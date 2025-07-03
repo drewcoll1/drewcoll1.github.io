@@ -102,15 +102,7 @@
 <body class="text-gray-900 bg-white min-h-screen flex flex-col">
     <div class="flex-grow">
 
-        <!--  Fixed Background Slideshow (Behind All Content) -->
-        <div class="fixed top-0 left-0 w-full h-screen -z-10 pointer-events-none">
-            <div id="bg1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
-                style="background-image: url('/images/hero-bg.png'); z-index: 1;"></div>
-            <div id="bg2" class="absolute inset-0 bg-cover bg-center opacity-0 transition-opacity duration-1000"
-                style="background-image: url('/images/hero-bg2.png'); z-index: 2;"></div>
-        </div>
 
-        <!-- Navigation Bar -->
         <!-- Navigation Bar -->
         <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
             <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
@@ -137,9 +129,9 @@
                     class="hidden fixed top-full left-0 w-full h-screen overflow-y-auto bg-white text-black flex-col justify-start items-center text-3xl space-y-10 z-50 transition-all duration-500 ease-in-out pt-5 md:relative md:flex md:h-auto md:overflow-visible md:bg-transparent md:flex-row md:space-y-0 md:space-x-10 md:text-black md:text-lg md:justify-end md:pt-0">
 
                     <a href="index.html" class="relative group">
-                        <span class="text-blue-400 brand-font font-bold text-3xl mt-[2px]">Home</span>
+                        <span class="text-black-400 brand-font text-3xl mt-[2px]">Home</span>
                         <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-black scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                     </a>
 
                     <a href="products.html" class="relative group">
@@ -147,10 +139,10 @@
                         <span
                             class="absolute bottom-0 left-0 w-full h-0.5 bg-black scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                     </a>
-                    <a href="contact.html" class="relative group">
-                        <span class="text-black hover:text-blue-400 transition brand-font text-3xl">Contact</span>
+                    <a href="#contact" class="relative group">
+                        <span class="text-blue-400 brand-font font-bold text-3xl">Contact</span>
                         <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-black scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
                     </a>
 
                     <a id="cart-icon" class="relative group cursor-pointer">
@@ -171,110 +163,80 @@
                             sales@primepromollc.com</span>
                     </div>
                 </nav>
+
             </div>
         </header>
+        <!-- Contact Section -->
+        <!-- Contact Section -->
+        <section class="py-20 px-6 max-w-4xl mx-auto">
+            <h1 class="brand-font text-6xl font-bold text-center mb-6">Contact Us</h1>
+            <p class="brand-font text-center text-black/80 text-2xl mb-10">Let us know what you're interested in and how
+                we can help.
+            </p>
 
-        <!--  Hero Section -->
-        <section
-            class="relative min-h-[35vh] flex items-center justify-center px-6 py-20 md:py-32 text-white z-10 bg-cover bg-center">
-            <!-- ⬛ Hero Overlay (Only inside hero section) -->
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-0 pointer-events-none"></div>
+            <form action="mailto:sales@primepromollc.com" method="POST" enctype="text/plain" class="space-y-6">
 
-            <!-- Hero Content -->
-            <div class="relative z-10 max-w-6xl w-full flex flex-col md:flex-row items-center justify-between gap-10">
-                <div class="text-center md:text-left md:w-2/3">
-                    <h1 class="text-6xl md:text-8xl font-extrabold brand-font mb-8">
-                        BRANDING<span class="text-blue-400">.</span><br>
-                        WITH<span class="text-blue-400">.</span><br>
-                        BRILLIANCE<span class="text-blue-400">.</span>
-                    </h1>
-                    <p class="text-2xl brand-font text-white/80 max-w-2xl mb-12">
-                        <!-- At Prime Promotions, we make it easy to bring your brand to life. Choose from a wide range of
-                        customizable products, collaborate with our design team to create stunning visuals, then sit
-                        back while we handle production and delivery. Whether it's a one-time order or ongoing
-                        promotional needs, we deliver quality, on time. -->
-                        At Prime Promotions, bringing your brand to life is simple: choose your products, work with our
-                        design team, and we’ll handle the rest—from production to delivery.
-                    </p>
-                    <a href="products.html"
-                        class="inline-block brand-font text-2xl bg-blue-400 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition">
-                        Exlpore Our Product Catalogs
-                    </a>
+                <!-- Name + Company -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="brand-font text-2xl mb-1">Name</label>
+                        <input type="text" name="Name" id="name" required
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    </div>
+                    <div>
+                        <label class="brand-font text-2xl mb-1">Company / Organization</label>
+                        <input type="text" name="Company" id="company"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    </div>
                 </div>
-                <div class="md:w-1/3 flex justify-center items-center">
-                    <img src="/images/logo.png" alt="Logo"
-                        class="w-72 md:w-96 rounded-full border-4 border-white shadow-2xl" />
-                </div>
-            </div>
 
-            <!-- Diagonal Divider at Bottom of Hero -->
-            <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
-                <svg class="relative block w-full h-[80px]" xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="none" viewBox="0 0 1200 120">
-                    <path d="M1200 0L0 0 892.25 114.72 1200 0z" fill="#ffffff"></path>
-                </svg>
-            </div>
+                <!-- Catalog + Products -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class=" brand-font text-xl mb-1">Catalogs Interested In</label>
+                        <select name="Catalogs" id="catalogs"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="">-- Select a Catalog --</option>
+                            <option value="Headwear">Headwear</option>
+                            <option value="Apparel">Apparel</option>
+                            <option value="Awards">Awards</option>
+                            <option value="Tradeshows">Tradeshows</option>
+                            <option value="General Promotions">General Promotions</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="brand-font text-xl mb-1">Products Interested In</label>
+                        <input type="text" name="Products" id="products"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="e.g., Tumblers, Hats..." />
+                    </div>
+                </div>
+
+                <!-- Subject -->
+                <div>
+                    <label class="brand-font text-2xl mb-1">Subject</label>
+                    <input type="text" name="Subject" id="subject" required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="What’s this message about?" />
+                </div>
+
+                <!-- Notes -->
+                <div>
+                    <label class="brand-font text-2xl mb-1">Other / Notes</label>
+                    <textarea name="Notes" id="notes" rows="3"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="Anything else you'd like us to know?"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="inline-block brand-font text-2xl bg-blue-400 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition">
+                    Send My Message
+                </button>
+            </form>
+
+
         </section>
-
-        <!-- HOW SECTION -->
-        <section id="how" class="py-20 px-6 bg-white text-black text-center relative">
-            <div class="text-5xl font-bold mb-2 brand-font">OUR PRODUCTS IN ACTION</div>
-
-            <section class="py-20 bg-white text-black">
-                <div class="max-w-7xl mx-auto px-4">
-
-                    <!-- Slider Wrapper -->
-                    <div class="slider-wrapper w-full flex flex-col items-center justify-center mx-auto">
-
-                        <!-- Slider Container -->
-                        <div class="w-full max-w-6xl overflow-hidden mx-auto">
-                            <div class="slider flex items-center justify-center"></div>
-                        </div>
-
-                        <!-- Controls -->
-                        <div id="controls" class="flex gap-4 mt-6">
-                            <button class="previous text-3xl text-gray-700 hover:text-blue-500">
-                                <i class="fa-solid fa-angle-left"></i>
-                            </button>
-                            <button class="next text-3xl text-gray-700 hover:text-blue-500">
-                                <i class="fa-solid fa-angle-right"></i>
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="mt-16"></div>
-
-                <!-- Explore Catalogs Button -->
-                <div class="text-center">
-                    <a href="products.html"
-                        class="inline-block brand-font text-2xl bg-blue-400 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition">
-                        Explore Our Product Catalogs
-                    </a>
-                </div>
-
-            </section>
-
-            <!--  Companies We Supply -->
-            <section id="companies" class="bg-white py-20 text-black">
-                <div class="text-5xl font-bold mb-10 brand-font">Trusted by Leading Companies</div>
-                <div class="max-w-7xl mx-auto px-6">
-                    <div
-                        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 items-center justify-items-center">
-                        <img src="/images/7.png" class="h-30 w-auto object-contain" />
-                        <img src="/images/8.png" class="h-30 w-auto object-contain" />
-                        <img src="/images/9.png" class="h-20 w-auto object-contain" />
-                        <img src="/images/10.png" class="h-20 w-auto object-contain" />
-                        <img src="/images/15.png" class="h-20 w-auto object-contain" />
-                        <img src="/images/12.png" class="h-21 w-auto object-contain" />
-                    </div>
-                    <div class="flex flex-wrap justify-center gap-10 mt-10">
-                        <img src="/images/13.png" class="h-21 w-auto object-contain" />
-                        <img src="/images/14.jpg" class="h-21 w-auto object-contain" />
-                        <img src="/images/11.png" class="h-21 w-auto object-contain" />
-                    </div>
-                </div>
-            </section>
     </div>
     <!-- Footer -->
     <footer class="bg-black text-white">
@@ -306,95 +268,29 @@
             rights reserved.</div>
     </footer>
 
-    <!--  Background Image Rotator Script -->
+    <!-- Script to build mailto -->
     <script>
-        const images = [
-            '/images/hero-bg.png',
-            '/images/hero-bg3.png',
-            '/images/hero-bg2.png'
-        ];
+        document.getElementById('contact-form').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        let current = 0;
-        const bg1 = document.getElementById('bg1');
-        const bg2 = document.getElementById('bg2');
-        let showingBg1 = true;
+            const name = document.getElementById('name').value.trim();
+            const company = document.getElementById('company').value.trim();
+            const catalogs = document.getElementById('catalogs').value.trim();
+            const products = document.getElementById('products').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const notes = document.getElementById('notes').value.trim();
 
-        setInterval(() => {
-            current = (current + 1) % images.length;
-            const nextImage = images[current];
+            let body = `Name: ${name}\n`;
+            if (company) body += `Company: ${company}\n`;
+            if (catalogs) body += `Catalogs Interested In: ${catalogs}\n`;
+            if (products) body += `Products Interested In: ${products}\n`;
+            if (notes) body += `Notes:\n${notes}`;
 
-            if (showingBg1) {
-                bg2.style.backgroundImage = url('${nextImage}');
-                bg2.style.opacity = '1';
-                bg1.style.opacity = '0';
-            } else {
-                bg1.style.backgroundImage = url('${nextImage}');
-                bg1.style.opacity = '1';
-                bg2.style.opacity = '0';
-            }
-
-            showingBg1 = !showingBg1;
-        }, 5000);
-
-        // Update footer year
-        document.getElementById('year').textContent = new Date().getFullYear();
+            const mailto = `mailto:sales@primepromollc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailto;
+        });
     </script>
 
-    <script>
-        const carwrapper = document.querySelector('.carousel-wrapper');
-        const itemsContainer = document.getElementById('carouselItems');
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
-
-        function scrollByAmount(amount) {
-            // Pause animation temporarily
-            wrapper.classList.add('paused');
-
-            carwrapper.scrollBy({
-                left: amount,
-                behavior: 'smooth'
-            });
-
-            // Resume after short delay
-            setTimeout(() => {
-                wrapper.classList.remove('paused');
-            }, 1000);
-        }
-
-        nextBtn.addEventListener('click', () => scrollByAmount(200));
-        prevBtn.addEventListener('click', () => scrollByAmount(-200));
-    </script>
-    <script>
-        const carouselTrack = document.querySelector('#carouselItems');
-        const itemCount = carouselTrack.children.length / 2;
-
-        let animationId;
-        let position = 0;
-
-        function startLoop() {
-            function step() {
-                position += 1;
-                carouselTrack.style.transform = `translateX(-${position}px)`;
-
-                // When scrolled halfway, reset without snapping
-                if (position >= carouselTrack.scrollWidth / 2) {
-                    position = 0;
-                    carouselTrack.style.transform = translateX(0);
-                }
-
-                animationId = requestAnimationFrame(step);
-            }
-            step();
-        }
-
-        // Stop animation on hover
-        const wrapper = document.querySelector('.carousel-wrapper');
-        wrapper.addEventListener('mouseenter', () => cancelAnimationFrame(animationId));
-        wrapper.addEventListener('mouseleave', () => startLoop());
-
-        // Start the loop
-        startLoop();
-    </script>
 
     <script>
         const menuToggle = document.getElementById('menu-toggle');

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prime Promotions LLC | Custom Promotional Products</title>
+    <link rel="icon" href="/images/logo.png" type="image/jpeg" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Barlow+Condensed:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+
+        .brand-font {
+            font-family: "Bebas Neue", sans-serif;
+
+        }
+    </style>
+    <style>
+        .menu-open .menu-line:nth-child(1) {
+            transform: translateY(14px) rotate(45deg);
+        }
+
+        .menu-open .menu-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-open .menu-line:nth-child(3) {
+            transform: translateY(-14px) rotate(-45deg);
+        }
+    </style>
+</head>
+
+<body class="text-gray-900 bg-white min-h-screen flex flex-col">
+    <div class="flex-grow">
+
+        <!--  Fixed Background Slideshow (Behind All Content) -->
+        <div class="fixed top-0 left-0 w-full h-screen -z-10 pointer-events-none">
+            <div id="bg1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
+                style="background-image: url('/images/hero-bg.png'); z-index: 1;"></div>
+            <div id="bg2" class="absolute inset-0 bg-cover bg-center opacity-0 transition-opacity duration-1000"
+                style="background-image: url('/images/hero-bg2.png'); z-index: 2;"></div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <!-- Navigation Bar -->
+        <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
+            <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
+                <a href="#" class="flex items-center gap-4">
+                    <img src="/images/logo.png" alt="Prime Promotions Logo"
+                        class="h-20 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300" />
+                    <span
+                        class="hidden lg:flex flex-col text-black text-3xl font-semibold tracking-wide brand-font leading-tight">
+                        <span class="whitespace-nowrap">Prime Promotions LLC</span>
+                        <span class='text-xl text-blue-400'>(574) 350-6559</span>
+                        <span class='text-xl text-blue-400'>sales@primepromollc.com</span>
+                    </span>
+                </a>
+                <button id="menu-toggle" class="md:hidden relative w-8 h-8 focus:outline-none z-50">
+                    <span
+                        class="menu-line block absolute left-0 top-0 w-8 h-0.5 bg-black transition-transform duration-300"></span>
+                    <span
+                        class="menu-line block absolute left-0 top-3.5 w-8 h-0.5 bg-black transition-opacity duration-300"></span>
+                    <span
+                        class="menu-line block absolute left-0 top-7 w-8 h-0.5 bg-black transition-transform duration-300"></span>
+                </button>
+
+                <nav id="nav-menu"
+                    class="hidden fixed top-full left-0 w-full h-screen bg-white text-black flex-col justify-start items-center text-3xl space-y-10 z-50 transition-all duration-500 ease-in-out pt-5 md:relative md:flex md:h-auto md:bg-transparent md:flex-row md:space-y-0 md:space-x-10 md:text-black md:text-lg md:justify-end md:pt-0">
+
+                    <a href="index.html" class="relative group">
+                        <span
+                            class="text-black hover:text-blue-400 transition brand-font text-3xl mt-[2px] inline-block">Home</span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-black scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    </a>
+
+                    <a href="products.html" class="relative group">
+                        <span class="text-blue-400 brand-font font-bold text-3xl">Catalogs</span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
+                    </a>
+                    <a href="contact.html" class="relative group">
+                        <span class="text-black hover:text-blue-400 transition brand-font text-3xl">Contact</span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-black scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    </a>
+
+                    <a id="cart-icon" class="relative group cursor-pointer">
+                        <span class="text-3xl text-gray-700 hover:text-red-500">♥</span>
+                        <span id="cart-count"
+                            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
+                    </a>
+                    <a href="mailto:sales@primepromollc.com" class="text-3xl text-gray-700 hover:text-blue-600">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+
+                    <!-- Logo & Brand Info for Mobile View (at bottom) -->
+                    <div class="flex flex-col items-center py-1 md:hidden">
+                        <img src="/images/logo.png" alt="Prime Promotions Logo"
+                            class="h-36 w-auto rounded-full border-4 border-white shadow-xl mb-4" />
+                        <span class="text-2xl text-blue-400 font-extrabold brand-font">(574) 350-6559 <span
+                                class="text-black">|</span>
+                            sales@primepromollc.com</span>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section
+            class="relative min-h-[60vh] flex flex-col items-center justify-center px-6 py-24 text-white z-10 bg-cover bg-center">
+            <!-- Hero Overlay -->
+            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 z-0 pointer-events-none"></div>
+
+            <!-- Hero Content Wrapper -->
+            <div class="relative z-10 flex flex-col items-center w-full max-w-7xl text-center">
+
+                <!-- Headline + Subtext -->
+                <h1 class="text-6xl font-extrabold brand-font mb-4 drop-shadow-xl">Explore Our Product Catalogs</h1>
+                <p class="brand-font text-2xl text-white/80 max-w-2xl mb-12">Explore branded product collections from
+                    trusted
+                    suppliers. Save your favorites and let us bring your vision to life.</p>
+
+                <!-- Cards Grid (same level) -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full">
+                    <!-- Search Catalogs Card -->
+                    <div
+                        class="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-8 flex flex-col items-center transition-transform duration-300 hover:scale-105">
+                        <h2 class="text-4xl sm:text-5xl font-extrabold brand-font mb-4 tracking-tight">Search Catalogs
+                        </h2>
+                        <svg class="w-20 h-20 text-white/70" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 21l-4.35-4.35m1.45-4.65a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+
+                    <!-- Save Favorites Card -->
+                    <div
+                        class="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-8 flex flex-col items-center transition-transform duration-300 hover:scale-105">
+                        <h2 class="text-4xl sm:text-5xl font-extrabold brand-font mb-4 tracking-tight">Save Favorites
+                        </h2>
+                        <svg class="w-20 h-20 text-white/70" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4.318 6.318a4.5 4.5 0 010 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+
+                    <!-- Reach Out Card -->
+                    <div
+                        class="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-8 flex flex-col items-center transition-transform duration-300 hover:scale-105">
+                        <h2 class="text-4xl sm:text-5xl font-extrabold brand-font mb-4 tracking-tight">Contact Us</h2>
+                        <svg class="w-20 h-20 text-white/70" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optional Divider -->
+            <!-- <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
+                <svg class="relative block w-full h-[80px]" xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="none" viewBox="0 0 1200 120">
+                    <path d="M1200 0L0 0 892.25 114.72 1200 0z" fill="#ffffff"></path>
+                </svg>
+            </div> -->
+        </section>
+
+        <!-- Catalog Section -->
+        <section class="py-20 px-6 bg-white">
+            <!-- <h2 class="text-5xl h-20 font-bold mb-6 text-center brand-font">Explore Our Product Catalogs</h2> -->
+
+            <div class="category-stack flex justify-center gap-20 mb-10 flex-wrap">
+                <!-- Category Circle -->
+                <div class="text-center">
+                    <img src="/images/hat.png" alt="Headwear" id="headwear-img"
+                        class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+
+                    <div class="text-3xl brand-font text-center">Headwear</div>
+                </div>
+
+                <div class="text-center">
+                    <img src="/images/apparel.png" alt="Apparel" id="apparel-img"
+                        class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-whitecursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                    <div class="text-3xl brand-font text-center">Apparel</div>
+                </div>
+
+                <div class="text-center">
+                    <img src="/images/tent.png" alt="Tradeshows" id="tradeshows-img"
+                        class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                    <div class="text-3xl brand-font text-center">Tradeshows</div>
+                </div>
+
+                <div class="text-center">
+                    <img src="/images/general.png" alt="General Promotions" id="promotions-img"
+                        class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                    <div class="text-3xl brand-font text-center">General Promotions</div>
+                </div>
+
+                <div class="text-center">
+                    <img src="/images/award.jpg" alt="Awards" id="awards-img"
+                        class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                    <div class="text-3xl brand-font text-center">Awards</div>
+                </div>
+
+                <!-- <div class="text-center">
+                    <img src="/images/speaker.png" alt="All Catalogs" id="all-catalogs-img"
+                        class="catalog-circle w-36 h-36 mb-3 rounded-full object-cover cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                    <div class="text-xl brand-font text-center">Browse All</div>
+                </div> -->
+            </div>
+
+
+            <!-- Catalog Cards (Hidden initially) -->
+
+            <!-- Headwear -->
+            <div id="headwear-cards"
+                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                <div class="catalog-card relative rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Cap America"
+                        data-link="https://www.capamerica.com/category/view-all-caps?pageno=1&PageView=grid">
+                        ♥
+                    </button>
+
+
+
+                    <img src="/images/cap copy.jpg" alt="Cap America Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-3xl font-bold text-gray-900 mb-2 tracking-tight brand-font">Cap America</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">American-made embroidered
+                        baseball
+                        caps,
+                        beanies, and visors.
+                        Known for rapid delivery and premium stitching—perfect for patriotic or domestic-focused
+                        branding.</p>
+                    <a href="https://www.capamerica.com/category/view-all-caps?pageno=1&PageView=grid" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Outdoor Cap" data-link="https://promo.outdoorcap.com/">
+                        ♥
+                    </button>
+                    <img src="/images/outdoor.webp" alt="Outdoor Cap Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <p class="text-sm text-gray-600 mb-3 italic">Vast selection of trucker hats, camo caps, and
+                        lifestyle
+                        headwear. Deep inventory and low MOQs make them ideal for versatile and quick-turn projects.
+                    </p>
+                    <a href="https://promo.outdoorcap.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Richardson Sports" data-link="https://richardsonsports.com/">
+                        ♥
+                    </button>
+                    <img src="/images/rich.gif" alt="Richardson Sports Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Richardson Sports</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">High-performance caps and visors used by athletic teams
+                        nationwide. Great for custom sports branding or premium headwear programs.</p>
+                    <a href="https://richardsonsports.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Pacific Headwear"
+                        data-link="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear">
+                        ♥
+                    </button>
+                    <img src="/images/ps.jpeg" alt="Pacific Headwear Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Pacific Headwear</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Focused on athletic and lifestyle hats—snapbacks,
+                        flexfits,
+                        and performance styles. Easily customized for teams, events, or brand merch.</p>
+                    <a href="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Max Apparel" data-link="https://maxapparel.com/headwear.htm">
+                        ♥
+                    </button>
+                    <img src="/images/max.jpg" alt="Max Apparel Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Max Apparel</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Private-label cap manufacturer offering custom-cut
+                        styles and
+                        finishes. Ideal for brands seeking exclusive, high-end headwear options.</p>
+                    <a href="https://maxapparel.com/headwear.htm" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+            </div>
+
+
+            <!-- Apparel -->
+
+            <div id="apparel-cards"
+                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="SanMar" data-link="https://www.sanmar.com/">
+                        ♥
+                    </button>
+                    <img src="/images/s.png" alt="Bella+Canvas Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">SanMar</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Distributor of brands like Nike, Carhartt, Travis
+                        Matthew,
+                        Brooks Borthers, District, Port Authority, and
+                        Sport-Tek. Known for polos, fleece, jackets, and custom embroidery options for teams and
+                        corporate use.</p>
+                    <a href="https://www.sanmar.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="S&S Activewear" data-link="https://www.ssactivewear.com/ps/new">
+                        ♥
+                    </button>
+                    <img src="/images/ss.jpg" alt="Gildan Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">S&S Activewear</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Offers top-name brands like Under Armour, Adidas,
+                        Swannies,
+                        and Huk. Known for blank t-shirts, sweatshirts, and fashion-forward retail basics..</p>
+                    <a href="https://www.ssactivewear.com/ps/new" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Driving Imperssions" data-link="https://drivingi.com/">
+                        ♥
+                    </button>
+                    <img src="/images/di.jpeg" alt="Next Level Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Driving Impressions</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Offers an elite collection of premium apparel from
+                        renowned
+                        lifestyle and performance brands including Peter Millar, Patagonia, Helly Hansen, Johnnie-O,
+                        G/Fore, Southern Tide, Vineyard Vines, and Greyson. Ideal for upscale corporate wear, golf
+                        tournaments, and luxury giveaways.</p>
+                    <a href="https://drivingi.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Scales" data-link="https://www.scalesgear.com/">
+                        ♥
+                    </button>
+                    <img src="/images/scales.webp" alt="Next Level Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Scales</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Premium coastal and lifestyle brand known for
+                        performance
+                        fishing shirts, water-repellent polos, and modern coastal workwear.</p>
+                    <a href="https://www.scalesgear.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Gill" data-link="https://www.gillmarine.com/">
+                        ♥
+                    </button>
+                    <img src="/images/gill.jpg" alt="Next Level Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Gill Marine</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Offers technical sailing apparel and outerwear.
+                        Specializes in
+                        waterproof jackets, breathable layers, and marine-grade clothing.</p>
+                    <a href="https://www.gillmarine.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Ubix" data-link="https://ubixnow.com/">
+                        ♥
+                    </button>
+                    <img src="/images/ubix.png" alt="Next Level Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Ubix</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Custom sportswear and branding company with innovative
+                        apparel
+                        solutions. Provides moisture-wicking polos and softshell outerwear for teams and businesses.</p>
+                    <a href="https://ubixnow.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+            </div>
+
+
+            <!--  Tradeshows -->
+
+            <div id="tradeshows-cards"
+                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Orbus" data-link="https://www.orbus.com/">
+                        ♥
+                    </button>
+                    <img src="/images/orbus.png" alt="Bella+Canvas Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Orbus</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Specializes in portable trade show displays:
+                        retractable
+                        banners, tension fabric booths, backdrops, and modular exhibit systems — ideal for setting up
+                        professional presentations fast.</p>
+                    <a href="https://www.orbus.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Showdown Displays" data-link="https://www.showdowndisplays.com/">
+                        ♥
+                    </button>
+                    <img src="/images/showdown.jpeg" alt="Gildan Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Showdown Displays</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Wide range of indoor and outdoor signage including
+                        table
+                        throws, tents, flag banners, and floor displays. Known for quick turnarounds and bold
+                        visibility.</p>
+                    <a href="https://www.showdowndisplays.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Soar Display" data-link="https://soardistusa.com/">
+                        ♥
+                    </button>
+                    <img src="/images/soar.png" alt="Next Level Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Soar Display</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Custom-designed event displays and branded
+                        architecture. Best
+                        for experiential marketing setups or premium booth layouts with impact.</p>
+                    <a href="https://soardistusa.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+            </div>
+
+            <!-- General Promotions -->
+            <div id="promotions-cards"
+                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="PCNA" data-link="https://www.pcna.com/en-us">
+                        ♥
+                    </button>
+                    <img src="/images/pcna.png" alt="Bella+Canvas Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">PCNA</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">One of the largest suppliers in the industry, offering
+                        drinkware, tech, wellness items, bags, and name-brand products like CamelBak, Skullcandy, and
+                        Moleskine.</p>
+                    <a href="https://www.pcna.com/en-us" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Gemline" data-link="https://www.gemline.com/s/">
+                        ♥
+                    </button>
+                    <img src="/images/gemline.avif" alt="Gildan Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Gemline</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Focuses on bags, backpacks, coolers, journals, and home
+                        goods.
+                        Known for elegant retail-inspired designs and partnerships with brands like Igloo and CORKCICLE.
+                    </p>
+                    <a href="https://www.gemline.com/s/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Diamondback Branding" data-link="https://diamondbackbranding.com/">
+                        ♥
+                    </button>
+                    <img src="/images/diamond.png" alt="Next Level Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Diamondback Branding</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Custom laser-engraved tumblers, bottles, and barware.
+                        Perfect
+                        for personalizing premium stainless-steel products for high-end gifts or events.</p>
+                    <a href="https://diamondbackbranding.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Thirsty Boxer" data-link="https://www.thirstyboxer.com/">
+                        ♥
+                    </button>
+                    <img src="/images/boxer.jpg" alt="Next Level Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Thirsty Boxer</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Known for premium custom drinkware featuring brands
+                        like YETI
+                        and Stio — ideal for giveaways, outdoor events, and high-end brand experiences.</p>
+                    <a href="https://www.thirstyboxer.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Hit Promotional Products" data-link="https://www.hitpromo.net/">
+                        ♥
+                    </button>
+                    <img src="/images/hit.png" alt="Next Level Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Hit Promotional Products</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Offers one of the widest arrays of budget-friendly
+                        promo
+                        goods: pens, tote bags, drinkware, tech gadgets, and more — ideal for large events and
+                        giveaways.</p>
+                    <a href="https://www.hitpromo.net/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Koozie Group" data-link="https://www.kooziegroup.com/US/">
+                        ♥
+                    </button>
+                    <img src="/images/koozie.jpg" alt="Next Level Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Koozie Group</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Known for iconic Koozies, calendars, notepads, pens,
+                        and
+                        writing instruments. Offers sustainable promo options and BIC-branded products.</p>
+                    <a href="https://www.kooziegroup.com/US/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+            </div>
+
+            <!-- Awards -->
+            <div id="awards-cards"
+                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+
+                <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center">
+                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-red-500 text-5xl"
+                        data-name="Vision Awards" data-link="https://visionsawards.com/">
+                        ♥
+                    </button>
+                    <img src="/images/vision.gif" alt=" Bella+Canvas Catalog"
+                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Vision Awards</p> -->
+                    <p class="text-sm text-gray-600 mb-3 italic">Custom crystal, acrylic, and glass awards with etched
+                        personalization. Ideal for corporate recognitions, milestone celebrations, or donor
+                        appreciation.</p>
+                    <a href="https://visionsawards.com/" target="_blank"
+                        class="inline-block mt-auto px-4 py-2 bg-blue-400 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all duration-200">View
+                        Catalog</a>
+                </div>
+            </div>
+
+
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white">
+        <div
+            class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div class="flex items-center gap-4">
+                <img src="/images/logo.png" class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl" />
+                <div>
+                    <span class="text-white text-3xl brand-font">Prime Promotions
+                        LLC<br><span class='text-xl text-blue-400'>(574) 350-6559</span></span>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-2xl font-semibold mb-2 brand-font">Let’s Make Your Brand
+                    Unforgettable</h3>
+                <p class="text-gray-300 mb-4 brand-font text-2xl italic">Reach out to our team to
+                    get your order started
+                    today.
+                </p>
+                <a href="mailto:sales@primepromollc.com"
+                    class="bg-blue-400 brand-font text-2xl px-5 py-2 rounded-full font-semibold hover:bg-blue-500 transition">Get
+                    in Touch</a>
+            </div>
+        </div>
+        <div class="text-center text-sm text-white opacity-70 pb-6">&copy; <span id="year"></span>
+            Prime Promotions LLC.
+            All
+            rights reserved.</div>
+    </footer>
+
+    <script>
+        const catalogCircles = document.querySelectorAll('.catalog-circle');
+        const allCatalogs = document.querySelectorAll('.catalog-container');
+        let activeCircle = null;
+
+        catalogCircles.forEach(circle => {
+            circle.addEventListener('click', () => {
+                const categoryId = circle.id.replace('-img', '-cards');
+                const catalogContainer = document.getElementById(categoryId);
+
+                const isActive = activeCircle === circle;
+
+                // Reset all
+                catalogCircles.forEach(img => img.classList.remove('scale-110', 'ring-4', 'ring-blue-400'));
+                allCatalogs.forEach(container => container.classList.add('hidden'));
+
+                if (!isActive) {
+                    // Activate this one
+                    circle.classList.add('scale-110', 'ring-4', 'ring-blue-400');
+                    catalogContainer?.classList.remove('hidden');
+                    activeCircle = circle;
+                } else {
+                    // Deactivate
+                    activeCircle = null;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('menu-open');
+            navMenu.classList.toggle('hidden');
+            navMenu.classList.toggle('flex');
+        });
+    </script>
+
+
+
+    <!-- SAVE CATALOG POPUP -->
+    <div id="save-popup"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden transition-opacity duration-300">
+        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 animate-fade-in">
+
+            <!-- Close Button -->
+            <button id="popup-cancel" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl font-bold">
+                &times;
+            </button>
+
+            <!-- Header -->
+            <div class="mb-6 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="w-40 h-40 flex items-center justify-center rounded-full bg-white shadow-md border-2 "">
+                        <img src=" /images/logo.png" alt="Popup Logo" class="w-24 h-24 object-contain" />
+                </div>
+            </div>
+
+
+            <h2 class="text-2xl font-bold text-gray-800 mt-4">Save <span id="popup-catalog-name"
+                    class="text-blue-500">Catalog</span></h2>
+            <p class="text-sm text-gray-500 mt-1">Let us know which products you liked or have questions about.</p>
+        </div>
+
+        <!-- Input: Product Links -->
+        <div class="mb-4">
+            <label for="popup-links" class="block text-sm font-medium text-gray-700 mb-1">
+                Product Links <span class="text-gray-400 text-xs">(optional)</span>
+            </label>
+            <textarea id="popup-links"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
+                rows="3" placeholder="Paste one or more product URLs here..."></textarea>
+        </div>
+
+        <!-- Input: Notes/Questions -->
+        <div class="mb-6">
+            <label for="popup-notes" class="block text-sm font-medium text-gray-700 mb-1">
+                Notes or Questions <span class="text-gray-400 text-xs">(optional)</span>
+            </label>
+            <textarea id="popup-notes"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
+                rows="3" placeholder="Anything you'd like us to know or discuss..."></textarea>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-3">
+            <!-- <button id="popup-cancel-duplicate"
+                    class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
+                    Cancel
+                </button> -->
+            <button id="popup-confirm" class="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                Save Catalog
+            </button>
+        </div>
+    </div>
+    </div>
+
+
+    <script>
+        const saveButtons = document.querySelectorAll('.save-btn');
+        const popup = document.getElementById('save-popup');
+        const popupCatalogName = document.getElementById('popup-catalog-name');
+        const popupLinks = document.getElementById('popup-links');
+        const popupNotes = document.getElementById('popup-notes');
+        const popupCancel = document.getElementById('popup-cancel');
+        const popupConfirm = document.getElementById('popup-confirm');
+        const cartCount = document.getElementById('cart-count');
+        let currentCatalog = '';
+        let currentButton = null;
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+            cartCount.textContent = cart.length;
+            cartCount.classList.toggle('hidden', cart.length === 0);
+        }
+
+        saveButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentButton = btn;
+                currentCatalog = btn.getAttribute('data-name'); // specific to this button
+                popupCatalogName.textContent = currentCatalog;
+                popupCatalogName.setAttribute('data-link', btn.getAttribute('data-link')); // store the link too just in case
+
+                popupLinks.value = '';
+                popupNotes.value = '';
+                popup.classList.remove('hidden');
+            });
+        });
+
+
+
+        popupCancel.addEventListener('click', () => {
+            popup.classList.add('hidden');
+        });
+        function updateCartList() {
+            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+            cartList.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
+            } else {
+                cart.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.className = "border-b pb-2 mb-2 relative";
+                    li.innerHTML = `
+                <a href="${item.link}" target="_blank"
+                   class="brand-font text-lg text-blue-600 hover:text-blue-800 underline block mb-1">
+                    ${item.name}
+                </a>
+                ${item.productLinks ? formatLinks(item.productLinks) : ''}
+                ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
+                <button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
+            `;
+                    cartList.appendChild(li);
+                });
+
+                // Re-attach remove button handlers
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const index = parseInt(e.target.getAttribute('data-index'));
+                        const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+                        updatedCart.splice(index, 1);
+                        localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
+                        updateCartCount();
+                        updateCartList();
+                    });
+                });
+            }
+        }
+
+
+        popupConfirm.addEventListener('click', () => {
+            if (!currentButton) return;
+
+            const name = currentButton.getAttribute('data-name'); // ✅ reliable
+            const link = currentButton.getAttribute('data-link');
+            const productLinks = popupLinks.value.trim();
+            const notes = popupNotes.value.trim();
+
+            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+            cart.push({ name, link, productLinks, notes });
+
+            localStorage.setItem('catalogCart', JSON.stringify(cart));
+            updateCartCount();
+            popup.classList.add('hidden');
+            updateCartList(); // ✅ This uses saved name
+            cartPanel.classList.remove('hidden');
+        });
+
+
+        updateCartCount();
+    </script>
+
+
+    <div id="cart-panel"
+        class="fixed bottom-0 right-0 bg-white w-full max-w-md h-[30rem] shadow-2xl border-l border-t z-50 rounded-tl-2xl p-6 hidden overflow-y-auto animate-fade-in">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="brand-font text-2xl text-gray-800">Saved Catalogs</h3>
+            <button id="close-cart"
+                class="text-gray-400 hover:text-red-500 text-lg font-bold focus:outline-none">&times;</button>
+        </div>
+
+        <!-- Saved Items -->
+        <ul id="cart-list" class="space-y-4 text-md text-gray-800">
+            <!-- Items will be rendered here -->
+        </ul>
+
+        <!-- CTA Message -->
+        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
+            <div class="text-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </div>
+            <div class="text-sm text-gray-700 leading-snug">
+                <strong class="brand-font text-xl block font-semibold text-blue-600">Let’s get going!</strong>
+                Click the button below to email your saved catalogs and product notes to our team so we can help
+                bring
+                your vision to life.
+            </div>
+        </div>
+
+        <!-- Email Icon -->
+        <div class="mt-4 flex justify-center">
+            <button id="send-email" class="text-blue-500 hover:text-blue-700 transition-transform hover:scale-110"
+                title="Email My Saved Catalogs">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        const cartPanel = document.getElementById('cart-panel');
+        const cartList = document.getElementById('cart-list');
+        const cartIcon = document.getElementById('cart-icon');
+
+        cartIcon.addEventListener('click', () => {
+            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+            cartList.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
+            } else {
+                cart.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.className = "border-b pb-2 mb-2 relative";
+                    li.innerHTML = `
+  <a href="${item.link}" target="_blank"
+     class="brand-font text-5xl text-blue-600 hover:text-blue-800 underline block mb-1">
+    ${item.name}
+  </a>
+  ${item.productLinks ? formatLinks(item.productLinks) : ''}
+  ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
+  <button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
+`;
+
+                    cartList.appendChild(li);
+                });
+
+                // Attach remove handlers
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const index = parseInt(e.target.getAttribute('data-index'));
+                        const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+                        updatedCart.splice(index, 1);
+                        localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
+
+                        // Refresh cart
+                        cartIcon.click(); // close
+                        cartIcon.click(); // reopen
+                    });
+                });
+            }
+
+            cartPanel.classList.toggle('hidden');
+        });
+    </script>
+
+    <script>
+        document.getElementById('send-email').addEventListener('click', () => {
+            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            let body = "Here are the catalogs I'm interested in:\n\n";
+
+            cart.forEach(item => {
+                body += `Catalog: ${item.name}\n`;
+                if (item.link) body += `Catalog Link: ${item.link}\n`;
+                if (item.productLinks) body += `Product Links:\n${item.productLinks}\n`;
+                if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
+                body += `\n`;
+            });
+
+            const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Catalogs&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        });
+
+
+
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartIcon = document.getElementById('cart-icon');
+            const cartPanel = document.getElementById('cart-panel');
+            const cartList = document.getElementById('cart-list');
+            const closeCartBtn = document.getElementById('close-cart');
+
+            cartIcon?.addEventListener('click', () => {
+                const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+                cartList.innerHTML = '';
+
+                if (cart.length === 0) {
+                    cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
+                } else {
+                    cart.forEach((item, index) => {
+                        const li = document.createElement('li');
+                        li.className = "border-b pb-2 mb-2 relative";
+                        li.innerHTML = `
+                            <a href="${item.link}" target="_blank"
+                               class="brand-font text-lg text-blue-600 hover:text-blue-800 underline block mb-1">
+                                ${item.name}
+                            </a>
+                            ${item.productLinks ? formatLinks(item.productLinks) : ''}
+                            ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
+                            <button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
+                        `;
+                        cartList.appendChild(li);
+                    });
+
+                    // Add remove logic
+                    document.querySelectorAll('.remove-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const index = parseInt(e.target.getAttribute('data-index'));
+                            const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+                            updatedCart.splice(index, 1);
+                            localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
+                            updateCartCount();
+                            updateCartList();
+                        });
+                    });
+                }
+
+                cartPanel.classList.remove('hidden');
+            });
+
+            closeCartBtn?.addEventListener('click', () => {
+                cartPanel?.classList.add('hidden');
+            });
+        });
+    </script>
+
+    <script>
+        function formatLinks(links) {
+            // Assume links are newline-separated or comma-separated
+            const parts = links.split(/\s*[\n,]+\s*/).filter(Boolean);
+            return parts.map(link => {
+                return `<a href="${link}" target="_blank" class="text-blue-500 underline block mb-1">${link}</a>`;
+            }).join('');
+        }
+    </script>
+
+
+
+
+
+</body>
+
+</html>
