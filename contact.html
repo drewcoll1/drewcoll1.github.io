@@ -466,7 +466,16 @@
 
         updateCartCount();
     </script>
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
 
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('menu-open');
+            navMenu.classList.toggle('hidden');
+            navMenu.classList.toggle('flex');
+        });
+    </script>
 
     <div id="cart-panel"
         class="fixed bottom-0 right-0 bg-white w-full max-w-md h-[30rem] shadow-2xl border-l border-t z-50 rounded-tl-2xl p-6 hidden overflow-y-auto animate-fade-in">
