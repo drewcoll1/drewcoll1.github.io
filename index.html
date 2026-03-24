@@ -282,26 +282,50 @@
 
             <!-- Hero Content -->
             <div class="relative z-10 max-w-6xl w-full flex flex-col md:flex-row items-center justify-between gap-10">
-                <div class="w-full md:w-2/3 text-center md:text-left flex flex-col items-center md:items-start px-2 md:px-0">
-                   <h1 class="text-5xl md:text-8xl font-extrabold brand-font mb-8 leading-tight text-center md:text-left"> BRANDING<span class="text-blue-400">.</span> <span class="inline md:hidden">WITH<span class="text-blue-400">.</span> BRILLIANCE<span class="text-blue-400">.</span></span> <span class="hidden md:inline"> <br>WITH<span class="text-blue-400">.</span><br> BRILLIANCE<span class="text-blue-400">.</span> </span> </h1>
-                    <p class="text-3xl brand-font text-white max-w-2xl mb-12">
-                        <!-- At Prime Promotions, we make it easy to bring your brand to life. Choose from a wide range of
-                        customizable products, collaborate with our design team to create stunning visuals, then sit
-                        back while we handle production and delivery. Whether it's a one-time order or ongoing
-                        promotional needs, we deliver quality, on time. -->
-                        At Prime Promotions, bringing your brand to life is simple: choose your products, work with our
-                        design team, and we’ll handle the rest—from production to delivery.
-                    </p>
-                    <a href="products.html"
-                        class="inline-block brand-font text-2xl bg-blue-400 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition">
-                        Exlpore Our Product Catalogs
-                    </a>
-                </div>
-                <div class="md:w-1/3 flex justify-center items-center">
-                    <img src="./images/logo.png" alt="Logo"
-                        class="w-72 md:w-96 rounded-full border-4 border-white shadow-2xl" />
-                </div>
-            </div>
+
+    <!-- TEXT + HEADLINE -->
+    <div class="w-full md:w-2/3 flex flex-col items-center md:items-start text-center md:text-left px-2 md:px-0">
+
+        <!-- HEADLINE -->
+        <h1 class="order-1 text-5xl md:text-8xl font-extrabold brand-font mb-8 leading-tight text-center md:text-left">
+            BRANDING<span class="text-blue-400">.</span>
+
+            <span class="inline md:hidden">
+                WITH<span class="text-blue-400">.</span> BRILLIANCE<span class="text-blue-400">.</span>
+            </span>
+
+            <span class="hidden md:inline">
+                <br>WITH<span class="text-blue-400">.</span><br>
+                BRILLIANCE<span class="text-blue-400">.</span>
+            </span>
+        </h1>
+
+        <!-- LOGO (mobile only placement) -->
+        <div class="order-2 md:hidden flex justify-center items-center mb-8">
+            <img src="./images/logo.png" alt="Logo"
+                class="w-56 rounded-full border-4 border-white shadow-2xl" />
+        </div>
+
+        <!-- PARAGRAPH -->
+        <p class="order-3 text-3xl brand-font text-white max-w-2xl mb-12">
+            At Prime Promotions, bringing your brand to life is simple: choose your products, work with our
+            design team, and we’ll handle the rest—from production to delivery.
+        </p>
+
+        <!-- BUTTON -->
+        <a href="products.html"
+            class="order-4 inline-block brand-font text-2xl bg-blue-400 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition">
+            Exlpore Our Product Catalogs
+        </a>
+    </div>
+
+    <!-- LOGO (desktop only placement) -->
+    <div class="hidden md:flex md:w-1/3 justify-center items-center">
+        <img src="./images/logo.png" alt="Logo"
+            class="w-72 md:w-96 rounded-full border-4 border-white shadow-2xl" />
+    </div>
+
+</div>
 
             <!-- Diagonal Divider at Bottom of Hero -->
             <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
