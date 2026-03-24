@@ -30,82 +30,6 @@
 
         }
     </style>
-<style>
-    .slider .slide img {
-        cursor: zoom-in;
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .slider .slide img:hover {
-        transform: scale(1.02);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
-    }
-
-    .lightbox {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.88);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        padding: 2rem;
-    }
-
-    .lightbox.hidden {
-        display: none;
-    }
-
-    .lightbox-content {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        max-width: 95vw;
-        max-height: 95vh;
-    }
-
-    .lightbox img {
-        max-width: 90vw;
-        max-height: 85vh;
-        object-fit: contain;
-        display: block;
-        border-radius: 1rem;
-        background: white;
-        transition: transform 0.25s ease;
-        cursor: zoom-in;
-    }
-
-    .lightbox img.zoomed {
-        transform: scale(1.75);
-        cursor: zoom-out;
-    }
-
-    .lightbox-close {
-        position: absolute;
-        top: -0.75rem;
-        right: -0.75rem;
-        width: 42px;
-        height: 42px;
-        border: none;
-        border-radius: 9999px;
-        background: white;
-        color: #111827;
-        font-size: 1.4rem;
-        font-weight: bold;
-        line-height: 1;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-        transition: 0.2s ease;
-        z-index: 2;
-    }
-
-    .lightbox-close:hover {
-        background: #ef4444;
-        color: white;
-    }
-</style>
-    
     <style>
         .menu-open .menu-line:nth-child(1) {
             transform: translateY(14px) rotate(45deg);
@@ -312,13 +236,13 @@
             <section class="py-20 bg-white text-black">
                 <div class="max-w-7xl mx-auto px-4">
 
-                    <!--  Wrapper -->
-                    <div class="-wrapper w-full flex flex-col items-center justify-center mx-auto">
+                    <!-- Slider Wrapper -->
+                    <div class="slider-wrapper w-full flex flex-col items-center justify-center mx-auto">
 
-                        <!-- Container -->
-<div class="w-full max-w-6xl overflow-hidden mx-auto">
-    <div class="slider"></div>
-</div>
+                        <!-- Slider Container -->
+                        <div class="w-full max-w-6xl overflow-hidden mx-auto">
+                            <div class="slider flex items-center justify-center"></div>
+                        </div>
 
                         <!-- Controls -->
                         <div id="controls" class="flex gap-4 mt-6">
@@ -421,14 +345,82 @@
         const bg2 = document.getElementById('bg2');
         let showingBg1 = true;
 
-    
+        setInterval(() => {
+            current = (current + 1) % images.length;
+            const nextImage = images[current];
+
+            if (showingBg1) {
+                bg2.style.backgroundImage = url('${nextImage}');
+                bg2.style.opacity = '1';
+                bg1.style.opacity = '0';
+            } else {
+                bg1.style.backgroundImage = url('${nextImage}');
+                bg1.style.opacity = '1';
+                bg2.style.opacity = '0';
+            }
+
+            showingBg1 = !showingBg1;
+        }, 5000);
 
         // Update footer year
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 
-    
-   
+    <script>
+        const carwrapper = document.querySelector('.carousel-wrapper');
+        const itemsContainer = document.getElementById('carouselItems');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+
+        function scrollByAmount(amount) {
+            // Pause animation temporarily
+            wrapper.classList.add('paused');
+
+            carwrapper.scrollBy({
+                left: amount,
+                behavior: 'smooth'
+            });
+
+            // Resume after short delay
+            setTimeout(() => {
+                wrapper.classList.remove('paused');
+            }, 1000);
+        }
+
+        nextBtn.addEventListener('click', () => scrollByAmount(200));
+        prevBtn.addEventListener('click', () => scrollByAmount(-200));
+    </script>
+    <script>
+        const carouselTrack = document.querySelector('#carouselItems');
+        const itemCount = carouselTrack.children.length / 2;
+
+        let animationId;
+        let position = 0;
+
+        function startLoop() {
+            function step() {
+                position += 1;
+                carouselTrack.style.transform = `translateX(-${position}px)`;
+
+                // When scrolled halfway, reset without snapping
+                if (position >= carouselTrack.scrollWidth / 2) {
+                    position = 0;
+                    carouselTrack.style.transform = translateX(0);
+                }
+
+                animationId = requestAnimationFrame(step);
+            }
+            step();
+        }
+
+        // Stop animation on hover
+        const wrapper = document.querySelector('.carousel-wrapper');
+        wrapper.addEventListener('mouseenter', () => cancelAnimationFrame(animationId));
+        wrapper.addEventListener('mouseleave', () => startLoop());
+
+        // Start the loop
+        startLoop();
+    </script>
 
     <script>
         const menuToggle = document.getElementById('menu-toggle');
@@ -783,101 +775,48 @@ ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><
     </script>
 
 
-    <!--  Script -->
-    <div id="image-lightbox" class="lightbox hidden">
-    <div class="lightbox-content">
-        <button id="lightbox-close" class="lightbox-close" aria-label="Close enlarged image">&times;</button>
-        <img id="lightbox-image" src="" alt="Expanded product image" />
-    </div>
-</div>
-   <script>
-window.addEventListener("DOMContentLoaded", () => {
-    const slider = document.querySelector(".slider");
-    if (!slider) return;
+    <!-- Slider Script -->
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const slider = document.querySelector(".slider");
 
-    const carObject = [
-        { img: "./images/50.jpeg" },
-        { img: "./images/shotskis.jpg" },
-        { img: "./images/51.jpeg" },
-        { img: "./images/52.jpeg" }
-    ];
+            const carObject = [
+                { "img": "./images/50.jpeg" },
+                { "img": "./images/shotskis.jpg" },
+                { "img": "./images/51.jpeg" },
+                { "img": "./images/52.jpeg" }
+            ];
 
-    slider.innerHTML = carObject.map(car => `
-        <div class="slide">
-            <img src="${car.img}" alt="Showcase image" class="clickable-slide-image" />
-        </div>
-    `).join("");
+            let cars = "";
+            for (let car of carObject) {
+                cars += `<div class="slide">
+          <img src="${car.img}" alt="Showcase image" />
+        </div>`;
+            }
+            slider.innerHTML = cars;
 
-    const tinySliderInstance = tns({
-        container: ".slider",
-        items: 1,
-        gutter: 15,
-        slideBy: 1,
-        nav: false,
-        speed: 400,
-        controls: false,
-        mouseDrag: true,
-        responsive: {
-            640: { items: 2 },
-            1024: { items: 3 }
-        }
-    });
+            const tinySliderInstance = tns({
+                container: ".slider",
+                items: 1,
+                gutter: 15,
+                slideBy: 1,
+                nav: false,
+                speed: 400,
+                controls: false,
+                responsive: {
+                    640: { items: 2 },
+                    1024: { items: 3 }
+                }
+            });
 
-    const prevBtn = document.querySelector(".previous");
-    const nextBtn = document.querySelector(".next");
+            const prevBtn = document.querySelector(".previous");
+            const nextBtn = document.querySelector(".next");
 
-    prevBtn?.addEventListener("click", () => tinySliderInstance.goTo("prev"));
-    nextBtn?.addEventListener("click", () => tinySliderInstance.goTo("next"));
+            prevBtn.addEventListener("click", () => tinySliderInstance.goTo("prev"));
+            nextBtn.addEventListener("click", () => tinySliderInstance.goTo("next"));
+        });
+    </script>
 
-    const lightbox = document.getElementById("image-lightbox");
-    const lightboxImage = document.getElementById("lightbox-image");
-    const lightboxClose = document.getElementById("lightbox-close");
-
-    function openLightbox(src, alt) {
-        lightboxImage.src = src;
-        lightboxImage.alt = alt || "Expanded product image";
-        lightboxImage.classList.remove("zoomed");
-        lightbox.classList.remove("hidden");
-        document.body.style.overflow = "hidden";
-    }
-
-    function closeLightbox() {
-        lightbox.classList.add("hidden");
-        lightboxImage.src = "";
-        lightboxImage.classList.remove("zoomed");
-        document.body.style.overflow = "";
-    }
-
-    document.addEventListener("click", (e) => {
-        const clickedImage = e.target.closest(".clickable-slide-image");
-        if (clickedImage) {
-            openLightbox(clickedImage.getAttribute("src"), clickedImage.getAttribute("alt"));
-        }
-    });
-
-    lightboxImage.addEventListener("click", (e) => {
-        e.stopPropagation();
-        lightboxImage.classList.toggle("zoomed");
-    });
-
-    lightboxClose.addEventListener("click", (e) => {
-        e.stopPropagation();
-        closeLightbox();
-    });
-
-    lightbox.addEventListener("click", (e) => {
-        if (e.target === lightbox) {
-            closeLightbox();
-        }
-    });
-
-    document.addEventListener("keydown", (e) => {
-        if (!lightbox.classList.contains("hidden") && e.key === "Escape") {
-            closeLightbox();
-        }
-    });
-});
-</script>
 
 
 
