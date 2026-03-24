@@ -59,64 +59,50 @@
     .lightbox-content {
         position: relative;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        justify-content: center;
         max-width: 95vw;
         max-height: 95vh;
     }
 
-    .lightbox-img-wrap {
-        overflow: auto;
-        max-width: 95vw;
-        max-height: 80vh;
-        border-radius: 1rem;
-    }
-
     .lightbox img {
-        max-width: 100%;
-        max-height: 80vh;
+        max-width: 90vw;
+        max-height: 85vh;
         object-fit: contain;
         display: block;
-        margin: 0 auto;
         border-radius: 1rem;
-        transition: transform 0.2s ease;
-        transform-origin: center center;
         background: white;
+        transition: transform 0.25s ease;
+        cursor: zoom-in;
     }
 
-    .lightbox-controls {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .lightbox-controls button,
-    .lightbox-close {
-        border: none;
-        background: white;
-        color: #111827;
-        padding: 0.75rem 1rem;
-        border-radius: 9999px;
-        font-size: 1rem;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        transition: 0.2s ease;
-    }
-
-    .lightbox-controls button:hover,
-    .lightbox-close:hover {
-        background: #3b82f6;
-        color: white;
+    .lightbox img.zoomed {
+        transform: scale(1.75);
+        cursor: zoom-out;
     }
 
     .lightbox-close {
         position: absolute;
-        top: -0.5rem;
-        right: 0;
-        font-size: 1.25rem;
+        top: -0.75rem;
+        right: -0.75rem;
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 9999px;
+        background: white;
+        color: #111827;
+        font-size: 1.4rem;
+        font-weight: bold;
         line-height: 1;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        transition: 0.2s ease;
+        z-index: 2;
+    }
+
+    .lightbox-close:hover {
+        background: #ef4444;
+        color: white;
     }
 </style>
     
@@ -326,12 +312,12 @@
             <section class="py-20 bg-white text-black">
                 <div class="max-w-7xl mx-auto px-4">
 
-                    <!-- Slider Wrapper -->
-                    <div class="slider-wrapper w-full flex flex-col items-center justify-center mx-auto">
+                    <!--  Wrapper -->
+                    <div class="-wrapper w-full flex flex-col items-center justify-center mx-auto">
 
-                        <!-- Slider Container -->
+                        <!--  Container -->
                         <div class="w-full max-w-6xl overflow-hidden mx-auto">
-                            <div class="slider flex items-center justify-center"></div>
+                            <div class=" flex items-center justify-center"></div>
                         </div>
 
                         <!-- Controls -->
@@ -865,20 +851,11 @@ ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><
     </script>
 
 
-    <!-- Slider Script -->
+    <!--  Script -->
     <div id="image-lightbox" class="lightbox hidden">
     <div class="lightbox-content">
         <button id="lightbox-close" class="lightbox-close" aria-label="Close enlarged image">&times;</button>
-
-        <div class="lightbox-img-wrap">
-            <img id="lightbox-image" src="" alt="Expanded product image" />
-        </div>
-
-        <div class="lightbox-controls">
-            <button id="zoom-in" type="button">Zoom In</button>
-            <button id="zoom-out" type="button">Zoom Out</button>
-            <button id="zoom-reset" type="button">Reset</button>
-        </div>
+        <img id="lightbox-image" src="" alt="Expanded product image" />
     </div>
 </div>
     <script>
@@ -923,25 +900,14 @@ ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><
         prevBtn.addEventListener("click", () => tinySliderInstance.goTo("prev"));
         nextBtn.addEventListener("click", () => tinySliderInstance.goTo("next"));
 
-        // Lightbox elements
         const lightbox = document.getElementById("image-lightbox");
         const lightboxImage = document.getElementById("lightbox-image");
         const lightboxClose = document.getElementById("lightbox-close");
-        const zoomInBtn = document.getElementById("zoom-in");
-        const zoomOutBtn = document.getElementById("zoom-out");
-        const zoomResetBtn = document.getElementById("zoom-reset");
-
-        let currentZoom = 1;
-
-        function updateZoom() {
-            lightboxImage.style.transform = `scale(${currentZoom})`;
-        }
 
         function openLightbox(src, alt) {
             lightboxImage.src = src;
             lightboxImage.alt = alt || "Expanded product image";
-            currentZoom = 1;
-            updateZoom();
+            lightboxImage.classList.remove("zoomed");
             lightbox.classList.remove("hidden");
             document.body.style.overflow = "hidden";
         }
@@ -949,8 +915,7 @@ ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><
         function closeLightbox() {
             lightbox.classList.add("hidden");
             lightboxImage.src = "";
-            currentZoom = 1;
-            updateZoom();
+            lightboxImage.classList.remove("zoomed");
             document.body.style.overflow = "";
         }
 
@@ -961,19 +926,8 @@ ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><
             }
         });
 
-        zoomInBtn.addEventListener("click", () => {
-            currentZoom = Math.min(currentZoom + 0.25, 3);
-            updateZoom();
-        });
-
-        zoomOutBtn.addEventListener("click", () => {
-            currentZoom = Math.max(currentZoom - 0.25, 0.75);
-            updateZoom();
-        });
-
-        zoomResetBtn.addEventListener("click", () => {
-            currentZoom = 1;
-            updateZoom();
+        lightboxImage.addEventListener("click", () => {
+            lightboxImage.classList.toggle("zoomed");
         });
 
         lightboxClose.addEventListener("click", closeLightbox);
@@ -987,18 +941,8 @@ ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><
         document.addEventListener("keydown", (e) => {
             if (lightbox.classList.contains("hidden")) return;
 
-            if (e.key === "Escape") closeLightbox();
-            if (e.key === "+" || e.key === "=") {
-                currentZoom = Math.min(currentZoom + 0.25, 3);
-                updateZoom();
-            }
-            if (e.key === "-") {
-                currentZoom = Math.max(currentZoom - 0.25, 0.75);
-                updateZoom();
-            }
-            if (e.key === "0") {
-                currentZoom = 1;
-                updateZoom();
+            if (e.key === "Escape") {
+                closeLightbox();
             }
         });
     });
