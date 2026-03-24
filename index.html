@@ -421,22 +421,7 @@
         const bg2 = document.getElementById('bg2');
         let showingBg1 = true;
 
-        setInterval(() => {
-            current = (current + 1) % images.length;
-            const nextImage = images[current];
-
-            if (showingBg1) {
-                bg2.style.backgroundImage = `url('${nextImage}')`;
-                bg2.style.opacity = '1';
-                bg1.style.opacity = '0';
-            } else {
-                bg1.style.backgroundImage = `url('${nextImage}')`;
-                bg1.style.opacity = '1';
-                bg2.style.opacity = '0';
-            }
-
-            showingBg1 = !showingBg1;
-        }, 5000);
+    
 
         // Update footer year
         document.getElementById('year').textContent = new Date().getFullYear();
