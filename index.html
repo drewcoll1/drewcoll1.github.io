@@ -315,10 +315,10 @@
                     <!--  Wrapper -->
                     <div class="-wrapper w-full flex flex-col items-center justify-center mx-auto">
 
-                        <!--  Container -->
-                        <div class="w-full max-w-6xl overflow-hidden mx-auto">
-                            <div class=" flex items-center justify-center"></div>
-                        </div>
+                        <!-- Container -->
+<div class="w-full max-w-6xl overflow-hidden mx-auto">
+    <div class="slider"></div>
+</div>
 
                         <!-- Controls -->
                         <div id="controls" class="flex gap-4 mt-6">
@@ -426,11 +426,11 @@
             const nextImage = images[current];
 
             if (showingBg1) {
-                bg2.style.backgroundImage = url('${nextImage}');
+                bg2.style.backgroundImage = `url('${nextImage}')`;
                 bg2.style.opacity = '1';
                 bg1.style.opacity = '0';
             } else {
-                bg1.style.backgroundImage = url('${nextImage}');
+                bg1.style.backgroundImage = `url('${nextImage}')`;
                 bg1.style.opacity = '1';
                 bg2.style.opacity = '0';
             }
@@ -442,61 +442,8 @@
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 
-    <script>
-        const carwrapper = document.querySelector('.carousel-wrapper');
-        const itemsContainer = document.getElementById('carouselItems');
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
-
-        function scrollByAmount(amount) {
-            // Pause animation temporarily
-            wrapper.classList.add('paused');
-
-            carwrapper.scrollBy({
-                left: amount,
-                behavior: 'smooth'
-            });
-
-            // Resume after short delay
-            setTimeout(() => {
-                wrapper.classList.remove('paused');
-            }, 1000);
-        }
-
-        nextBtn.addEventListener('click', () => scrollByAmount(200));
-        prevBtn.addEventListener('click', () => scrollByAmount(-200));
-    </script>
-    <script>
-        const carouselTrack = document.querySelector('#carouselItems');
-        const itemCount = carouselTrack.children.length / 2;
-
-        let animationId;
-        let position = 0;
-
-        function startLoop() {
-            function step() {
-                position += 1;
-                carouselTrack.style.transform = `translateX(-${position}px)`;
-
-                // When scrolled halfway, reset without snapping
-                if (position >= carouselTrack.scrollWidth / 2) {
-                    position = 0;
-                    carouselTrack.style.transform = translateX(0);
-                }
-
-                animationId = requestAnimationFrame(step);
-            }
-            step();
-        }
-
-        // Stop animation on hover
-        const wrapper = document.querySelector('.carousel-wrapper');
-        wrapper.addEventListener('mouseenter', () => cancelAnimationFrame(animationId));
-        wrapper.addEventListener('mouseleave', () => startLoop());
-
-        // Start the loop
-        startLoop();
-    </script>
+    
+   
 
     <script>
         const menuToggle = document.getElementById('menu-toggle');
@@ -858,94 +805,93 @@ ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><
         <img id="lightbox-image" src="" alt="Expanded product image" />
     </div>
 </div>
-    <script>
-    window.addEventListener("DOMContentLoaded", () => {
-        const slider = document.querySelector(".slider");
+   <script>
+window.addEventListener("DOMContentLoaded", () => {
+    const slider = document.querySelector(".slider");
+    if (!slider) return;
 
-        const carObject = [
-            { img: "./images/50.jpeg" },
-            { img: "./images/shotskis.jpg" },
-            { img: "./images/51.jpeg" },
-            { img: "./images/52.jpeg" }
-        ];
+    const carObject = [
+        { img: "./images/50.jpeg" },
+        { img: "./images/shotskis.jpg" },
+        { img: "./images/51.jpeg" },
+        { img: "./images/52.jpeg" }
+    ];
 
-        let cars = "";
-        for (let car of carObject) {
-            cars += `
-                <div class="slide">
-                    <img src="${car.img}" alt="Showcase image" class="clickable-slide-image" />
-                </div>
-            `;
+    slider.innerHTML = carObject.map(car => `
+        <div class="slide">
+            <img src="${car.img}" alt="Showcase image" class="clickable-slide-image" />
+        </div>
+    `).join("");
+
+    const tinySliderInstance = tns({
+        container: ".slider",
+        items: 1,
+        gutter: 15,
+        slideBy: 1,
+        nav: false,
+        speed: 400,
+        controls: false,
+        mouseDrag: true,
+        responsive: {
+            640: { items: 2 },
+            1024: { items: 3 }
         }
-
-        slider.innerHTML = cars;
-
-        const tinySliderInstance = tns({
-            container: ".slider",
-            items: 1,
-            gutter: 15,
-            slideBy: 1,
-            nav: false,
-            speed: 400,
-            controls: false,
-            responsive: {
-                640: { items: 2 },
-                1024: { items: 3 }
-            }
-        });
-
-        const prevBtn = document.querySelector(".previous");
-        const nextBtn = document.querySelector(".next");
-
-        prevBtn.addEventListener("click", () => tinySliderInstance.goTo("prev"));
-        nextBtn.addEventListener("click", () => tinySliderInstance.goTo("next"));
-
-        const lightbox = document.getElementById("image-lightbox");
-        const lightboxImage = document.getElementById("lightbox-image");
-        const lightboxClose = document.getElementById("lightbox-close");
-
-        function openLightbox(src, alt) {
-            lightboxImage.src = src;
-            lightboxImage.alt = alt || "Expanded product image";
-            lightboxImage.classList.remove("zoomed");
-            lightbox.classList.remove("hidden");
-            document.body.style.overflow = "hidden";
-        }
-
-        function closeLightbox() {
-            lightbox.classList.add("hidden");
-            lightboxImage.src = "";
-            lightboxImage.classList.remove("zoomed");
-            document.body.style.overflow = "";
-        }
-
-        document.addEventListener("click", (e) => {
-            const clickedImage = e.target.closest(".clickable-slide-image");
-            if (clickedImage) {
-                openLightbox(clickedImage.src, clickedImage.alt);
-            }
-        });
-
-        lightboxImage.addEventListener("click", () => {
-            lightboxImage.classList.toggle("zoomed");
-        });
-
-        lightboxClose.addEventListener("click", closeLightbox);
-
-        lightbox.addEventListener("click", (e) => {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (lightbox.classList.contains("hidden")) return;
-
-            if (e.key === "Escape") {
-                closeLightbox();
-            }
-        });
     });
+
+    const prevBtn = document.querySelector(".previous");
+    const nextBtn = document.querySelector(".next");
+
+    prevBtn?.addEventListener("click", () => tinySliderInstance.goTo("prev"));
+    nextBtn?.addEventListener("click", () => tinySliderInstance.goTo("next"));
+
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+    const lightboxClose = document.getElementById("lightbox-close");
+
+    function openLightbox(src, alt) {
+        lightboxImage.src = src;
+        lightboxImage.alt = alt || "Expanded product image";
+        lightboxImage.classList.remove("zoomed");
+        lightbox.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+        lightbox.classList.add("hidden");
+        lightboxImage.src = "";
+        lightboxImage.classList.remove("zoomed");
+        document.body.style.overflow = "";
+    }
+
+    document.addEventListener("click", (e) => {
+        const clickedImage = e.target.closest(".clickable-slide-image");
+        if (clickedImage) {
+            openLightbox(clickedImage.getAttribute("src"), clickedImage.getAttribute("alt"));
+        }
+    });
+
+    lightboxImage.addEventListener("click", (e) => {
+        e.stopPropagation();
+        lightboxImage.classList.toggle("zoomed");
+    });
+
+    lightboxClose.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeLightbox();
+    });
+
+    lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (!lightbox.classList.contains("hidden") && e.key === "Escape") {
+            closeLightbox();
+        }
+    });
+});
 </script>
 
 
