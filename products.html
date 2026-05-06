@@ -81,6 +81,14 @@
     border-color: #60a5fa;
     box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 }
+        .category-btn:hover {
+    color: inherit;
+    border-color: #e5e7eb;
+}
+
+.category-btn.active:hover {
+    border-color: #60a5fa;
+}
     </style>
 </head>
 
@@ -310,31 +318,45 @@
                             </p>
                         </div>
 
-                        <div class="flex flex-nowrap gap-3 overflow-x-auto whitespace-nowrap pb-2">
-                            <button
-                                class="category-btn active border border-blue-400 bg-blue-400 text-white px-5 py-2 rounded-full font-semibold transition"
-                                data-category="all">All</button>
+                       <div class="grid grid-cols-6 gap-3 w-full max-w-4xl">
 
-                            <button
-                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
-                                data-category="headwear">Headwear</button>
+    <button
+        class="category-btn active border border-blue-400 bg-blue-400 text-white px-5 py-2 rounded-full font-semibold transition"
+        data-category="all">
+        All
+    </button>
 
-                            <button
-                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
-                                data-category="apparel">Apparel</button>
+    <button
+        class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
+        data-category="headwear">
+        Headwear
+    </button>
 
-                            <button
-                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
-                                data-category="tradeshows">Tradeshows</button>
+    <button
+        class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
+        data-category="apparel">
+        Apparel
+    </button>
 
-                            <button
-                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
-                                data-category="promotions">Promotions</button>
+    <button
+        class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
+        data-category="tradeshows">
+        Tradeshows
+    </button>
 
-                            <button
-                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
-                                data-category="awards">Awards</button>
-                        </div>
+    <button
+        class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
+        data-category="promotions">
+        Promotions
+    </button>
+
+    <button
+        class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
+        data-category="awards">
+        Awards
+    </button>
+
+</div>
                     </div>
 
                     <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
