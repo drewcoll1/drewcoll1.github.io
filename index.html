@@ -629,103 +629,205 @@
     </script>
 
 
-    <div id="cart-panel"
-        class="fixed bottom-0 right-0 bg-white w-full max-w-md h-[30rem] shadow-2xl border-l border-t z-50 rounded-tl-2xl p-6 hidden overflow-y-auto animate-fade-in">
+<div id="cart-panel"
+    class="fixed bottom-0 right-0 bg-white w-full max-w-lg h-[34rem] shadow-2xl border border-gray-200 z-50 rounded-tl-3xl hidden overflow-hidden">
 
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="brand-font text-3xl text-gray-800">Saved Catalogs</h3>
+    <div class="bg-gradient-to-r from-gray-950 to-gray-800 text-white px-6 py-5">
+        <div class="flex items-start justify-between gap-4">
+            <div>
+                <p class="text-blue-400 text-sm uppercase tracking-widest font-semibold">Prime Promotions</p>
+                <h3 class="brand-font text-4xl leading-none mt-1">Saved Quote Items</h3>
+                <p class="text-sm text-gray-300 mt-2">
+                    Review your saved catalogs and send them to our team.
+                </p>
+            </div>
+
             <button id="close-cart"
-                class="text-gray-400 hover:text-red-500 text-lg font-bold focus:outline-none">&times;</button>
+                class="w-10 h-10 rounded-full bg-white/10 hover:bg-red-500 text-white flex items-center justify-center transition">
+                &times;
+            </button>
         </div>
-
-        <!-- Saved Items -->
-        <ul id="cart-list" class="space-y-4 text-md text-gray-800">
-            <!-- Items will be rendered here -->
-        </ul>
-
-        <!-- CTA Message -->
-        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
-            <div class="text-blue-500">
-                <!-- <svg xmlns=http://www.w3.org/2000/svg class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg> -->
-            </div>
-            <div class="text-sm text-gray-700 leading-snug">
-                <span class="brand-font text-xl block text-blue-500">Let’s get going!</span>
-                Click the mail icon to email your saved catalogs and product notes to our team so we can help
-                bring
-                your vision to life.
-            </div>
-            <div class="mt-4 flex justify-center">
-                <button id="send-email"
-                    class="mt-3 text-blue-500 hover:text-blue-700 transition-transform hover:scale-110"
-                    title="Email My Saved Catalogs">
-                    <svg xmlns=http://www.w3.org/2000/svg class="w-8 h-8" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Email Icon -->
-
-
-
-
     </div>
 
+    <div class="px-6 py-4 bg-blue-50 border-b border-blue-100">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Current Request</p>
+                <p class="brand-font text-2xl text-gray-900">
+                    <span id="cart-total-label">0</span> Saved Catalogs
+                </p>
+            </div>
 
-    <script>
-        const cartPanel = document.getElementById('cart-panel');
-        const cartList = document.getElementById('cart-list');
-        const cartIcon = document.getElementById('cart-icon');
+            <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg">
+                <i class="fa-solid fa-cart-shopping text-xl"></i>
+            </div>
+        </div>
+    </div>
 
-        cartIcon.addEventListener('click', () => {
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-            cartList.innerHTML = '';
+    <div class="h-[16.5rem] overflow-y-auto px-6 py-5 bg-gray-50">
+        <ul id="cart-list" class="space-y-4 text-md text-gray-800"></ul>
+    </div>
 
-            if (cart.length === 0) {
-                cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
-            } else {
-                cart.forEach((item, index) => {
-                    const li = document.createElement('li');
-                    li.className = "border-b pb-2 mb-2 relative";
-                    li.innerHTML = `
-<a href="${item.link}" target="_blank"
-  class="brand-font text-lg text-blue-600 hover:text-blue-800 underline block mb-1">
- ${item.name}
-</a>
-${item.productLinks ? formatLinks(item.productLinks) : ''}
-${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
-<button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
-`;
+    <div class="px-6 py-5 bg-white border-t border-gray-200">
+        <div class="bg-gray-950 rounded-2xl p-5 text-white shadow-xl">
+            <p class="brand-font text-3xl leading-none">Ready to get started?</p>
+            <p class="text-sm text-gray-300 mt-2 mb-4">
+                Send your saved catalogs, product links, and notes directly to our team.
+            </p>
 
-                    cartList.appendChild(li);
-                });
+            <button id="send-email"
+                class="w-full bg-blue-400 hover:bg-blue-500 text-white brand-font text-2xl py-3 rounded-full shadow-lg transition flex items-center justify-center gap-3">
+                <i class="fa-solid fa-envelope"></i>
+                Email My Saved Items
+            </button>
+        </div>
+    </div>
+</div>
 
-                // Attach remove handlers
-                document.querySelectorAll('.remove-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-                        updatedCart.splice(index, 1);
-                        localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
 
-                        // Refresh cart
-                        cartIcon.click(); // close
-                        cartIcon.click(); // reopen
-                    });
-                });
-            }
+   <script>
+    const cartPanel = document.getElementById('cart-panel');
+    const cartList = document.getElementById('cart-list');
+    const cartIcon = document.getElementById('cart-icon');
+    const closeCartBtn = document.getElementById('close-cart');
+    const cartTotalLabel = document.getElementById('cart-total-label');
 
-            cartPanel.classList.toggle('hidden');
+    function getCart() {
+        return JSON.parse(localStorage.getItem('catalogCart')) || [];
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem('catalogCart', JSON.stringify(cart));
+    }
+
+    function updateCartCount() {
+        const cart = getCart();
+        cartCount.textContent = cart.length;
+        cartCount.classList.toggle('hidden', cart.length === 0);
+
+        if (cartTotalLabel) {
+            cartTotalLabel.textContent = cart.length;
+        }
+    }
+
+    function updateCartList() {
+        const cart = getCart();
+        cartList.innerHTML = '';
+
+        if (cartTotalLabel) {
+            cartTotalLabel.textContent = cart.length;
+        }
+
+        if (cart.length === 0) {
+            cartList.innerHTML = `
+                <li class="text-center py-10">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-white shadow flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-cart-shopping text-2xl text-gray-300"></i>
+                    </div>
+                    <p class="brand-font text-3xl text-gray-800">No saved catalogs yet</p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Save catalogs you like and they will show up here.
+                    </p>
+                </li>
+            `;
+            return;
+        }
+
+        cart.forEach((item, index) => {
+            const li = document.createElement('li');
+
+            li.className = "bg-white border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition relative";
+
+            li.innerHTML = `
+                <div class="flex items-start justify-between gap-4">
+                    <div class="pr-6">
+                        <p class="text-xs uppercase tracking-widest text-blue-500 font-semibold mb-1">
+                            Saved Catalog
+                        </p>
+
+                        <a href="${item.link}" target="_blank"
+                            class="brand-font text-2xl text-gray-900 hover:text-blue-500 transition leading-none block">
+                            ${item.name}
+                        </a>
+                    </div>
+
+                    <button class="remove-btn w-8 h-8 rounded-full bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition flex items-center justify-center"
+                        data-index="${index}" title="Remove item">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                ${item.productLinks ? `
+                    <div class="mt-4 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-2">
+                            Product Links
+                        </p>
+                        <div class="text-sm">
+                            ${formatLinks(item.productLinks)}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${item.notes ? `
+                    <div class="mt-3 bg-gray-50 border border-gray-100 rounded-xl p-3">
+                        <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-1">
+                            Notes
+                        </p>
+                        <p class="text-sm text-gray-700 whitespace-pre-line">${item.notes}</p>
+                    </div>
+                ` : ''}
+            `;
+
+            cartList.appendChild(li);
         });
-    </script>
+
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                const updatedCart = getCart();
+
+                updatedCart.splice(index, 1);
+                saveCart(updatedCart);
+
+                updateCartCount();
+                updateCartList();
+            });
+        });
+    }
+
+    cartIcon.addEventListener('click', () => {
+        updateCartList();
+        cartPanel.classList.remove('hidden');
+    });
+
+    closeCartBtn.addEventListener('click', () => {
+        cartPanel.classList.add('hidden');
+    });
+
+    document.getElementById('send-email').addEventListener('click', () => {
+        const cart = getCart();
+
+        if (cart.length === 0) {
+            alert("Your saved list is empty!");
+            return;
+        }
+
+        let body = "Here are the catalogs I'm interested in:\n\n";
+
+        cart.forEach(item => {
+            body += `Catalog: ${item.name}\n`;
+            if (item.link) body += `Catalog Link: ${item.link}\n`;
+            if (item.productLinks) body += `Product Links:\n${item.productLinks}\n`;
+            if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
+            body += `\n`;
+        });
+
+        const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Catalogs&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoLink;
+    });
+
+    updateCartCount();
+</script>
 
     <script>
         document.getElementById('send-email').addEventListener('click', () => {
