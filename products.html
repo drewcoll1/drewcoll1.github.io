@@ -22,15 +22,49 @@
 
         body {
             font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
-
 
         .brand-font {
             font-family: "Bebas Neue", sans-serif;
-
         }
-    </style>
-    <style>
+
+        .site-shell {
+            transition: padding-right 0.35s ease;
+        }
+
+        @media (min-width: 1024px) {
+            body.cart-open .site-shell {
+                padding-right: 420px;
+            }
+        }
+
+        #cart-panel {
+            transform: translateX(100%);
+            transition: transform 0.35s ease;
+        }
+
+        body.cart-open #cart-panel {
+            transform: translateX(0);
+        }
+
+        #cart-backdrop {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        body.cart-open #cart-backdrop {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @media (min-width: 1024px) {
+            #cart-backdrop {
+                display: none;
+            }
+        }
+
         .menu-open .menu-line:nth-child(1) {
             transform: translateY(14px) rotate(45deg);
         }
@@ -45,719 +79,723 @@
     </style>
 </head>
 
-<body class="text-gray-900 bg-white min-h-screen flex flex-col">
-    <div class="flex-grow">
+<body class="text-gray-900 bg-white min-h-screen">
 
-        <!--  Fixed Background Slideshow (Behind All Content) -->
-        <div class="fixed top-0 left-0 w-full h-screen -z-10 pointer-events-none">
-            <div id="bg1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
-                style="background-image: url('/images/test2.jpg'); z-index: 1;"></div>
-            <div id="bg2" class="absolute inset-0 bg-cover bg-center opacity-0 transition-opacity duration-1000"
-                style="background-image: url('/images/hero-bg2.png'); z-index: 2;"></div>
+    <div id="cart-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80]"></div>
+
+    <aside id="cart-panel"
+        class="fixed top-0 right-0 h-screen w-full max-w-[420px] bg-white z-[90] shadow-2xl border-l border-blue-100 flex flex-col">
+
+        <div class="relative px-6 py-6 border-b border-blue-100 bg-white">
+            <div class="absolute top-0 left-0 w-full h-2 bg-blue-400"></div>
+
+            <div class="flex items-start justify-between gap-4 pt-2">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-14 h-14 rounded-full bg-white border-4 border-blue-100 shadow-md flex items-center justify-center shrink-0">
+                        <img src="/images/logo.png" alt="Prime Promotions Logo"
+                            class="w-10 h-10 object-contain rounded-full">
+                    </div>
+
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.22em] text-blue-400 font-bold">
+                            Prime Promotions
+                        </p>
+                        <h3 class="brand-font text-4xl leading-none text-gray-950 mt-1">
+                            Saved Items
+                        </h3>
+                        <p class="text-sm text-gray-500 mt-1">
+                            Your selected catalogs are ready to send.
+                        </p>
+                    </div>
+                </div>
+
+                <button id="close-cart"
+                    class="w-10 h-10 rounded-full bg-gray-100 hover:bg-blue-400 hover:text-white text-gray-600 flex items-center justify-center transition shadow-sm">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
         </div>
 
-        <!-- Navigation Bar -->
-        <!-- Navigation Bar -->
-        <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
-            <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
-                <a href="index.html" class="flex items-center gap-4">
-                    <img src="/images/logo.png" alt="Prime Promotions Logo"
-                        class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300" />
-                    <span
-                        class="hidden lg:flex flex-col text-black text-4xl tracking-wide brand-font leading-tight">
-                        <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
-                        <span class='text-xl text-blue-400'>(574) 202-7050</span>
-                        <span class='text-xl text-blue-400 italic'>sales@primepromollc.com</span>
-                    </span>
-                </a>
-                <button id="menu-toggle" class="md:hidden relative w-8 h-8 focus:outline-none z-50">
-                    <span
-                        class="menu-line block absolute left-0 top-0 w-8 h-0.5 bg-black transition-transform duration-300"></span>
-                    <span
-                        class="menu-line block absolute left-0 top-3.5 w-8 h-0.5 bg-black transition-opacity duration-300"></span>
-                    <span
-                        class="menu-line block absolute left-0 top-7 w-8 h-0.5 bg-black transition-transform duration-300"></span>
+        <div class="px-6 py-4 bg-blue-50/80 border-b border-blue-100">
+            <div class="flex items-center justify-between gap-4">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold">
+                        Current Request
+                    </p>
+                    <p class="brand-font text-3xl text-gray-950 leading-none mt-1">
+                        <span id="cart-total-label">0</span> Saved Catalogs
+                    </p>
+                </div>
+
+                <div
+                    class="px-4 py-2 rounded-full bg-white border border-blue-100 text-blue-500 shadow-sm text-sm font-semibold">
+                    Quote Ready
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-5 py-5 bg-white">
+            <ul id="cart-list" class="space-y-4 text-md text-gray-800"></ul>
+        </div>
+
+        <div class="px-5 py-5 bg-gray-50 border-t border-gray-200">
+            <div class="rounded-3xl bg-white border border-blue-100 p-5 shadow-sm">
+                <p class="brand-font text-3xl text-gray-950 leading-none">
+                    Send to our team
+                </p>
+                <p class="text-sm text-gray-500 mt-1 mb-4">
+                    Email your saved catalogs, product links, and notes.
+                </p>
+
+                <button id="send-email"
+                    class="w-full bg-blue-400 hover:bg-blue-500 text-white brand-font text-2xl px-6 py-3 rounded-full shadow-lg transition flex items-center justify-center gap-3 whitespace-nowrap">
+                    <i class="fa-solid fa-envelope"></i>
+                    Send Request
                 </button>
+            </div>
+        </div>
+    </aside>
 
-                <nav id="nav-menu"
-                    class="hidden fixed top-full left-0 w-full h-screen bg-white text-black flex-col justify-start items-center text-3xl space-y-10 z-50 transition-all duration-500 ease-in-out pt-5 md:relative md:flex md:h-auto md:bg-transparent md:flex-row md:space-y-0 md:space-x-10 md:text-black md:text-lg md:justify-end md:pt-0">
+    <div class="site-shell min-h-screen flex flex-col">
+        <div class="flex-grow">
 
-                    <a href="index.html" class="relative group">
-                        <span
-                            class="text-black hover:text-blue-400 transition brand-font text-4xl mt-[2px] inline-block">Home</span>
-                        <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </a>
+            <div class="fixed top-0 left-0 w-full h-screen -z-10 pointer-events-none">
+                <div id="bg1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
+                    style="background-image: url('/images/test2.jpg'); z-index: 1;"></div>
+                <div id="bg2" class="absolute inset-0 bg-cover bg-center opacity-0 transition-opacity duration-1000"
+                    style="background-image: url('/images/hero-bg2.png'); z-index: 2;"></div>
+            </div>
 
-                    <a href="products.html" class="relative group">
-                        <span class="text-blue-400 brand-font text-4xl">Catalogs</span>
-                        <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
-                    </a>
-                    <a href="shopify.html" class="relative group">
-                        <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Shopify</span>
-                        <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </a>
-                    <a href="contact.html" class="relative group">
-                        <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Contact</span>
-                        <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </a>
-
-                    <a id="cart-icon" class="relative group cursor-pointer">
-                        <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2"><i
-                                class="fas fa-shopping-cart"></i></span>
-                        <span id="cart-count"
-                            class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
-                    </a>
-                    <!-- <a href="mailto:sales@primepromollc.com" class="text-4xl text-gray-700 hover:text-blue-600">
-                        <i class="fa-solid fa-envelope -translate-y-0.5"></i>
-                    </a> -->
-
-                    <!-- Logo & Brand Info for Mobile View (at bottom) -->
-                    <div class="flex flex-col items-center py-1 md:hidden">
+            <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
+                <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
+                    <a href="index.html" class="flex items-center gap-4">
                         <img src="/images/logo.png" alt="Prime Promotions Logo"
-                            class="h-36 w-auto rounded-full border-4 border-white shadow-xl mb-4" />
-                        <span class="text-2xl text-blue-400 brand-font">(574) 202-7050<span
-                                class="text-black">|</span>
-                            sales@primepromollc.com</span>
-                        
-<span class="text-xl text-blue-400 brand-font">
-    514 S Main Street, Middlebury, IN 46540
-</span>
+                            class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300" />
+                        <span class="hidden lg:flex flex-col text-black text-4xl tracking-wide brand-font leading-tight">
+                            <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
+                            <span class="text-xl text-blue-400">(574) 202-7050</span>
+                            <span class="text-xl text-blue-400 italic">sales@primepromollc.com</span>
+                        </span>
+                    </a>
 
+                    <button id="menu-toggle" class="md:hidden relative w-8 h-8 focus:outline-none z-50">
+                        <span
+                            class="menu-line block absolute left-0 top-0 w-8 h-0.5 bg-black transition-transform duration-300"></span>
+                        <span
+                            class="menu-line block absolute left-0 top-3.5 w-8 h-0.5 bg-black transition-opacity duration-300"></span>
+                        <span
+                            class="menu-line block absolute left-0 top-7 w-8 h-0.5 bg-black transition-transform duration-300"></span>
+                    </button>
+
+                    <nav id="nav-menu"
+                        class="hidden fixed top-full left-0 w-full h-screen bg-white text-black flex-col justify-start items-center text-3xl space-y-10 z-50 transition-all duration-500 ease-in-out pt-5 md:relative md:flex md:h-auto md:bg-transparent md:flex-row md:space-y-0 md:space-x-10 md:text-black md:text-lg md:justify-end md:pt-0">
+
+                        <a href="index.html" class="relative group">
+                            <span
+                                class="text-black hover:text-blue-400 transition brand-font text-4xl mt-[2px] inline-block">Home</span>
+                            <span
+                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+
+                        <a href="products.html" class="relative group">
+                            <span class="text-blue-400 brand-font text-4xl">Catalogs</span>
+                            <span
+                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
+                        </a>
+
+                        <a href="shopify.html" class="relative group">
+                            <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Shopify</span>
+                            <span
+                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+
+                        <a href="contact.html" class="relative group">
+                            <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Contact</span>
+                            <span
+                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+
+                        <a id="cart-icon" class="relative group cursor-pointer">
+                            <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2">
+                                <i class="fas fa-shopping-cart"></i>
+                            </span>
+                            <span id="cart-count"
+                                class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
+                        </a>
+
+                        <div class="flex flex-col items-center py-1 md:hidden">
+                            <img src="/images/logo.png" alt="Prime Promotions Logo"
+                                class="h-36 w-auto rounded-full border-4 border-white shadow-xl mb-4" />
+                            <span class="text-2xl text-blue-400 brand-font">
+                                (574) 202-7050<span class="text-black">|</span>
+                                sales@primepromollc.com
+                            </span>
+
+                            <span class="text-xl text-blue-400 brand-font">
+                                514 S Main Street, Middlebury, IN 46540
+                            </span>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+
+            <section
+                class="relative min-h-[60vh] flex flex-col items-center justify-center px-6 py-24 text-white z-10 bg-cover bg-center">
+                <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 z-0 pointer-events-none"></div>
+
+                <div class="relative z-10 flex flex-col items-center w-full max-w-7xl text-center">
+                    <h1 class="text-6xl font-extrabold brand-font mb-8 drop-shadow-xl">Explore Our Product Catalogs</h1>
+
+                    <div
+                        class="bg-white/5 rounded-2xl p-4 w-full max-w-6xl mx-auto text-white border border-white/10 backdrop-blur-xl">
+                        <div class="grid grid-cols-1 sm:grid-cols-3">
+
+                            <div class="flex flex-col items-center px-6 py-8 text-center cursor-default">
+                                <h2 class="text-4xl font-bold brand-font mb-2 text-white">Search Catalogs</h2>
+                                <svg class="w-14 h-14 text-white block mx-auto" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 21l-4.35-4.35m1.45-4.65a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                <p class="text-white brand-font text-xl mt-4">
+                                    Click a category below to explore catalogs by product type.
+                                </p>
+                            </div>
+
+                            <div class="flex flex-col items-center px-6 py-8 text-center cursor-default">
+                                <h2 class="text-4xl font-bold brand-font mb-3 text-white">Save Favorites</h2>
+                                <i class="fas fa-cart-plus text-white text-5xl mt-1"></i>
+                                <p class="text-white brand-font text-xl mt-4">
+                                    Save catalogs you enjoy, add product links and notes for later.
+                                </p>
+                            </div>
+
+                            <div class="flex flex-col items-center px-6 py-8 text-center cursor-default">
+                                <h2 class="text-4xl font-bold brand-font mb-2 text-white">Contact Us</h2>
+                                <svg class="w-14 h-14 text-white block mx-auto" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" role="img"
+                                    aria-label="Email icon">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p class="text-white brand-font text-xl mt-4">
+                                    Send your saved selections to our team when you're ready.
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
-                </nav>
-            </div>
-        </header>
+                </div>
+            </section>
 
-        <!-- Hero Section -->
-        <section
-            class="relative min-h-[60vh] flex flex-col items-center justify-center px-6 py-24 text-white z-10 bg-cover bg-center">
-            <!-- Hero Overlay -->
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 z-0 pointer-events-none"></div>
+            <section class="py-20 px-6 bg-white">
 
-            <!-- Hero Content Wrapper -->
-            <div class="relative z-10 flex flex-col items-center w-full max-w-7xl text-center">
-
-                <!-- Headline + Subtext -->
-                <h1 class="text-6xl font-extrabold brand-font mb-8 drop-shadow-xl">Explore Our Product Catalogs</h1>
-                <!-- <p class="brand-font text-2xl text-white max-w-2xl mb-12">Explore branded product collections from
-                    trusted
-                    suppliers. Save your favorites and let us bring your vision to life.</p> -->
-
-                <!-- Cards Grid (same level) -->
-                <!-- Unified Info Section -->
-                <!-- Unified Info Section - No Dividers -->
-                <div
-                    class="bg-white/5 rounded-2xl p-4 w-full max-w-6xl mx-auto text-white border border-white/10 backdrop-blur-xl">
-                    <div class="grid grid-cols-1 sm:grid-cols-3">
-
-                        <!-- Search Catalogs -->
-                        <div class="flex flex-col items-center px-6 py-8 text-center cursor-default">
-                            <h2 class="text-4xl font-bold brand-font mb-2 text-white">Search Catalogs</h2>
-                            <svg 
-class="w-14 h-14 text-white block mx-auto"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 21l-4.35-4.35m1.45-4.65a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                            <p class="text-white brand-font text-xl mt-4">Click a category below to explore catalogs by
-                                product type.
-                            </p>
-                        </div>
-
-                        <!-- Save Favorites -->
-                        <div class="flex flex-col items-center px-6 py-8 text-center cursor-default">
-                            <h2 class="text-4xl font-bold brand-font mb-3 text-white">Save Favorites</h2>
-                            <i class="fas fa-cart-plus text-white text-5xl mt-1"></i>
-                            <p class="text-white brand-font text-xl mt-4">Save catalogs you enjoy, add product links
-                                and
-                                notes for
-                                later.</p>
-                        </div>
-
-                        <!-- Contact Us -->
-                        <div class="flex flex-col items-center px-6 py-8 text-center cursor-default">
-                            <h2 class="text-4xl font-bold brand-font mb-2 text-white">Contact Us</h2>
-                            <svg 
-
-class="w-14 h-14 text-white block mx-auto"
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  role="img"
-  aria-label="Search icon"
->
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            <p class="text-white brand-font text-xl mt-4">Send your saved selections to our team when
-                                you're
-                                ready.</p>
-                            <!-- How the process works explanation -->
-
-                        </div>
-
+                <div class="category-stack flex justify-center gap-20 mb-10 flex-wrap">
+                    <div class="text-center">
+                        <img src="/images/customhats.webp" alt="Headwear" id="headwear-img"
+                            class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                        <div class="text-3xl brand-font text-center">Headwear</div>
                     </div>
-                    <!-- <p class="text-white text-center max-w-5xl mx-auto mt-4 text-lg">
 
-                        Here’s how it works: Click on any of the product category circles to  related catalogs. As
-                        you browse, you can save the categories you like, add links to specific products, and include
-                        any notes. When you're ready, you can send everything directly to our team via email so we can
-                        help bring your ideas to life.
-                    </p> -->
+                    <div class="text-center">
+                        <img src="/images/22A.webp" alt="Apparel" id="apparel-img"
+                            class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                        <div class="text-3xl brand-font text-center">Apparel</div>
+                    </div>
 
+                    <div class="text-center">
+                        <img src="/images/customtents.webp" alt="Tradeshows" id="tradeshows-img"
+                            class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                        <div class="text-3xl brand-font text-center">Tradeshows</div>
+                    </div>
 
-                </div>
-                <!-- <p class="text-lg text-white/70 mb-12 italic">Scroll down to browse our featured catalogs by
-                    category.</p> -->
+                    <div class="text-center">
+                        <img src="/images/rambler.jpg" alt="General Promotions" id="promotions-img"
+                            class="catalog-circle block mx-auto w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                        <div class="text-3xl brand-font text-center">General Promotions</div>
+                    </div>
 
-
-            </div>
-
-            <!-- Optional Divider -->
-            <!-- <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
-                <svg class="relative block w-full h-[80px]" xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="none" Box="0 0 1200 120">
-                    <path d="M1200 0L0 0 892.25 114.72 1200 0z" fill="#ffffff"></path>
-                </svg>
-            </div> -->
-        </section>
-
-        <!-- Catalog Section -->
-        <section class="py-20 px-6 bg-white">
-            <!-- <h2 class="text-5xl h-20 font-bold mb-6 text-center brand-font">Explore Our Product Catalogs</h2> -->
-
-            <div class="category-stack flex justify-center gap-20 mb-10 flex-wrap">
-                <!-- Category Circle -->
-                <div class="text-center">
-                    <img src="/images/customhats.webp" alt="Headwear" id="headwear-img"
-                        class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-
-                    <div class="text-3xl brand-font text-center">Headwear</div>
+                    <div class="text-center">
+                        <img src="/images/award.jpg" alt="Awards" id="awards-img"
+                            class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
+                        <div class="text-3xl brand-font text-center">Awards</div>
+                    </div>
                 </div>
 
-                <div class="text-center">
-                    <img src="/images/22A.webp" alt="Apparel" id="apparel-img"
-                        class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-whitecursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                    <div class="text-3xl brand-font text-center">Apparel</div>
+                <div id="headwear-cards"
+                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Cap America"
+                            data-link="https://www.capamerica.com/category/-all-caps?pageno=1&Page=grid">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/cap copy.jpg" alt="Cap America Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            American-made embroidered baseball caps, beanies, and visors. Known for rapid delivery and
+                            premium stitching—perfect for patriotic or domestic-focused branding.
+                        </p>
+                        <a href="https://www.capamerica.com/category/-all-caps?pageno=1&Page=grid" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Outdoor Cap" data-link="https://promo.outdoorcap.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/outdoor.png" alt="Outdoor Cap Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Vast selection of trucker hats, camo caps, and lifestyle headwear. Deep inventory and low
+                            MOQs make them ideal for versatile and quick-turn projects.
+                        </p>
+                        <a href="https://promo.outdoorcap.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Richardson Sports" data-link="https://richardsonsports.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/rich.webp" alt="Richardson Sports Catalog"
+                            class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            High-performance caps and visors used by athletic teams nationwide. Great for custom sports
+                            branding or premium headwear programs.
+                        </p>
+                        <a href="https://richardsonsports.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Pacific Headwear"
+                            data-link="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/ps.webp" alt="Pacific Headwear Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Focused on athletic and lifestyle hats—snapbacks, flexfits, and performance styles. Easily
+                            customized for teams, events, or brand merch.
+                        </p>
+                        <a href="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear"
+                            target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Max Apparel" data-link="https://maxapparel.com/headwear.htm">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/max.png" alt="Max Apparel Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Private-label cap manufacturer offering custom-cut styles and finishes. Ideal for brands
+                            seeking exclusive, high-end headwear options.
+                        </p>
+                        <a href="https://maxapparel.com/headwear.htm" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
                 </div>
 
-                <div class="text-center">
-                    <img src="/images/customtents.webp" alt="Tradeshows" id="tradeshows-img"
-                        class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                    <div class="text-3xl brand-font text-center">Tradeshows</div>
+                <div id="apparel-cards"
+                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="SanMar" data-link="https://www.sanmar.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/sanmar.webp" alt="SanMar Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Distributor of brands like Nike, Carhartt, Travis Matthew, Brooks Brothers, District, Port
+                            Authority, and Sport-Tek. Known for polos, fleece, jackets, and custom embroidery options.
+                        </p>
+                        <a href="https://www.sanmar.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="S&S Activewear" data-link="https://www.ssactivewear.com/ps/new">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/ss.png" alt="S&S Activewear Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Offers top-name brands like Under Armour, Adidas, Swannies, and Huk. Known for blank
+                            t-shirts, sweatshirts, and fashion-forward retail basics.
+                        </p>
+                        <a href="https://www.ssactivewear.com/ps/new" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Driving Impressions" data-link="https://drivingi.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/di.png" alt="Driving Impressions Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Offers an elite collection of premium apparel from brands including Peter Millar, Patagonia,
+                            Helly Hansen, Johnnie-O, G/Fore, Southern Tide, Vineyard Vines, and Greyson.
+                        </p>
+                        <a href="https://drivingi.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Scales" data-link="https://www.scalesgear.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/scales22.avif" alt="Scales Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Premium coastal and lifestyle brand known for performance fishing shirts, water-repellent
+                            polos, and modern coastal workwear.
+                        </p>
+                        <a href="https://www.scalesgear.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Gill" data-link="https://www.gillmarine.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/gill.jpg" alt="Gill Marine Catalog"
+                            class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Offers technical sailing apparel and outerwear. Specializes in waterproof jackets,
+                            breathable layers, and marine-grade clothing.
+                        </p>
+                        <a href="https://www.gillmarine.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Ubix" data-link="https://ubixnow.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/ubix.png" alt="Ubix Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Custom sportswear and branding company with innovative apparel solutions. Provides
+                            moisture-wicking polos and softshell outerwear.
+                        </p>
+                        <a href="https://ubixnow.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
                 </div>
 
-                <div class="text-center">
-                    <img src="/images/rambler.jpg" alt="General Promotions" id="promotions-img"
-                        class="catalog-circle block mx-auto w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                    <div class="text-3xl brand-font text-center">General Promotions</div>
+                <div id="tradeshows-cards"
+                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Orbus" data-link="https://www.orbus.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/orbus.png" alt="Orbus Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Specializes in portable trade show displays: retractable banners, tension fabric booths,
+                            backdrops, and modular exhibit systems.
+                        </p>
+                        <a href="https://www.orbus.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Showdown Displays" data-link="https://www.showdowndisplays.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/showdown.jpeg" alt="Showdown Displays Catalog"
+                            class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Wide range of indoor and outdoor signage including table throws, tents, flag banners, and
+                            floor displays.
+                        </p>
+                        <a href="https://www.showdowndisplays.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Soar Display" data-link="https://soardistusa.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/soar.png" alt="Soar Display Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Custom-designed event displays and branded architecture. Best for experiential marketing
+                            setups or premium booth layouts.
+                        </p>
+                        <a href="https://soardistusa.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
                 </div>
 
-                <div class="text-center">
-                    <img src="/images/award.jpg" alt="Awards" id="awards-img"
-                        class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                    <div class="text-3xl brand-font text-center">Awards</div>
+                <div id="promotions-cards"
+                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="PCNA" data-link="https://www.pcna.com/en-us">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/pcna.png" alt="PCNA Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            One of the largest suppliers in the industry, offering drinkware, tech, wellness items,
+                            bags, and name-brand products.
+                        </p>
+                        <a href="https://www.pcna.com/en-us" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Gemline" data-link="https://www.gemline.com/s/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/gemline.avif" alt="Gemline Catalog"
+                            class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Focuses on bags, backpacks, coolers, journals, and home goods. Known for elegant
+                            retail-inspired designs.
+                        </p>
+                        <a href="https://www.gemline.com/s/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Diamondback Branding" data-link="https://diamondbackbranding.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/diamond.png" alt="Diamondback Branding Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Custom laser-engraved tumblers, bottles, and barware. Perfect for personalizing premium
+                            stainless-steel products.
+                        </p>
+                        <a href="https://diamondbackbranding.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Thirsty Boxer" data-link="https://www.thirstyboxer.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/boxer.jpg" alt="Thirsty Boxer Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Known for premium custom drinkware featuring brands like YETI and Stio — ideal for
+                            giveaways, outdoor events, and high-end brand experiences.
+                        </p>
+                        <a href="https://www.thirstyboxer.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Hit Promotional Products" data-link="https://www.hitpromo.net/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/hit.png" alt="Hit Promotional Products Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Offers one of the widest arrays of budget-friendly promo goods: pens, tote bags, drinkware,
+                            tech gadgets, and more.
+                        </p>
+                        <a href="https://www.hitpromo.net/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
+
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Koozie Group" data-link="https://www.kooziegroup.com/US/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/koozie.jpg" alt="Koozie Group Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Known for iconic Koozies, calendars, notepads, and pens. Offers sustainable promo options
+                            and BIC-branded products.
+                        </p>
+                        <a href="https://www.kooziegroup.com/US/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
                 </div>
 
-                <!-- <div class="text-center">
-                    <img src="/images/speaker.png" alt="All Catalogs" id="all-catalogs-img"
-                        class="catalog-circle w-36 h-36 mb-3 rounded-full object-cover cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                    <div class="text-xl brand-font text-center">Browse All</div>
-                </div> -->
-            </div>
-
-
-            <!-- Catalog Cards (Hidden initially) -->
-
-            <!-- Headwear -->
-            <div id="headwear-cards"
-                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Cap America"
-                        data-link="https://www.capamerica.com/category/-all-caps?pageno=1&Page=grid">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-
-
-
-                    <img src="/images/cap copy.jpg" alt="Cap America Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-3xl font-bold text-gray-900 mb-2 tracking-tight brand-font">Cap America</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">American-made embroidered
-                        baseball
-                        caps,
-                        beanies, and visors.
-                        Known for rapid delivery and premium stitching—perfect for patriotic or domestic-focused
-                        branding.</p>
-                    <a href="https://www.capamerica.com/category/-all-caps?pageno=1&Page=grid" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                        View Catalog</a>
+                <div id="awards-cards"
+                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
+                            data-name="Vision Awards" data-link="https://visionsawards.com/">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        <img src="/images/vision.gif" alt="Vision Awards Catalog"
+                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
+                        <p class="text-sm text-gray-600 mb-3 italic">
+                            Custom crystal, acrylic, and glass awards with etched personalization. Ideal for corporate
+                            recognitions, milestone celebrations, or donor appreciation.
+                        </p>
+                        <a href="https://visionsawards.com/" target="_blank"
+                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
+                            View Catalog
+                        </a>
+                    </div>
                 </div>
 
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
+            </section>
+        </div>
 
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Outdoor Cap" data-link="https://promo.outdoorcap.com/">
-                        <i class="fas fa-cart-plus"></i>
+        <footer class="bg-black text-white">
+            <div
+                class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div class="flex items-center gap-4">
+                    <img src="/images/logo.png" class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl" />
+                    <div>
+                        <span class="text-white text-3xl brand-font">
+                            Prime Promotions LLC
+                            <br>
+                            <span class="text-xl text-blue-400">(574) 202-7050</span>
+                            <br>
+                            <span class="text-xl text-blue-400">sales@primepromollc.com</span>
+                            <br>
+                            <span class="text-xl text-blue-400">514 S Main Street, Middlebury, IN 46540</span>
+                        </span>
+                    </div>
+                </div>
 
-                    </button>
-                    <img src="/images/outdoor.png" alt="Outdoor Cap Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <p class="text-sm text-gray-600 mb-3 italic">Vast selection of trucker hats, camo caps, and
-                        lifestyle
-                        headwear. Deep inventory and low MOQs make them ideal for versatile and quick-turn projects.
+                <div>
+                    <h3 class="text-2xl brand-font text-white font-normal mb-2">
+                        Let’s Make Your Brand Unforgettable
+                    </h3>
+                    <p class="text-2xl brand-font text-grey font-normal mb-4 italic">
+                        Reach out to our team to get your order started today.
                     </p>
-                    <a href="https://promo.outdoorcap.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog </a>
-                </div>
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Richardson Sports" data-link="https://richardsonsports.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/rich.webp" alt="Richardson Sports Catalog"
-                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Richardson Sports</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">High-performance caps and visors used by athletic teams
-                        nationwide. Great for custom sports branding or premium headwear programs.</p>
-                    <a href="https://richardsonsports.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Pacific Headwear"
-                        data-link="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/ps.webp" alt="Pacific Headwear Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Pacific Headwear</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Focused on athletic and lifestyle hats—snapbacks,
-                        flexfits,
-                        and performance styles. Easily customized for teams, events, or brand merch.</p>
-                    <a href="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Max Apparel" data-link="https://maxapparel.com/headwear.htm">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/max.png" alt="Max Apparel Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Max Apparel</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Private-label cap manufacturer offering custom-cut
-                        styles and
-                        finishes. Ideal for brands seeking exclusive, high-end headwear options.</p>
-                    <a href="https://maxapparel.com/headwear.htm" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
+                    <a href="mailto:sales@primepromollc.com"
+                        class="bg-blue-400 brand-font text-2xl px-5 py-2 rounded-full hover:bg-blue-500 transition">
+                        Get in Touch
+                    </a>
                 </div>
             </div>
 
-
-            <!-- Apparel -->
-
-            <div id="apparel-cards"
-                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="SanMar" data-link="https://www.sanmar.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/sanmar.webp" alt="Bella+Canvas Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">SanMar</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Distributor of brands like Nike, Carhartt, Travis
-                        Matthew,
-                        Brooks Borthers, District, Port Authority, and
-                        Sport-Tek. Known for polos, fleece, jackets, and custom embroidery options for teams and
-                        corporate use.</p>
-                    <a href="https://www.sanmar.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="S&S Activewear" data-link="https://www.ssactivewear.com/ps/new">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/ss.png" alt="Gildan Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">S&S Activewear</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Offers top-name brands like Under Armour, Adidas,
-                        Swannies,
-                        and Huk. Known for blank t-shirts, sweatshirts, and fashion-forward retail basics..</p>
-                    <a href="https://www.ssactivewear.com/ps/new" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Driving Imperssions" data-link="https://drivingi.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/di.png" alt="Next Level Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Driving Impressions</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Offers an elite collection of premium apparel from
-                        renowned
-                        lifestyle and performance brands including Peter Millar, Patagonia, Helly Hansen, Johnnie-O,
-                        G/Fore, Southern Tide, Vineyard Vines, and Greyson. Ideal for upscale corporate wear, golf
-                        tournaments, and luxury giveaways.</p>
-                    <a href="https://drivingi.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Scales" data-link="https://www.scalesgear.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/scales22.avif" alt="Next Level Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Scales</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Premium coastal and lifestyle brand known for
-                        performance
-                        fishing shirts, water-repellent polos, and modern coastal workwear.</p>
-                    <a href="https://www.scalesgear.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Gill" data-link="https://www.gillmarine.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/gill.jpg" alt="Next Level Catalog"
-                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Gill Marine</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Offers technical sailing apparel and outerwear.
-                        Specializes in
-                        waterproof jackets, breathable layers, and marine-grade clothing.</p>
-                    <a href="https://www.gillmarine.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Ubix" data-link="https://ubixnow.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/ubix.png" alt="Next Level Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Ubix</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Custom sportswear and branding company with innovative
-                        apparel
-                        solutions. Provides moisture-wicking polos and softshell outerwear for teams and businesses.</p>
-                    <a href="https://ubixnow.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
+            <div class="text-center text-sm text-white opacity-70 pb-6">
+                &copy; <span id="year"></span> Prime Promotions LLC. All rights reserved.
+                <br>
+                Site by
+                <a href="https://www.linkedin.com/in/drewmcollins/" target="_blank"
+                    class="underline hover:text-blue-400 transition">
+                    Drew Collins
+                </a>
             </div>
-
-
-            <!--  Tradeshows -->
-
-            <div id="tradeshows-cards"
-                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Orbus" data-link="https://www.orbus.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/orbus.png" alt="Bella+Canvas Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Orbus</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Specializes in portable trade show displays:
-                        retractable
-                        banners, tension fabric booths, backdrops, and modular exhibit systems — ideal for setting up
-                        professional presentations fast.</p>
-                    <a href="https://www.orbus.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Showdown Displays" data-link="https://www.showdowndisplays.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/showdown.jpeg" alt="Gildan Catalog"
-                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Showdown Displays</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Wide range of indoor and outdoor signage including
-                        table
-                        throws, tents, flag banners, and floor displays. Known for quick turnarounds and bold
-                        visibility.</p>
-                    <a href="https://www.showdowndisplays.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Soar Display" data-link="https://soardistusa.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/soar.png" alt="Next Level Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Soar Display</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Custom-designed event displays and branded
-                        architecture. Best
-                        for experiential marketing setups or premium booth layouts with impact.</p>
-                    <a href="https://soardistusa.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-            </div>
-
-            <!-- General Promotions -->
-            <div id="promotions-cards"
-                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="PCNA" data-link="https://www.pcna.com/en-us">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/pcna.png" alt="Bella+Canvas Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">PCNA</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">One of the largest suppliers in the industry, offering
-                        drinkware, tech, wellness items, bags, and name-brand products like CamelBak, Skullcandy, and
-                        Moleskine.</p>
-                    <a href="https://www.pcna.com/en-us" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Gemline" data-link="https://www.gemline.com/s/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/gemline.avif" alt="Gildan Catalog"
-                        class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Gemline</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Focuses on bags, backpacks, coolers, journals, and home
-                        goods.
-                        Known for elegant retail-inspired designs and partnerships with brands like Igloo and CORKCICLE.
-                    </p>
-                    <a href="https://www.gemline.com/s/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Diamondback Branding" data-link="https://diamondbackbranding.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/diamond.png" alt="Next Level Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Diamondback Branding</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Custom laser-engraved tumblers, bottles, and barware.
-                        Perfect
-                        for personalizing premium stainless-steel products for high-end gifts or events.</p>
-                    <a href="https://diamondbackbranding.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Thirsty Boxer" data-link="https://www.thirstyboxer.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/boxer.jpg" alt="Next Level Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Thirsty Boxer</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Known for premium custom drinkware featuring brands
-                        like YETI
-                        and Stio — ideal for giveaways, outdoor events, and high-end brand experiences.</p>
-                    <a href="https://www.thirstyboxer.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Hit Promotional Products" data-link="https://www.hitpromo.net/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/hit.png" alt="Next Level Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Hit Promotional Products</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Offers one of the widest arrays of budget-friendly
-                        promo
-                        goods: pens, tote bags, drinkware, tech gadgets, and more — ideal for large events and
-                        giveaways.</p>
-                    <a href="https://www.hitpromo.net/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Koozie Group" data-link="https://www.kooziegroup.com/US/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/koozie.jpg" alt="Next Level Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Koozie Group</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Known for iconic Koozies, calendars, notepads, and
-                        pens. Offers sustainable promo options and BIC-branded products.</p>
-                    <a href="https://www.kooziegroup.com/US/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-            </div>
-
-            <!-- Awards -->
-            <div id="awards-cards"
-                class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-
-                <div
-                    class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-
-                    <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                        data-name="Vision Awards" data-link="https://visionsawards.com/">
-                        <i class="fas fa-cart-plus"></i>
-
-                    </button>
-                    <img src="/images/vision.gif" alt=" Bella+Canvas Catalog"
-                        class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                    <!-- <p class="text-sm font-semibold text-gray-800 mb-1">Vision Awards</p> -->
-                    <p class="text-sm text-gray-600 mb-3 italic">Custom crystal, acrylic, and glass awards with etched
-                        personalization. Ideal for corporate recognitions, milestone celebrations, or donor
-                        appreciation.</p>
-                    <a href="https://visionsawards.com/" target="_blank"
-                        class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">View
-                        Catalog</a>
-                </div>
-            </div>
-
-
-        </section>
+        </footer>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-black text-white">
-        <div
-            class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-            <div class="flex items-center gap-4">
-                <img src="/images/logo.png" class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl" />
-                <div>
-  <span class="text-white text-3xl brand-font">
-    Prime Promotions LLC
-    <br>
-    <span class="text-xl text-blue-400">(574) 202-7050</span>
-    <br>
-    <span class="text-xl text-blue-400">sales@primepromollc.com</span>
-    <br>
-    <span class="text-xl text-blue-400">514 S Main Street, Middlebury, IN 46540</span>
-  </span>
-</div>
-            </div>
-            <div>
-                <h3 class="text-2xl brand-font text-white font-normal mb-2">Let’s Make Your Brand
-                    Unforgettable</h3>
-                <p class="text-2xl brand-font text-grey font-normal mb-4 italic">Reach out to our team to
-                    get your order started
-                    today.
+    <div id="save-popup"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] hidden transition-opacity duration-300 px-4">
+        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 animate-fade-in">
+
+            <button id="popup-cancel" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl font-bold">
+                &times;
+            </button>
+
+            <div class="mb-6 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="w-28 h-28 p-1 flex items-center justify-center rounded-full bg-white shadow-md border-2">
+                        <img src="/images/logo.png" alt="Popup Logo" class="w-full h-full object-contain rounded-full" />
+                    </div>
+                </div>
+
+                <h2 class="text-3xl brand-font text-gray-800 mt-4">
+                    Save <span id="popup-catalog-name" class="text-blue-500">Catalog</span>
+                </h2>
+                <p class="text-xl brand-font text-gray-700 italic mt-1">
+                    <span class="pl-1 text-gray-400 text-xl">
+                        Let us know which products you liked or have questions about.
+                    </span>
                 </p>
-                <a href="mailto:sales@primepromollc.com"
-                    class="bg-blue-400 brand-font text-2xl px-5 py-2 rounded-full hover:bg-blue-500 transition">Get
-                    in Touch</a>
+            </div>
+
+            <div class="mb-4">
+                <label for="popup-links" class="brand-font pl-3 text-xl font-medium text-gray-700 mb-1">
+                    Product Links <span class="pl-1 text-gray-400 text-sm">(optional)</span>
+                </label>
+                <textarea id="popup-links"
+                    class="w-full py-2 pl-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
+                    rows="3" placeholder="Paste one or more product URLs here..."></textarea>
+            </div>
+
+            <div class="mb-6">
+                <label for="popup-notes" class="block brand-font pl-3 text-xl font-medium text-gray-700 mb-1">
+                    Notes or Questions <span class="pl-1 text-gray-400 text-sm">(optional)</span>
+                </label>
+                <textarea id="popup-notes"
+                    class="w-full py-2 pl-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
+                    rows="3" placeholder="Anything you'd like us to know or discuss..."></textarea>
+            </div>
+
+            <div class="flex justify-end gap-3">
+                <button id="popup-confirm"
+                    class="bg-blue-400 text-white brand-font text-2xl px-5 py-2 rounded-full font-semibold hover:bg-blue-500 transition">
+                    Save Catalog
+                </button>
             </div>
         </div>
-        <div class="text-center text-sm text-white opacity-70 pb-6">&copy; <span id="year"></span>
-            Prime Promotions LLC.
-            All
-            rights reserved.
-            <br>
-            Site by
-            <a href="https://www.linkedin.com/in/drewmcollins/" target="_blank"
-                class="underline hover:text-blue-400 transition">
-                Drew Collins
-            </a>
-        </div>
-    </footer>
+    </div>
 
     <script>
         const catalogCircles = document.querySelectorAll('.catalog-circle');
@@ -770,7 +808,6 @@ class="w-14 h-14 text-white block mx-auto"
                 const catalogContainer = document.getElementById(categoryId);
                 const isActive = activeCircle === circle;
 
-                // Reset all
                 catalogCircles.forEach(img => img.classList.remove('scale-110', 'ring-4', 'ring-blue-400'));
                 allCatalogs.forEach(container => container.classList.add('hidden'));
 
@@ -779,7 +816,6 @@ class="w-14 h-14 text-white block mx-auto"
                     catalogContainer?.classList.remove('hidden');
                     activeCircle = circle;
 
-                    // ✅ Detect wrapping layout
                     const isStacked = (() => {
                         const firstTop = catalogCircles[0].offsetTop;
                         return [...catalogCircles].some(el => el.offsetTop !== firstTop);
@@ -787,11 +823,9 @@ class="w-14 h-14 text-white block mx-auto"
 
                     if (isStacked && catalogContainer) {
                         setTimeout(() => {
-                            catalogContainer.offsetHeight; // force reflow
-                            const yOffset = -150; // adjust this number as needed
+                            const yOffset = -150;
                             const y = catalogContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
                             window.scrollTo({ top: y, behavior: 'smooth' });
-
                         }, 0);
                     }
 
@@ -802,86 +836,15 @@ class="w-14 h-14 text-white block mx-auto"
         });
     </script>
 
-
     <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const navMenu = document.getElementById('nav-menu');
+        const cartPanel = document.getElementById('cart-panel');
+        const cartBackdrop = document.getElementById('cart-backdrop');
+        const cartList = document.getElementById('cart-list');
+        const cartIcon = document.getElementById('cart-icon');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartTotalLabel = document.getElementById('cart-total-label');
+        const cartCount = document.getElementById('cart-count');
 
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('menu-open');
-            navMenu.classList.toggle('hidden');
-            navMenu.classList.toggle('flex');
-        });
-    </script>
-
-
-
-    <!-- SAVE CATALOG POPUP -->
-    <div id="save-popup"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden transition-opacity duration-300">
-        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 animate-fade-in">
-
-            <!-- Close Button -->
-            <button id="popup-cancel" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl font-bold">
-                &times;
-            </button>
-
-            <!-- Header -->
-            <div class="mb-6 text-center">
-                <div class="flex justify-center mb-4">
-                    <div
-                        class="w-28 h-28 p-1 flex items-center justify-center rounded-full bg-white shadow-md border-2">
-                        <img src="/images/logo.png" alt="Popup Logo"
-                            class="w-full h-full object-contain rounded-full" />
-                    </div>
-
-
-                </div>
-
-
-                <h2 class="text-3xl brand-font text-gray-800 mt-4">Save <span id="popup-catalog-name"
-                        class="text-blue-500">Catalog</span></h2>
-                <p class="text-xl brand-font text-gray-700 italic mt-1"><span class="pl-1 text-gray-400 text-xl">Let us
-                        know which products you liked or have
-                        questions about.</span></p>
-            </div>
-
-            <!-- Input: Product Links -->
-            <div class="mb-4">
-                <label for="popup-links" class="brand-font pl-3 text-xl font-medium text-gray-700 mb-1">
-                    Product Links <span class="pl-1 text-gray-400 text-sm">(optional)</span>
-                </label>
-                <textarea id="popup-links"
-                    class="w-full py-2 pl-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                    rows="3" placeholder="Paste one or more product URLs here..."></textarea>
-            </div>
-
-            <!-- Input: Notes/Questions -->
-            <div class="mb-6">
-                <label for="popup-notes" class="block brand-font pl-3 text-xl font-medium text-gray-700 mb-1">
-                    Notes or Questions <span class="pl-1 text-gray-400 text-sm">(optional)</span>
-                </label>
-                <textarea id="popup-notes"
-                    class="w-full py-2 pl-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                    rows="3" placeholder="Anything you'd like us to know or discuss..."></textarea>
-            </div>
-
-            <!-- Buttons -->
-            <div class="flex justify-end gap-3">
-                <!-- <button id="popup-cancel-duplicate"
-                    class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
-                    Cancel
-                </button> -->
-                <button id="popup-confirm"
-                    class="bg-blue-400 text-white brand-font text-2xl px-5 py-2 rounded-full font-semibold hover:bg-blue-500 transition">
-                    Save Catalog
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-    <script>
         const saveButtons = document.querySelectorAll('.save-btn');
         const popup = document.getElementById('save-popup');
         const popupCatalogName = document.getElementById('popup-catalog-name');
@@ -889,22 +852,143 @@ class="w-14 h-14 text-white block mx-auto"
         const popupNotes = document.getElementById('popup-notes');
         const popupCancel = document.getElementById('popup-cancel');
         const popupConfirm = document.getElementById('popup-confirm');
-        const cartCount = document.getElementById('cart-count');
-        let currentCatalog = '';
+
         let currentButton = null;
 
+        function getCart() {
+            return JSON.parse(localStorage.getItem('catalogCart')) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('catalogCart', JSON.stringify(cart));
+        }
+
         function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+            const cart = getCart();
+
             cartCount.textContent = cart.length;
             cartCount.classList.toggle('hidden', cart.length === 0);
+
+            if (cartTotalLabel) {
+                cartTotalLabel.textContent = cart.length;
+            }
         }
+
+        function formatLinks(links) {
+            const parts = links.split(/\s*[\n,]+\s*/).filter(Boolean);
+
+            return parts.map(link => {
+                return `<a href="${link}" target="_blank" class="text-blue-500 underline block mb-1 break-all">${link}</a>`;
+            }).join('');
+        }
+
+        function updateCartList() {
+            const cart = getCart();
+            cartList.innerHTML = '';
+
+            if (cartTotalLabel) {
+                cartTotalLabel.textContent = cart.length;
+            }
+
+            if (cart.length === 0) {
+                cartList.innerHTML = `
+                    <li class="text-center py-12">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-blue-50 border border-blue-100 shadow-sm flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-cart-shopping text-2xl text-blue-300"></i>
+                        </div>
+                        <p class="brand-font text-3xl text-gray-800">No saved catalogs yet</p>
+                        <p class="text-sm text-gray-500 mt-1">
+                            Save catalogs you like and they will show up here.
+                        </p>
+                    </li>
+                `;
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+
+                li.className = "bg-white border border-blue-100 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:border-blue-300 transition relative";
+
+                li.innerHTML = `
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="pr-4">
+                            <p class="text-xs uppercase tracking-widest text-blue-400 font-semibold mb-1">
+                                Saved Catalog
+                            </p>
+
+                            <a href="${item.link}" target="_blank"
+                                class="brand-font text-2xl text-gray-900 hover:text-blue-500 transition leading-none block">
+                                ${item.name}
+                            </a>
+                        </div>
+
+                        <button class="remove-btn w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-red-500 hover:text-white transition flex items-center justify-center shrink-0"
+                            data-index="${index}" title="Remove item">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    ${item.productLinks ? `
+                        <div class="mt-4 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-2">
+                                Product Links
+                            </p>
+                            <div class="text-sm">
+                                ${formatLinks(item.productLinks)}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    ${item.notes ? `
+                        <div class="mt-3 bg-gray-50 border border-gray-100 rounded-xl p-3">
+                            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-1">
+                                Notes
+                            </p>
+                            <p class="text-sm text-gray-700 whitespace-pre-line">${item.notes}</p>
+                        </div>
+                    ` : ''}
+                `;
+
+                cartList.appendChild(li);
+            });
+
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                    const updatedCart = getCart();
+
+                    updatedCart.splice(index, 1);
+                    saveCart(updatedCart);
+
+                    updateCartCount();
+                    updateCartList();
+                });
+            });
+        }
+
+        function openCart() {
+            updateCartList();
+            document.body.classList.add('cart-open');
+
+            if (window.innerWidth < 1024) {
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeCart() {
+            document.body.classList.remove('cart-open');
+            document.body.style.overflow = '';
+        }
+
+        cartIcon.addEventListener('click', openCart);
+        closeCartBtn.addEventListener('click', closeCart);
+        cartBackdrop.addEventListener('click', closeCart);
 
         saveButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 currentButton = btn;
-                currentCatalog = btn.getAttribute('data-name'); // specific to this button
-                popupCatalogName.textContent = currentCatalog;
-                popupCatalogName.setAttribute('data-link', btn.getAttribute('data-link')); // store the link too just in case
+                popupCatalogName.textContent = btn.getAttribute('data-name');
 
                 popupLinks.value = '';
                 popupNotes.value = '';
@@ -912,174 +996,34 @@ class="w-14 h-14 text-white block mx-auto"
             });
         });
 
-
-
         popupCancel.addEventListener('click', () => {
             popup.classList.add('hidden');
         });
-        function updateCartList() {
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-            cartList.innerHTML = '';
-
-            if (cart.length === 0) {
-                cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
-            } else {
-                cart.forEach((item, index) => {
-                    const li = document.createElement('li');
-                    li.className = "border-b pb-2 mb-2 relative";
-                    li.innerHTML = `
-                <a href="${item.link}" target="_blank"
-                   class="brand-font text-lg text-blue-600 hover:text-blue-800 underline block mb-1">
-                    ${item.name}
-                </a>
-                ${item.productLinks ? formatLinks(item.productLinks) : ''}
-                ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
-                <button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
-            `;
-                    cartList.appendChild(li);
-                });
-
-                // Re-attach remove button handlers
-                document.querySelectorAll('.remove-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-                        updatedCart.splice(index, 1);
-                        localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
-                        updateCartCount();
-                        updateCartList();
-                    });
-                });
-            }
-        }
-
 
         popupConfirm.addEventListener('click', () => {
             if (!currentButton) return;
 
-            const name = currentButton.getAttribute('data-name'); // ✅ reliable
+            const name = currentButton.getAttribute('data-name');
             const link = currentButton.getAttribute('data-link');
             const productLinks = popupLinks.value.trim();
             const notes = popupNotes.value.trim();
 
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+            const cart = getCart();
             cart.push({ name, link, productLinks, notes });
 
-            localStorage.setItem('catalogCart', JSON.stringify(cart));
+            saveCart(cart);
             updateCartCount();
+            updateCartList();
+
             popup.classList.add('hidden');
-            updateCartList(); // ✅ This uses saved name
-            cartPanel.classList.remove('hidden');
+            openCart();
         });
 
-
-        updateCartCount();
-    </script>
-
-
-    <div id="cart-panel"
-        class="fixed bottom-0 right-0 bg-white w-full max-w-md h-[30rem] shadow-2xl border-l border-t z-50 rounded-tl-2xl p-6 hidden overflow-y-auto animate-fade-in">
-
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="brand-font text-3xl text-gray-800">Saved Catalogs</h3>
-            <button id="close-cart"
-                class="text-gray-400 hover:text-red-500 text-lg font-bold focus:outline-none">&times;</button>
-        </div>
-
-        <!-- Saved Items -->
-        <ul id="cart-list" class="space-y-4 text-md text-gray-800">
-            <!-- Items will be rendered here -->
-        </ul>
-
-        <!-- CTA Message -->
-        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
-            <div class="text-blue-500">
-                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg> -->
-            </div>
-            <div class="text-sm text-gray-700 leading-snug">
-                <span class="brand-font text-xl block text-blue-600">Let’s get going!</span>
-                Click the mail icon to email your saved catalogs and product notes to our team so we can help
-                bring
-                your vision to life.
-            </div>
-            <div class="mt-4 flex justify-center">
-                <button id="send-email"
-                    class="mt-3 text-blue-500 hover:text-blue-700 transition-transform hover:scale-110"
-                    title="Email My Saved Catalogs">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Email Icon -->
-
-
-
-
-    </div>
-
-
-    <script>
-        const cartPanel = document.getElementById('cart-panel');
-        const cartList = document.getElementById('cart-list');
-        const cartIcon = document.getElementById('cart-icon');
-
-        cartIcon.addEventListener('click', () => {
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-            cartList.innerHTML = '';
-
-            if (cart.length === 0) {
-                cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
-            } else {
-                cart.forEach((item, index) => {
-                    const li = document.createElement('li');
-                    li.className = "border-b pb-2 mb-2 relative";
-                    li.innerHTML = `
-  <a href="${item.link}" target="_blank"
-     class="brand-font text-5xl text-blue-600 hover:text-blue-800 underline block mb-1">
-    ${item.name}
-  </a>
-  ${item.productLinks ? formatLinks(item.productLinks) : ''}
-  ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
-  <button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
-`;
-
-                    cartList.appendChild(li);
-                });
-
-                // Attach remove handlers
-                document.querySelectorAll('.remove-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-                        updatedCart.splice(index, 1);
-                        localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
-
-                        // Refresh cart
-                        cartIcon.click(); // close
-                        cartIcon.click(); // reopen
-                    });
-                });
-            }
-
-            cartPanel.classList.toggle('hidden');
-        });
-    </script>
-
-    <script>
         document.getElementById('send-email').addEventListener('click', () => {
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
+            const cart = getCart();
+
             if (cart.length === 0) {
-                alert("Your cart is empty!");
+                alert("Your saved list is empty!");
                 return;
             }
 
@@ -1097,73 +1041,28 @@ class="w-14 h-14 text-white block mx-auto"
             window.location.href = mailtoLink;
         });
 
-
-
+        updateCartCount();
     </script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cartIcon = document.getElementById('cart-icon');
-            const cartPanel = document.getElementById('cart-panel');
-            const cartList = document.getElementById('cart-list');
-            const closeCartBtn = document.getElementById('close-cart');
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-            cartIcon?.addEventListener('click', () => {
-                const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-                cartList.innerHTML = '';
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
 
-                if (cart.length === 0) {
-                    cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
-                } else {
-                    cart.forEach((item, index) => {
-                        const li = document.createElement('li');
-                        li.className = "border-b pb-2 mb-2 relative";
-                        li.innerHTML = `
-                            <a href="${item.link}" target="_blank"
-                               class="brand-font text-lg text-blue-600 hover:text-blue-800 underline block mb-1">
-                                ${item.name}
-                            </a>
-                            ${item.productLinks ? formatLinks(item.productLinks) : ''}
-                            ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
-                            <button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
-                        `;
-                        cartList.appendChild(li);
-                    });
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('menu-open');
+            navMenu.classList.toggle('hidden');
+            navMenu.classList.toggle('flex');
+        });
 
-                    // Add remove logic
-                    document.querySelectorAll('.remove-btn').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const index = parseInt(e.target.getAttribute('data-index'));
-                            const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-                            updatedCart.splice(index, 1);
-                            localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
-                            updateCartCount();
-                            updateCartList();
-                        });
-                    });
-                }
-
-                cartPanel.classList.remove('hidden');
-            });
-
-            closeCartBtn?.addEventListener('click', () => {
-                cartPanel?.classList.add('hidden');
-            });
+        document.addEventListener("keydown", (e) => {
+            if (document.body.classList.contains('cart-open') && e.key === "Escape") {
+                document.body.classList.remove('cart-open');
+                document.body.style.overflow = '';
+            }
         });
     </script>
-
-    <script>
-        function formatLinks(links) {
-            // Assume links are newline-separated or comma-separated
-            const parts = links.split(/\s*[\n,]+\s*/).filter(Boolean);
-            return parts.map(link => {
-                return `<a href="${link}" target="_blank" class="text-blue-500 underline block mb-1">${link}</a>`;
-            }).join('');
-        }
-    </script>
-
-
-
-
 
 </body>
 
