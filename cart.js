@@ -1,3 +1,46 @@
+// CART STYLES
+const cartStyles = document.createElement("style");
+
+cartStyles.textContent = `
+    .site-shell {
+        transition: padding-right 0.35s ease;
+    }
+
+    @media (min-width: 1024px) {
+        body.cart-open .site-shell {
+            padding-right: 420px;
+        }
+    }
+
+    #cart-panel {
+        transform: translateX(100%);
+        transition: transform 0.35s ease;
+    }
+
+    body.cart-open #cart-panel {
+        transform: translateX(0);
+    }
+
+    #cart-backdrop {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+    }
+
+    body.cart-open #cart-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    @media (min-width: 1024px) {
+        #cart-backdrop {
+            display: none;
+        }
+    }
+`;
+
+document.head.appendChild(cartStyles);
+
 // CART HTML
 document.body.insertAdjacentHTML("afterbegin", `
 <div id="cart-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80]"></div>
@@ -93,7 +136,7 @@ document.body.insertAdjacentHTML("afterbegin", `
 </aside>
 `);
 
-// CART LOGIC
+// CART ELEMENTS
 const cartPanel = document.getElementById('cart-panel');
 const cartBackdrop = document.getElementById('cart-backdrop');
 const cartList = document.getElementById('cart-list');
@@ -102,6 +145,7 @@ const closeCartBtn = document.getElementById('close-cart');
 const cartTotalLabel = document.getElementById('cart-total-label');
 const cartCount = document.getElementById('cart-count');
 
+// STORAGE
 function getCart() {
     return JSON.parse(localStorage.getItem('catalogCart')) || [];
 }
@@ -110,6 +154,7 @@ function saveCart(cart) {
     localStorage.setItem('catalogCart', JSON.stringify(cart));
 }
 
+// COUNT
 function updateCartCount() {
 
     const cart = getCart();
@@ -124,6 +169,7 @@ function updateCartCount() {
     }
 }
 
+// RENDER CART
 function updateCartList() {
 
     const cart = getCart();
@@ -134,6 +180,7 @@ function updateCartList() {
 
         cartList.innerHTML = `
             <li class="text-center py-12">
+
                 <div class="w-16 h-16 mx-auto rounded-full bg-blue-50 border border-blue-100 shadow-sm flex items-center justify-center mb-4">
                     <i class="fa-solid fa-cart-shopping text-2xl text-blue-300"></i>
                 </div>
@@ -145,6 +192,7 @@ function updateCartList() {
                 <p class="text-sm text-gray-500 mt-1">
                     Save catalogs you like and they will show up here.
                 </p>
+
             </li>
         `;
 
@@ -173,6 +221,7 @@ function updateCartList() {
                         ${item.name}
 
                     </a>
+
                 </div>
 
                 <button class="remove-btn w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-red-500 hover:text-white transition flex items-center justify-center shrink-0"
@@ -194,17 +243,21 @@ function updateCartList() {
                     rows="3"
                     data-index="${index}"
                     placeholder="Add notes, quantities, colors, sizes, logo placement, questions, etc...">${item.notes || ''}</textarea>
+
             </div>
         `;
 
         cartList.appendChild(li);
     });
 
+    // REMOVE
     document.querySelectorAll('.remove-btn').forEach(btn => {
 
         btn.addEventListener('click', (e) => {
 
-            const index = parseInt(e.currentTarget.getAttribute('data-index'));
+            const index = parseInt(
+                e.currentTarget.getAttribute('data-index')
+            );
 
             const updatedCart = getCart();
 
@@ -217,11 +270,14 @@ function updateCartList() {
         });
     });
 
+    // NOTES
     document.querySelectorAll('.cart-notes').forEach(input => {
 
         input.addEventListener('input', (e) => {
 
-            const index = parseInt(e.target.getAttribute('data-index'));
+            const index = parseInt(
+                e.target.getAttribute('data-index')
+            );
 
             const cart = getCart();
 
@@ -232,6 +288,7 @@ function updateCartList() {
     });
 }
 
+// OPEN
 function openCart() {
 
     updateCartList();
@@ -243,6 +300,7 @@ function openCart() {
     }
 }
 
+// CLOSE
 function closeCart() {
 
     document.body.classList.remove('cart-open');
@@ -250,14 +308,17 @@ function closeCart() {
     document.body.style.overflow = '';
 }
 
+// ICON CLICK
 if (cartIcon) {
     cartIcon.addEventListener('click', openCart);
 }
 
+// CLOSE BUTTON
 if (closeCartBtn) {
     closeCartBtn.addEventListener('click', closeCart);
 }
 
+// BACKDROP
 if (cartBackdrop) {
     cartBackdrop.addEventListener('click', closeCart);
 }
@@ -290,6 +351,7 @@ document.addEventListener('click', (e) => {
     }
 
     updateCartCount();
+
     openCart();
 });
 
@@ -307,25 +369,25 @@ document.addEventListener('click', (e) => {
         return;
     }
 
-    let body = "Here are the catalogs I'm interested in:\\n\\n";
+    let body = "Here are the catalogs I'm interested in:\n\n";
 
     cart.forEach(item => {
 
-        body += \`Catalog: \${item.name}\\n\`;
+        body += `Catalog: ${item.name}\n`;
 
         if (item.link) {
-            body += \`Catalog Link: \${item.link}\\n\`;
+            body += `Catalog Link: ${item.link}\n`;
         }
 
         if (item.notes) {
-            body += \`Notes/Questions:\\n\${item.notes}\\n\`;
+            body += `Notes/Questions:\n${item.notes}\n`;
         }
 
-        body += "\\n";
+        body += "\n";
     });
 
     const mailtoLink =
-        \`mailto:sales@primepromollc.com?subject=Saved Catalogs&body=\${encodeURIComponent(body)}\`;
+        `mailto:sales@primepromollc.com?subject=Saved Catalogs&body=${encodeURIComponent(body)}`;
 
     window.location.href = mailtoLink;
 });
@@ -333,10 +395,13 @@ document.addEventListener('click', (e) => {
 // ESC CLOSE
 document.addEventListener("keydown", (e) => {
 
-    if (document.body.classList.contains('cart-open') && e.key === "Escape") {
-
+    if (
+        document.body.classList.contains('cart-open') &&
+        e.key === "Escape"
+    ) {
         closeCart();
     }
 });
 
+// INIT
 updateCartCount();
