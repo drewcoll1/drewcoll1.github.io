@@ -11,9 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Barlow+Condensed:wght@500;700&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
 
     <style>
         html {
@@ -76,6 +74,13 @@
         .menu-open .menu-line:nth-child(3) {
             transform: translateY(-14px) rotate(-45deg);
         }
+
+        .category-btn.active {
+            background: #38bdf8;
+            color: white;
+            border-color: #38bdf8;
+            box-shadow: 0 12px 28px rgba(56, 189, 248, 0.25);
+        }
     </style>
 </head>
 
@@ -105,7 +110,7 @@
                             Saved Items
                         </h3>
                         <p class="text-sm text-gray-500 mt-1">
-                            Your selected catalogs are ready to send.
+                            Add notes before sending your request.
                         </p>
                     </div>
                 </div>
@@ -145,7 +150,7 @@
                     Send to our team
                 </p>
                 <p class="text-sm text-gray-500 mt-1 mb-4">
-                    Email your saved catalogs, product links, and notes.
+                    Email your saved catalogs and notes.
                 </p>
 
                 <button id="send-email"
@@ -259,7 +264,7 @@
                                         d="M21 21l-4.35-4.35m1.45-4.65a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                                 <p class="text-white brand-font text-xl mt-4">
-                                    Click a category below to explore catalogs by product type.
+                                    Select a category below to explore catalogs by product type.
                                 </p>
                             </div>
 
@@ -267,7 +272,7 @@
                                 <h2 class="text-4xl font-bold brand-font mb-3 text-white">Save Favorites</h2>
                                 <i class="fas fa-cart-plus text-white text-5xl mt-1"></i>
                                 <p class="text-white brand-font text-xl mt-4">
-                                    Save catalogs you enjoy, add product links and notes for later.
+                                    Save catalogs you enjoy and add notes before sending.
                                 </p>
                             </div>
 
@@ -289,415 +294,647 @@
                 </div>
             </section>
 
-            <section class="py-20 px-6 bg-white">
+            <section id="catalog-directory" class="py-20 px-6 bg-white">
+                <div class="max-w-7xl mx-auto">
 
-                <div class="category-stack flex justify-center gap-20 mb-10 flex-wrap">
-                    <div class="text-center">
-                        <img src="/images/customhats.webp" alt="Headwear" id="headwear-img"
-                            class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                        <div class="text-3xl brand-font text-center">Headwear</div>
+                    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+                        <div>
+                            <p class="uppercase tracking-[0.25em] text-blue-400 text-sm font-bold mb-2">
+                                Browse by category
+                            </p>
+                            <h2 class="brand-font text-5xl md:text-6xl text-gray-950 leading-none">
+                                Catalog Directory
+                            </h2>
+                            <p class="text-gray-500 max-w-2xl mt-3">
+                                Browse supplier catalogs and save the ones you like directly into your quote panel.
+                            </p>
+                        </div>
+
+                        <div class="flex flex-wrap gap-3">
+                            <button
+                                class="category-btn active border border-blue-400 bg-blue-400 text-white px-5 py-2 rounded-full font-semibold transition"
+                                data-category="all">All</button>
+
+                            <button
+                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
+                                data-category="headwear">Headwear</button>
+
+                            <button
+                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
+                                data-category="apparel">Apparel</button>
+
+                            <button
+                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
+                                data-category="tradeshows">Tradeshows</button>
+
+                            <button
+                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
+                                data-category="promotions">Promotions</button>
+
+                            <button
+                                class="category-btn border border-gray-200 bg-white text-gray-700 hover:border-blue-400 hover:text-blue-500 px-5 py-2 rounded-full font-semibold transition"
+                                data-category="awards">Awards</button>
+                        </div>
                     </div>
 
-                    <div class="text-center">
-                        <img src="/images/22A.webp" alt="Apparel" id="apparel-img"
-                            class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                        <div class="text-3xl brand-font text-center">Apparel</div>
-                    </div>
+                    <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
-                    <div class="text-center">
-                        <img src="/images/customtents.webp" alt="Tradeshows" id="tradeshows-img"
-                            class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                        <div class="text-3xl brand-font text-center">Tradeshows</div>
-                    </div>
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="headwear">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/cap copy.jpg" alt="Cap America Catalog"
+                                    class="w-full h-full object-contain scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Headwear</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Cap America</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Cap America"
+                                        data-link="https://www.capamerica.com/category/-all-caps?pageno=1&Page=grid">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    American-made embroidered baseball caps, beanies, and visors. Known for rapid
+                                    delivery and premium stitching.
+                                </p>
+                                <a href="https://www.capamerica.com/category/-all-caps?pageno=1&Page=grid"
+                                    target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
 
-                    <div class="text-center">
-                        <img src="/images/rambler.jpg" alt="General Promotions" id="promotions-img"
-                            class="catalog-circle block mx-auto w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                        <div class="text-3xl brand-font text-center">General Promotions</div>
-                    </div>
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="headwear">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/outdoor.png" alt="Outdoor Cap Catalog"
+                                    class="w-full h-full object-contain scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Headwear</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Outdoor Cap</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Outdoor Cap" data-link="https://promo.outdoorcap.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Vast selection of trucker hats, camo caps, and lifestyle headwear with deep
+                                    inventory and low MOQs.
+                                </p>
+                                <a href="https://promo.outdoorcap.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
 
-                    <div class="text-center">
-                        <img src="/images/award.jpg" alt="Awards" id="awards-img"
-                            class="catalog-circle w-44 h-44 mb-3 rounded-full object-contain bg-white cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 hover:ring-4 hover:ring-blue-400" />
-                        <div class="text-3xl brand-font text-center">Awards</div>
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="headwear">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/rich.webp" alt="Richardson Sports Catalog"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Headwear</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Richardson Sports</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Richardson Sports" data-link="https://richardsonsports.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    High-performance caps and visors used by athletic teams nationwide.
+                                </p>
+                                <a href="https://richardsonsports.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="headwear">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/ps.webp" alt="Pacific Headwear Catalog"
+                                    class="w-full h-full object-contain scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Headwear</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Pacific Headwear</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Pacific Headwear"
+                                        data-link="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Athletic and lifestyle hats, snapbacks, flexfits, and performance styles.
+                                </p>
+                                <a href="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear"
+                                    target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="headwear">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/max.png" alt="Max Apparel Catalog"
+                                    class="w-full h-full object-contain scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Headwear</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Max Apparel</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Max Apparel" data-link="https://maxapparel.com/headwear.htm">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Private-label cap manufacturer offering custom-cut styles and finishes.
+                                </p>
+                                <a href="https://maxapparel.com/headwear.htm" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="apparel">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/sanmar.webp" alt="SanMar Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Apparel</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">SanMar</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="SanMar" data-link="https://www.sanmar.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Nike, Carhartt, TravisMathew, Brooks Brothers, District, Port Authority, and more.
+                                </p>
+                                <a href="https://www.sanmar.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="apparel">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/ss.png" alt="S&S Activewear Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Apparel</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">S&S Activewear</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="S&S Activewear" data-link="https://www.ssactivewear.com/ps/new">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Under Armour, Adidas, Swannies, Huk, fashion-forward basics, sweatshirts, and tees.
+                                </p>
+                                <a href="https://www.ssactivewear.com/ps/new" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="apparel">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/di.png" alt="Driving Impressions Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Apparel</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Driving Impressions</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Driving Impressions" data-link="https://drivingi.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Peter Millar, Patagonia, Helly Hansen, Johnnie-O, G/Fore, Southern Tide, and Greyson.
+                                </p>
+                                <a href="https://drivingi.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="apparel">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/scales22.avif" alt="Scales Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Apparel</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Scales</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Scales" data-link="https://www.scalesgear.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Premium coastal lifestyle apparel, performance fishing shirts, and modern workwear.
+                                </p>
+                                <a href="https://www.scalesgear.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="apparel">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/gill.jpg" alt="Gill Marine Catalog"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Apparel</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Gill Marine</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Gill Marine" data-link="https://www.gillmarine.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Technical sailing apparel, waterproof jackets, breathable layers, and marine-grade clothing.
+                                </p>
+                                <a href="https://www.gillmarine.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="apparel">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/ubix.png" alt="Ubix Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Apparel</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Ubix</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Ubix" data-link="https://ubixnow.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Custom sportswear and branding solutions with polos, outerwear, and team apparel.
+                                </p>
+                                <a href="https://ubixnow.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="tradeshows">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/orbus.png" alt="Orbus Catalog"
+                                    class="w-full h-full object-contain scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Tradeshows</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Orbus</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Orbus" data-link="https://www.orbus.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Portable trade show displays, retractable banners, booths, backdrops, and exhibit systems.
+                                </p>
+                                <a href="https://www.orbus.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="tradeshows">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/showdown.jpeg" alt="Showdown Displays Catalog"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Tradeshows</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Showdown Displays</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Showdown Displays" data-link="https://www.showdowndisplays.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Indoor and outdoor signage including table throws, tents, flags, and floor displays.
+                                </p>
+                                <a href="https://www.showdowndisplays.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="tradeshows">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/soar.png" alt="Soar Display Catalog"
+                                    class="w-full h-full object-contain scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Tradeshows</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Soar Display</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Soar Display" data-link="https://soardistusa.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Custom event displays and branded architecture for premium booth layouts.
+                                </p>
+                                <a href="https://soardistusa.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="promotions">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/pcna.png" alt="PCNA Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Promotions</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">PCNA</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="PCNA" data-link="https://www.pcna.com/en-us">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Drinkware, tech, wellness items, bags, coolers, and name-brand products.
+                                </p>
+                                <a href="https://www.pcna.com/en-us" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="promotions">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/gemline.avif" alt="Gemline Catalog"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Promotions</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Gemline</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Gemline" data-link="https://www.gemline.com/s/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Bags, backpacks, coolers, journals, and home goods with retail-inspired designs.
+                                </p>
+                                <a href="https://www.gemline.com/s/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="promotions">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/diamond.png" alt="Diamondback Branding Catalog"
+                                    class="w-full h-full object-contain scale-110">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Promotions</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Diamondback Branding</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Diamondback Branding" data-link="https://diamondbackbranding.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Custom laser-engraved tumblers, bottles, and premium barware.
+                                </p>
+                                <a href="https://diamondbackbranding.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="promotions">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/boxer.jpg" alt="Thirsty Boxer Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Promotions</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Thirsty Boxer</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Thirsty Boxer" data-link="https://www.thirstyboxer.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Premium custom drinkware featuring brands like YETI and Stio.
+                                </p>
+                                <a href="https://www.thirstyboxer.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="promotions">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/hit.png" alt="Hit Promotional Products Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Promotions</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Hit Promotional Products</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Hit Promotional Products" data-link="https://www.hitpromo.net/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Budget-friendly promo goods including pens, tote bags, drinkware, tech, and more.
+                                </p>
+                                <a href="https://www.hitpromo.net/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="promotions">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/koozie.jpg" alt="Koozie Group Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Promotions</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Koozie Group</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Koozie Group" data-link="https://www.kooziegroup.com/US/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Koozies, calendars, notepads, pens, sustainable options, and BIC-branded products.
+                                </p>
+                                <a href="https://www.kooziegroup.com/US/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
+                            data-category="awards">
+                            <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                                <img src="/images/vision.gif" alt="Vision Awards Catalog"
+                                    class="w-full h-full object-contain scale-105">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-start justify-between gap-4 mb-3">
+                                    <div>
+                                        <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Awards</p>
+                                        <h3 class="brand-font text-4xl text-gray-950 leading-none">Vision Awards</h3>
+                                    </div>
+                                    <button
+                                        class="save-btn w-11 h-11 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-400 hover:text-white transition flex items-center justify-center shrink-0"
+                                        data-name="Vision Awards" data-link="https://visionsawards.com/">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Custom crystal, acrylic, and glass awards with etched personalization.
+                                </p>
+                                <a href="https://visionsawards.com/" target="_blank"
+                                    class="brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Catalog <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
-                <div id="headwear-cards"
-                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Cap America"
-                            data-link="https://www.capamerica.com/category/-all-caps?pageno=1&Page=grid">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/cap copy.jpg" alt="Cap America Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            American-made embroidered baseball caps, beanies, and visors. Known for rapid delivery and
-                            premium stitching—perfect for patriotic or domestic-focused branding.
-                        </p>
-                        <a href="https://www.capamerica.com/category/-all-caps?pageno=1&Page=grid" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Outdoor Cap" data-link="https://promo.outdoorcap.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/outdoor.png" alt="Outdoor Cap Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Vast selection of trucker hats, camo caps, and lifestyle headwear. Deep inventory and low
-                            MOQs make them ideal for versatile and quick-turn projects.
-                        </p>
-                        <a href="https://promo.outdoorcap.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Richardson Sports" data-link="https://richardsonsports.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/rich.webp" alt="Richardson Sports Catalog"
-                            class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            High-performance caps and visors used by athletic teams nationwide. Great for custom sports
-                            branding or premium headwear programs.
-                        </p>
-                        <a href="https://richardsonsports.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Pacific Headwear"
-                            data-link="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/ps.webp" alt="Pacific Headwear Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Focused on athletic and lifestyle hats—snapbacks, flexfits, and performance styles. Easily
-                            customized for teams, events, or brand merch.
-                        </p>
-                        <a href="https://www.augustasportswear.com/headwear-shop-by-brand-pacific-headwear"
-                            target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Max Apparel" data-link="https://maxapparel.com/headwear.htm">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/max.png" alt="Max Apparel Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Private-label cap manufacturer offering custom-cut styles and finishes. Ideal for brands
-                            seeking exclusive, high-end headwear options.
-                        </p>
-                        <a href="https://maxapparel.com/headwear.htm" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-                </div>
-
-                <div id="apparel-cards"
-                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="SanMar" data-link="https://www.sanmar.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/sanmar.webp" alt="SanMar Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Distributor of brands like Nike, Carhartt, Travis Matthew, Brooks Brothers, District, Port
-                            Authority, and Sport-Tek. Known for polos, fleece, jackets, and custom embroidery options.
-                        </p>
-                        <a href="https://www.sanmar.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="S&S Activewear" data-link="https://www.ssactivewear.com/ps/new">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/ss.png" alt="S&S Activewear Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Offers top-name brands like Under Armour, Adidas, Swannies, and Huk. Known for blank
-                            t-shirts, sweatshirts, and fashion-forward retail basics.
-                        </p>
-                        <a href="https://www.ssactivewear.com/ps/new" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Driving Impressions" data-link="https://drivingi.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/di.png" alt="Driving Impressions Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Offers an elite collection of premium apparel from brands including Peter Millar, Patagonia,
-                            Helly Hansen, Johnnie-O, G/Fore, Southern Tide, Vineyard Vines, and Greyson.
-                        </p>
-                        <a href="https://drivingi.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Scales" data-link="https://www.scalesgear.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/scales22.avif" alt="Scales Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Premium coastal and lifestyle brand known for performance fishing shirts, water-repellent
-                            polos, and modern coastal workwear.
-                        </p>
-                        <a href="https://www.scalesgear.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Gill" data-link="https://www.gillmarine.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/gill.jpg" alt="Gill Marine Catalog"
-                            class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Offers technical sailing apparel and outerwear. Specializes in waterproof jackets,
-                            breathable layers, and marine-grade clothing.
-                        </p>
-                        <a href="https://www.gillmarine.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Ubix" data-link="https://ubixnow.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/ubix.png" alt="Ubix Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Custom sportswear and branding company with innovative apparel solutions. Provides
-                            moisture-wicking polos and softshell outerwear.
-                        </p>
-                        <a href="https://ubixnow.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-                </div>
-
-                <div id="tradeshows-cards"
-                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Orbus" data-link="https://www.orbus.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/orbus.png" alt="Orbus Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Specializes in portable trade show displays: retractable banners, tension fabric booths,
-                            backdrops, and modular exhibit systems.
-                        </p>
-                        <a href="https://www.orbus.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Showdown Displays" data-link="https://www.showdowndisplays.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/showdown.jpeg" alt="Showdown Displays Catalog"
-                            class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Wide range of indoor and outdoor signage including table throws, tents, flag banners, and
-                            floor displays.
-                        </p>
-                        <a href="https://www.showdowndisplays.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Soar Display" data-link="https://soardistusa.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/soar.png" alt="Soar Display Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Custom-designed event displays and branded architecture. Best for experiential marketing
-                            setups or premium booth layouts.
-                        </p>
-                        <a href="https://soardistusa.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-                </div>
-
-                <div id="promotions-cards"
-                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="PCNA" data-link="https://www.pcna.com/en-us">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/pcna.png" alt="PCNA Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            One of the largest suppliers in the industry, offering drinkware, tech, wellness items,
-                            bags, and name-brand products.
-                        </p>
-                        <a href="https://www.pcna.com/en-us" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Gemline" data-link="https://www.gemline.com/s/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/gemline.avif" alt="Gemline Catalog"
-                            class="w-full h-36 object-cover rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Focuses on bags, backpacks, coolers, journals, and home goods. Known for elegant
-                            retail-inspired designs.
-                        </p>
-                        <a href="https://www.gemline.com/s/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Diamondback Branding" data-link="https://diamondbackbranding.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/diamond.png" alt="Diamondback Branding Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Custom laser-engraved tumblers, bottles, and barware. Perfect for personalizing premium
-                            stainless-steel products.
-                        </p>
-                        <a href="https://diamondbackbranding.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Thirsty Boxer" data-link="https://www.thirstyboxer.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/boxer.jpg" alt="Thirsty Boxer Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Known for premium custom drinkware featuring brands like YETI and Stio — ideal for
-                            giveaways, outdoor events, and high-end brand experiences.
-                        </p>
-                        <a href="https://www.thirstyboxer.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Hit Promotional Products" data-link="https://www.hitpromo.net/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/hit.png" alt="Hit Promotional Products Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Offers one of the widest arrays of budget-friendly promo goods: pens, tote bags, drinkware,
-                            tech gadgets, and more.
-                        </p>
-                        <a href="https://www.hitpromo.net/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Koozie Group" data-link="https://www.kooziegroup.com/US/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/koozie.jpg" alt="Koozie Group Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Known for iconic Koozies, calendars, notepads, and pens. Offers sustainable promo options
-                            and BIC-branded products.
-                        </p>
-                        <a href="https://www.kooziegroup.com/US/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-                </div>
-
-                <div id="awards-cards"
-                    class="catalog-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
-                    <div class="catalog-card relative border rounded-lg shadow-lg p-4 text-center flex flex-col justify-between h-full">
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-5xl"
-                            data-name="Vision Awards" data-link="https://visionsawards.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        <img src="/images/vision.gif" alt="Vision Awards Catalog"
-                            class="w-full h-36 object-contain rounded-lg mb-4 shadow-sm">
-                        <p class="text-sm text-gray-600 mb-3 italic">
-                            Custom crystal, acrylic, and glass awards with etched personalization. Ideal for corporate
-                            recognitions, milestone celebrations, or donor appreciation.
-                        </p>
-                        <a href="https://visionsawards.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Catalog
-                        </a>
-                    </div>
-                </div>
-
             </section>
         </div>
 
@@ -745,97 +982,6 @@
         </footer>
     </div>
 
-    <div id="save-popup"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] hidden transition-opacity duration-300 px-4">
-        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 animate-fade-in">
-
-            <button id="popup-cancel" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl font-bold">
-                &times;
-            </button>
-
-            <div class="mb-6 text-center">
-                <div class="flex justify-center mb-4">
-                    <div class="w-28 h-28 p-1 flex items-center justify-center rounded-full bg-white shadow-md border-2">
-                        <img src="/images/logo.png" alt="Popup Logo" class="w-full h-full object-contain rounded-full" />
-                    </div>
-                </div>
-
-                <h2 class="text-3xl brand-font text-gray-800 mt-4">
-                    Save <span id="popup-catalog-name" class="text-blue-500">Catalog</span>
-                </h2>
-                <p class="text-xl brand-font text-gray-700 italic mt-1">
-                    <span class="pl-1 text-gray-400 text-xl">
-                        Let us know which products you liked or have questions about.
-                    </span>
-                </p>
-            </div>
-
-            <div class="mb-4">
-                <label for="popup-links" class="brand-font pl-3 text-xl font-medium text-gray-700 mb-1">
-                    Product Links <span class="pl-1 text-gray-400 text-sm">(optional)</span>
-                </label>
-                <textarea id="popup-links"
-                    class="w-full py-2 pl-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                    rows="3" placeholder="Paste one or more product URLs here..."></textarea>
-            </div>
-
-            <div class="mb-6">
-                <label for="popup-notes" class="block brand-font pl-3 text-xl font-medium text-gray-700 mb-1">
-                    Notes or Questions <span class="pl-1 text-gray-400 text-sm">(optional)</span>
-                </label>
-                <textarea id="popup-notes"
-                    class="w-full py-2 pl-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                    rows="3" placeholder="Anything you'd like us to know or discuss..."></textarea>
-            </div>
-
-            <div class="flex justify-end gap-3">
-                <button id="popup-confirm"
-                    class="bg-blue-400 text-white brand-font text-2xl px-5 py-2 rounded-full font-semibold hover:bg-blue-500 transition">
-                    Save Catalog
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const catalogCircles = document.querySelectorAll('.catalog-circle');
-        const allCatalogs = document.querySelectorAll('.catalog-container');
-        let activeCircle = null;
-
-        catalogCircles.forEach(circle => {
-            circle.addEventListener('click', () => {
-                const categoryId = circle.id.replace('-img', '-cards');
-                const catalogContainer = document.getElementById(categoryId);
-                const isActive = activeCircle === circle;
-
-                catalogCircles.forEach(img => img.classList.remove('scale-110', 'ring-4', 'ring-blue-400'));
-                allCatalogs.forEach(container => container.classList.add('hidden'));
-
-                if (!isActive) {
-                    circle.classList.add('scale-110', 'ring-4', 'ring-blue-400');
-                    catalogContainer?.classList.remove('hidden');
-                    activeCircle = circle;
-
-                    const isStacked = (() => {
-                        const firstTop = catalogCircles[0].offsetTop;
-                        return [...catalogCircles].some(el => el.offsetTop !== firstTop);
-                    })();
-
-                    if (isStacked && catalogContainer) {
-                        setTimeout(() => {
-                            const yOffset = -150;
-                            const y = catalogContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                            window.scrollTo({ top: y, behavior: 'smooth' });
-                        }, 0);
-                    }
-
-                } else {
-                    activeCircle = null;
-                }
-            });
-        });
-    </script>
-
     <script>
         const cartPanel = document.getElementById('cart-panel');
         const cartBackdrop = document.getElementById('cart-backdrop');
@@ -846,14 +992,8 @@
         const cartCount = document.getElementById('cart-count');
 
         const saveButtons = document.querySelectorAll('.save-btn');
-        const popup = document.getElementById('save-popup');
-        const popupCatalogName = document.getElementById('popup-catalog-name');
-        const popupLinks = document.getElementById('popup-links');
-        const popupNotes = document.getElementById('popup-notes');
-        const popupCancel = document.getElementById('popup-cancel');
-        const popupConfirm = document.getElementById('popup-confirm');
-
-        let currentButton = null;
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const catalogCards = document.querySelectorAll('.catalog-card');
 
         function getCart() {
             return JSON.parse(localStorage.getItem('catalogCart')) || [];
@@ -872,14 +1012,6 @@
             if (cartTotalLabel) {
                 cartTotalLabel.textContent = cart.length;
             }
-        }
-
-        function formatLinks(links) {
-            const parts = links.split(/\s*[\n,]+\s*/).filter(Boolean);
-
-            return parts.map(link => {
-                return `<a href="${link}" target="_blank" class="text-blue-500 underline block mb-1 break-all">${link}</a>`;
-            }).join('');
         }
 
         function updateCartList() {
@@ -929,25 +1061,16 @@
                         </button>
                     </div>
 
-                    ${item.productLinks ? `
-                        <div class="mt-4 bg-blue-50 border border-blue-100 rounded-xl p-3">
-                            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-2">
-                                Product Links
-                            </p>
-                            <div class="text-sm">
-                                ${formatLinks(item.productLinks)}
-                            </div>
-                        </div>
-                    ` : ''}
-
-                    ${item.notes ? `
-                        <div class="mt-3 bg-gray-50 border border-gray-100 rounded-xl p-3">
-                            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-1">
-                                Notes
-                            </p>
-                            <p class="text-sm text-gray-700 whitespace-pre-line">${item.notes}</p>
-                        </div>
-                    ` : ''}
+                    <div class="mt-4">
+                        <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-1 block">
+                            Notes
+                        </label>
+                        <textarea
+                            class="cart-notes w-full border border-blue-100 rounded-xl p-3 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
+                            rows="3"
+                            data-index="${index}"
+                            placeholder="Add notes, quantities, colors, sizes, logo placement, questions, etc...">${item.notes || ''}</textarea>
+                    </div>
                 `;
 
                 cartList.appendChild(li);
@@ -963,6 +1086,16 @@
 
                     updateCartCount();
                     updateCartList();
+                });
+            });
+
+            document.querySelectorAll('.cart-notes').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const index = parseInt(e.target.getAttribute('data-index'));
+                    const cart = getCart();
+
+                    cart[index].notes = e.target.value;
+                    saveCart(cart);
                 });
             });
         }
@@ -987,36 +1120,49 @@
 
         saveButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                currentButton = btn;
-                popupCatalogName.textContent = btn.getAttribute('data-name');
+                const name = btn.getAttribute('data-name');
+                const link = btn.getAttribute('data-link');
+                const cart = getCart();
 
-                popupLinks.value = '';
-                popupNotes.value = '';
-                popup.classList.remove('hidden');
+                const alreadySaved = cart.some(item => item.name === name && item.link === link);
+
+                if (!alreadySaved) {
+                    cart.push({
+                        name,
+                        link,
+                        notes: ''
+                    });
+
+                    saveCart(cart);
+                }
+
+                updateCartCount();
+                openCart();
             });
         });
 
-        popupCancel.addEventListener('click', () => {
-            popup.classList.add('hidden');
-        });
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const selectedCategory = button.getAttribute('data-category');
 
-        popupConfirm.addEventListener('click', () => {
-            if (!currentButton) return;
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-blue-400', 'text-white', 'border-blue-400');
+                    btn.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
+                });
 
-            const name = currentButton.getAttribute('data-name');
-            const link = currentButton.getAttribute('data-link');
-            const productLinks = popupLinks.value.trim();
-            const notes = popupNotes.value.trim();
+                button.classList.add('active', 'bg-blue-400', 'text-white', 'border-blue-400');
+                button.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
 
-            const cart = getCart();
-            cart.push({ name, link, productLinks, notes });
+                catalogCards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
 
-            saveCart(cart);
-            updateCartCount();
-            updateCartList();
-
-            popup.classList.add('hidden');
-            openCart();
+                    if (selectedCategory === 'all' || selectedCategory === cardCategory) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
         });
 
         document.getElementById('send-email').addEventListener('click', () => {
@@ -1032,7 +1178,6 @@
             cart.forEach(item => {
                 body += `Catalog: ${item.name}\n`;
                 if (item.link) body += `Catalog Link: ${item.link}\n`;
-                if (item.productLinks) body += `Product Links:\n${item.productLinks}\n`;
                 if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
                 body += `\n`;
             });
