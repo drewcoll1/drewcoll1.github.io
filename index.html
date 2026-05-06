@@ -6,13 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prime Promotions LLC</title>
     <link rel="icon" href="/images/favicon.png" type="image/jpeg" />
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Barlow+Condensed:wght@500;700&display=swap"
         rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
 
     <style>
@@ -27,42 +33,6 @@
 
         .brand-font {
             font-family: "Bebas Neue", sans-serif;
-        }
-
-        .site-shell {
-            transition: padding-right 0.35s ease;
-        }
-
-        @media (min-width: 1024px) {
-            body.cart-open .site-shell {
-                padding-right: 420px;
-            }
-        }
-
-        #cart-panel {
-            transform: translateX(100%);
-            transition: transform 0.35s ease;
-        }
-
-        body.cart-open #cart-panel {
-            transform: translateX(0);
-        }
-
-        body.cart-open #cart-backdrop {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        #cart-backdrop {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease;
-        }
-
-        @media (min-width: 1024px) {
-            #cart-backdrop {
-                display: none;
-            }
         }
 
         .slider .slide img {
@@ -203,69 +173,7 @@
 
 <body class="text-gray-900 bg-white min-h-screen">
 
-    <div id="cart-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80]"></div>
-
-    <aside id="cart-panel"
-        class="fixed top-0 right-0 h-screen w-full max-w-[420px] bg-white z-[90] shadow-2xl border-l border-blue-100 flex flex-col">
-
-        <div class="relative px-6 py-6 border-b border-blue-100 bg-white">
-            <div class="absolute top-0 left-0 w-full h-2 bg-blue-400"></div>
-
-            <div class="flex items-start justify-between gap-4 pt-2">
-                <div class="flex items-center gap-4">
-                    <div
-                        class="w-14 h-14 rounded-full bg-white border-4 border-blue-100 shadow-md flex items-center justify-center shrink-0">
-                        <img src="./images/logo.png" alt="Prime Promotions Logo"
-                            class="w-10 h-10 object-contain rounded-full">
-                    </div>
-
-                    <div>
-                        <p class="text-xs uppercase tracking-[0.22em] text-blue-400 font-bold">
-                            Prime Promotions
-                        </p>
-                        <h3 class="brand-font text-4xl leading-none text-gray-950 mt-1">
-                            Saved Items
-                        </h3>
-                    </div>
-                </div>
-
-                <button id="close-cart"
-                    class="w-10 h-10 rounded-full bg-gray-100 hover:bg-blue-400 hover:text-white text-gray-600 flex items-center justify-center transition shadow-sm">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="px-6 py-4 bg-blue-50/80 border-b border-blue-100">
-            <div class="flex items-center justify-between gap-4">
-                <div>
-                    <p class="brand-font text-3xl text-gray-950 leading-none mt-1">
-                        <span id="cart-total-label">0</span> Saved Catalogs
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex-1 overflow-y-auto px-5 py-5 bg-white">
-            <ul id="cart-list" class="space-y-4 text-md text-gray-800"></ul>
-        </div>
-
-        <div class="px-5 py-5 bg-gray-50 border-t border-gray-200">
-            <div class="rounded-3xl bg-white border border-blue-100 p-5 shadow-sm">
-                <p class="brand-font text-3xl text-gray-950 leading-none">
-                    Send to our team
-                </p>
-                <p class="text-sm text-gray-500 mt-1 mb-4">
-                    Your selected catalogs are ready to send.
-                </p>
-
-                <button id="send-email"
-                    class="w-full bg-blue-400 hover:bg-blue-500 text-white brand-font text-2xl px-6 py-3 rounded-full shadow-lg transition flex items-center justify-center gap-3 whitespace-nowrap">
-                    <i class="fa-solid fa-envelope"></i>
-                </button>
-            </div>
-        </div>
-    </aside>
+    <div id="cart-root"></div>
 
     <div class="site-shell min-h-screen flex flex-col">
 
@@ -502,55 +410,6 @@
         </footer>
     </div>
 
-    <div id="save-popup"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] hidden transition-opacity duration-300 px-4">
-        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 animate-fade-in">
-
-            <button id="popup-cancel" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl font-bold">
-                &times;
-            </button>
-
-            <div class="mb-6 text-center">
-                <div class="flex justify-center mb-4">
-                    <div class="w-40 h-40 flex items-center justify-center rounded-full bg-white shadow-md border-2">
-                        <img src="./images/logo.png" alt="Popup Logo" class="w-24 h-24 object-contain" />
-                    </div>
-                </div>
-
-                <h2 class="text-2xl font-bold text-gray-800 mt-4">
-                    Save <span id="popup-catalog-name" class="text-blue-500">Catalog</span>
-                </h2>
-                <p class="text-sm text-gray-500 mt-1">
-                    Let us know which products you liked or have questions about.
-                </p>
-            </div>
-
-            <div class="mb-4">
-                <label for="popup-links" class="block text-sm font-medium text-gray-700 mb-1">
-                    Product Links <span class="text-gray-400 text-xs">(optional)</span>
-                </label>
-                <textarea id="popup-links"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                    rows="3" placeholder="Paste one or more product URLs here..."></textarea>
-            </div>
-
-            <div class="mb-6">
-                <label for="popup-notes" class="block text-sm font-medium text-gray-700 mb-1">
-                    Notes or Questions <span class="text-gray-400 text-xs">(optional)</span>
-                </label>
-                <textarea id="popup-notes"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                    rows="3" placeholder="Anything you'd like us to know or discuss..."></textarea>
-            </div>
-
-            <div class="flex justify-end gap-3">
-                <button id="popup-confirm" class="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-                    Save Catalog
-                </button>
-            </div>
-        </div>
-    </div>
-
     <div id="image-lightbox" class="lightbox hidden">
         <div class="lightbox-content">
             <button id="lightbox-close" class="lightbox-close" aria-label="Close enlarged image">&times;</button>
@@ -558,205 +417,7 @@
         </div>
     </div>
 
-    <script>
-        const cartPanel = document.getElementById('cart-panel');
-        const cartBackdrop = document.getElementById('cart-backdrop');
-        const cartList = document.getElementById('cart-list');
-        const cartIcon = document.getElementById('cart-icon');
-        const closeCartBtn = document.getElementById('close-cart');
-        const cartTotalLabel = document.getElementById('cart-total-label');
-        const cartCount = document.getElementById('cart-count');
-
-        const saveButtons = document.querySelectorAll('.save-btn');
-        const popup = document.getElementById('save-popup');
-        const popupCatalogName = document.getElementById('popup-catalog-name');
-        const popupLinks = document.getElementById('popup-links');
-        const popupNotes = document.getElementById('popup-notes');
-        const popupCancel = document.getElementById('popup-cancel');
-        const popupConfirm = document.getElementById('popup-confirm');
-
-        let currentButton = null;
-
-        function getCart() {
-            return JSON.parse(localStorage.getItem('catalogCart')) || [];
-        }
-
-        function saveCart(cart) {
-            localStorage.setItem('catalogCart', JSON.stringify(cart));
-        }
-
-        function updateCartCount() {
-            const cart = getCart();
-
-            cartCount.textContent = cart.length;
-            cartCount.classList.toggle('hidden', cart.length === 0);
-
-            if (cartTotalLabel) {
-                cartTotalLabel.textContent = cart.length;
-            }
-        }
-
-        function formatLinks(links) {
-            const parts = links.split(/\s*[\n,]+\s*/).filter(Boolean);
-
-            return parts.map(link => {
-                return `<a href="${link}" target="_blank" class="text-blue-500 underline block mb-1 break-all">${link}</a>`;
-            }).join('');
-        }
-
-        function updateCartList() {
-            const cart = getCart();
-            cartList.innerHTML = '';
-
-            if (cartTotalLabel) {
-                cartTotalLabel.textContent = cart.length;
-            }
-
-            if (cart.length === 0) {
-                cartList.innerHTML = `
-                    <li class="text-center py-12">
-                        <div class="w-16 h-16 mx-auto rounded-full bg-blue-50 border border-blue-100 shadow-sm flex items-center justify-center mb-4">
-                            <i class="fa-solid fa-cart-shopping text-2xl text-blue-300"></i>
-                        </div>
-                        <p class="brand-font text-3xl text-gray-800">No saved catalogs yet</p>
-                        <p class="text-sm text-gray-500 mt-1">
-                            Save catalogs you like and they will show up here.
-                        </p>
-                    </li>
-                `;
-                return;
-            }
-
-            cart.forEach((item, index) => {
-                const li = document.createElement('li');
-
-                li.className = "bg-white border border-blue-100 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:border-blue-300 transition relative";
-
-                li.innerHTML = `
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="pr-4">
-                            <p class="text-xs uppercase tracking-widest text-blue-400 font-semibold mb-1">
-                                Saved Catalog
-                            </p>
-
-                            <a href="${item.link}" target="_blank"
-                                class="brand-font text-2xl text-gray-900 hover:text-blue-500 transition leading-none block">
-                                ${item.name}
-                            </a>
-                        </div>
-
-                        <button class="remove-btn w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-red-500 hover:text-white transition flex items-center justify-center shrink-0"
-                            data-index="${index}" title="Remove item">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-
-                    <div class="mt-4">
-                        <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-1 block">
-                            Notes
-                        </label>
-                        <textarea
-                            class="cart-notes w-full border border-blue-100 rounded-xl p-3 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                            rows="3"
-                            data-index="${index}"
-                            placeholder="Add notes, quantities, colors, sizes, logo placement, questions, etc...">${item.notes || ''}</textarea>
-                    </div>
-                `;
-
-                cartList.appendChild(li);
-            });
-
-
-            document.querySelectorAll('.remove-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
-                    const updatedCart = getCart();
-
-                    updatedCart.splice(index, 1);
-                    saveCart(updatedCart);
-
-                    updateCartCount();
-                    updateCartList();
-                });
-            });
-        }
-
-        function openCart() {
-            updateCartList();
-            document.body.classList.add('cart-open');
-
-            if (window.innerWidth < 1024) {
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeCart() {
-            document.body.classList.remove('cart-open');
-            document.body.style.overflow = '';
-        }
-
-        cartIcon.addEventListener('click', openCart);
-        closeCartBtn.addEventListener('click', closeCart);
-        cartBackdrop.addEventListener('click', closeCart);
-
-        saveButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentButton = btn;
-                popupCatalogName.textContent = btn.getAttribute('data-name');
-
-                popupLinks.value = '';
-                popupNotes.value = '';
-                popup.classList.remove('hidden');
-            });
-        });
-
-        popupCancel.addEventListener('click', () => {
-            popup.classList.add('hidden');
-        });
-
-        popupConfirm.addEventListener('click', () => {
-            if (!currentButton) return;
-
-            const name = currentButton.getAttribute('data-name');
-            const link = currentButton.getAttribute('data-link');
-            const productLinks = popupLinks.value.trim();
-            const notes = popupNotes.value.trim();
-
-            const cart = getCart();
-            cart.push({ name, link, productLinks, notes });
-
-            saveCart(cart);
-            updateCartCount();
-            updateCartList();
-
-            popup.classList.add('hidden');
-            openCart();
-        });
-
-        document.getElementById('send-email').addEventListener('click', () => {
-            const cart = getCart();
-
-            if (cart.length === 0) {
-                alert("Your saved list is empty!");
-                return;
-            }
-
-            let body = "Here are the catalogs I'm interested in:\n\n";
-
-            cart.forEach(item => {
-                body += `Catalog: ${item.name}\n`;
-                if (item.link) body += `Catalog Link: ${item.link}\n`;
-                if (item.productLinks) body += `Product Links:\n${item.productLinks}\n`;
-                if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
-                body += `\n`;
-            });
-
-            const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Catalogs&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
-        });
-
-        updateCartCount();
-    </script>
+    <script src="/cart.js"></script>
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
