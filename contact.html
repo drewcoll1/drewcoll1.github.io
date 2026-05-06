@@ -11,9 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Barlow+Condensed:wght@500;700&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
 
     <style>
         html {
@@ -22,15 +20,49 @@
 
         body {
             font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
-
 
         .brand-font {
             font-family: "Bebas Neue", sans-serif;
-
         }
-    </style>
-    <style>
+
+        .site-shell {
+            transition: padding-right 0.35s ease;
+        }
+
+        @media (min-width: 1024px) {
+            body.cart-open .site-shell {
+                padding-right: 420px;
+            }
+        }
+
+        #cart-panel {
+            transform: translateX(100%);
+            transition: transform 0.35s ease;
+        }
+
+        body.cart-open #cart-panel {
+            transform: translateX(0);
+        }
+
+        #cart-backdrop {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        body.cart-open #cart-backdrop {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @media (min-width: 1024px) {
+            #cart-backdrop {
+                display: none;
+            }
+        }
+
         .menu-open .menu-line:nth-child(1) {
             transform: translateY(14px) rotate(45deg);
         }
@@ -43,264 +75,450 @@
             transform: translateY(-14px) rotate(-45deg);
         }
     </style>
-    <style>
-        #controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        #controls button {
-            width: 3rem;
-            height: 3rem;
-            font-size: 1.5rem;
-            border-radius: 9999px;
-            background-color: white;
-            border: 2px solid #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        #controls button:hover {
-            background-color: #3b82f6;
-            color: white;
-        }
-    </style>
-
-    <style>
-        .slider .slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 350px;
-            max-width: 100%;
-            margin: auto;
-        }
-
-        .slider .slide img {
-            height: 100%;
-            width: auto;
-            object-fit: contain;
-            display: block;
-            margin: 0 auto;
-            border-radius: 0.5rem;
-        }
-    </style>
-
-
-
-
-
 </head>
 
+<body class="text-gray-900 bg-white min-h-screen">
 
-<body class="text-gray-900 bg-white min-h-screen flex flex-col">
-    <div class="flex-grow">
+    <div id="cart-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80]"></div>
 
+    <aside id="cart-panel"
+        class="fixed top-0 right-0 h-screen w-full max-w-[420px] bg-white z-[90] shadow-2xl border-l border-blue-100 flex flex-col">
 
-        <!-- Navigation Bar -->
-        <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
-            <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
-                <a href="index.html" class="flex items-center gap-4">
-                    <img src="/images/logo.png" alt="Prime Promotions Logo"
-                        class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300" />
-                    <span
-                        class="hidden lg:flex flex-col text-black text-4xl tracking-wide brand-font leading-tight">
-                        <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
-                        <span class='text-xl text-blue-400'>(574) 202-7050</span>
-                        <span class='text-xl text-blue-400 italic'>sales@primepromollc.com</span>
-                    </span>
-                </a>
-                <button id="menu-toggle" class="md:hidden relative w-8 h-8 focus:outline-none z-50">
-                    <span
-                        class="menu-line block absolute left-0 top-0 w-8 h-0.5 bg-black transition-transform duration-300"></span>
-                    <span
-                        class="menu-line block absolute left-0 top-3.5 w-8 h-0.5 bg-black transition-opacity duration-300"></span>
-                    <span
-                        class="menu-line block absolute left-0 top-7 w-8 h-0.5 bg-black transition-transform duration-300"></span>
-                </button>
+        <div class="relative px-6 py-6 border-b border-blue-100 bg-white">
+            <div class="absolute top-0 left-0 w-full h-2 bg-blue-400"></div>
 
-                <nav id="nav-menu"
-                    class="hidden fixed top-full left-0 w-full h-screen overflow-y-auto bg-white text-black flex-col justify-start items-center text-3xl space-y-10 z-50 transition-all duration-500 ease-in-out pt-5 md:relative md:flex md:h-auto md:overflow-visible md:bg-transparent md:flex-row md:space-y-0 md:space-x-10 md:text-black md:text-lg md:justify-end md:pt-0">
-
-                    <a href="index.html" class="relative group">
-                        <span class="text-black group-hover:text-blue-400 transition brand-font text-4xl mt-[2px]">
-    Home
-</span>
-                        <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </a>
-
-                    <a href="products.html" class="relative group">
-                        <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Catalogs</span>
-                        <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </a>
-                    <a href="shopify.html" class="relative group">
-                        <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Shopify</span>
-                        <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                    </a>
-                    <a href="contact.html" class="relative group">
-                        <span class="text-blue-400 brand-font text-4xl">Contact</span>
-                        <span
-                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
-                    </a>
-
-                    <a id="cart-icon" class="relative group cursor-pointer">
-                        <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2"><i
-                                class="fas fa-shopping-cart"></i>
-
-                        </span>
-                        <span id="cart-count"
-                            class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
-                    </a>
-                    <!-- <a href="mailto:sales@primepromollc.com" class="text-4xl text-gray-700 hover:text-blue-600">
-                        <i class="fa-solid fa-envelope -translate-y-0.5"></i>
-                    </a> -->
-
-                    <!-- Logo & Brand Info for Mobile View (at bottom) -->
-                    <div class="flex flex-col items-center py-1 md:hidden">
+            <div class="flex items-start justify-between gap-4 pt-2">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-14 h-14 rounded-full bg-white border-4 border-blue-100 shadow-md flex items-center justify-center shrink-0">
                         <img src="/images/logo.png" alt="Prime Promotions Logo"
-                            class="h-36 w-auto rounded-full border-4 border-white shadow-xl mb-4" />
-                        <span class="text-2xl text-blue-400 brand-font">(574) 202-7050 <span
-                                class="text-black">|</span>
-                            sales@primepromollc.com</span>
-                        
-<span class="text-xl text-blue-400 brand-font">
-    514 S Main Street, Middlebury, IN 46540
-</span>
-
+                            class="w-10 h-10 object-contain rounded-full">
                     </div>
-                </nav>
 
-            </div>
-        </header>
-        <!-- Contact Section -->
-        <!-- Contact Section -->
-        <section class="py-20 px-6 max-w-4xl mx-auto">
-            <h1 class="brand-font text-6xl font-bold text-center mb-6">Contact Us</h1>
-            <p class="brand-font text-center text-black/80 text-2xl mb-10">
-                Let us know what you're interested in and how we can help.
-            </p>
-
-            <form id="contact-form" class="space-y-6">
-
-
-                <!-- First & Last Name -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="brand-font text-2xl mb-1 block">First Name<span
-                                class="text-red-500">*</span></label>
-                        <input type="text" id="first-name" name="first-name" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                    </div>
-                    <div>
-                        <label class="brand-font text-2xl mb-1 block">Last Name<span
-                                class="text-red-500">*</span></label>
-                        <input type="text" id="last-name" name="last-name" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                        <p class="text-xs uppercase tracking-[0.22em] text-blue-400 font-bold">
+                            Prime Promotions
+                        </p>
+                        <h3 class="brand-font text-4xl leading-none text-gray-950 mt-1">
+                            Saved Items
+                        </h3>
+                        <p class="text-sm text-gray-500 mt-1">
+                            Your saved catalogs are ready to send.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Phone & Email -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="brand-font text-2xl mb-1 block">Phone<span class="text-red-500">*</span></label>
-                        <input type="tel" id="phone" name="phone" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            placeholder="(555) 555-5555" />
-                    </div>
-                    <div>
-                        <label class="brand-font text-2xl mb-1 block">Email<span class="text-red-500">*</span></label>
-                        <input type="email" id="email" name="email" required
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            placeholder="you@example.com" />
-                    </div>
-                </div>
-
-                <!-- Company & Type of Item -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="brand-font text-2xl mb-1 block">Company / Organization</label>
-                        <input type="text" id="company" name="company"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                    </div>
-                    <div>
-                        <label class="brand-font text-2xl mb-1 block">Type of Item</label>
-                        <input type="text" id="products" name="products"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            placeholder="e.g., Tumblers, Hats..." />
-                    </div>
-                </div>
-
-                <!-- Message -->
-                <div>
-                    <label class="brand-font text-2xl mb-1 block">Message<span class="text-red-500">*</span></label>
-                    <textarea id="notes" name="notes" rows="5" required
-                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        placeholder="Let us know how we can help..."></textarea>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit"
-                    class="inline-block brand-font text-2xl bg-blue-400 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition">
-                    Send My Message
+                <button id="close-cart"
+                    class="w-10 h-10 rounded-full bg-gray-100 hover:bg-blue-400 hover:text-white text-gray-600 flex items-center justify-center transition shadow-sm">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
+            </div>
+        </div>
 
-            </form>
-        </section>
-
-    </div>
-    <!-- Footer -->
-    <footer class="bg-black text-white">
-        <div
-            class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-            <div class="flex items-center gap-4">
-                <img src="/images/logo.png" class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl" />
+        <div class="px-6 py-4 bg-blue-50/80 border-b border-blue-100">
+            <div class="flex items-center justify-between gap-4">
                 <div>
-  <span class="text-white text-3xl brand-font">
-    Prime Promotions LLC
-    <br>
-    <span class="text-xl text-blue-400">(574) 202-7050</span>
-    <br>
-    <span class="text-xl text-blue-400">sales@primepromollc.com</span>
-    <br>
-    <span class="text-xl text-blue-400">514 S Main Street, Middlebury, IN 46540</span>
-  </span>
-</div>
-            </div>
-            <div>
-                <h3 class="text-2xl brand-font text-white font-normal mb-2">Let’s Make Your Brand
-                    Unforgettable</h3>
-                <p class="text-2xl brand-font text-grey font-normal mb-4 italic">Reach out to our team to
-                    get your order started
-                    today.
-                </p>
-                <a href="mailto:sales@primepromollc.com"
-                    class="bg-blue-400 brand-font text-2xl px-5 py-2 rounded-full hover:bg-blue-500 transition">Get
-                    in Touch</a>
-            </div>
-        </div>
-        <div class="text-center text-sm text-white opacity-70 pb-6">&copy; <span id="year"></span>
-            Prime Promotions LLC.
-            All
-            rights reserved.
-            <br>
-            Site by
-            <a href="https://www.linkedin.com/in/drewmcollins/" target="_blank"
-                class="underline hover:text-blue-400 transition">
-                Drew Collins
-            </a>
-        </div>
-    </footer>
+                    <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold">
+                        Current Request
+                    </p>
+                    <p class="brand-font text-3xl text-gray-950 leading-none mt-1">
+                        <span id="cart-total-label">0</span> Saved Items
+                    </p>
+                </div>
 
-    <!-- Script to build mailto -->
+                <div
+                    class="px-4 py-2 rounded-full bg-white border border-blue-100 text-blue-500 shadow-sm text-sm font-semibold">
+                    Quote Ready
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-5 py-5 bg-white">
+            <ul id="cart-list" class="space-y-4 text-md text-gray-800"></ul>
+        </div>
+
+        <div class="px-5 py-5 bg-gray-50 border-t border-gray-200">
+            <div class="rounded-3xl bg-white border border-blue-100 p-5 shadow-sm">
+                <p class="brand-font text-3xl text-gray-950 leading-none">
+                    Send to our team
+                </p>
+                <p class="text-sm text-gray-500 mt-1 mb-4">
+                    Email your saved catalogs, product links, and notes.
+                </p>
+
+                <button id="send-email"
+                    class="w-full bg-blue-400 hover:bg-blue-500 text-white brand-font text-2xl px-6 py-3 rounded-full shadow-lg transition flex items-center justify-center gap-3 whitespace-nowrap">
+                    <i class="fa-solid fa-envelope"></i>
+                    Send Request
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="site-shell min-h-screen flex flex-col">
+        <div class="flex-grow">
+
+            <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
+                <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
+                    <a href="index.html" class="flex items-center gap-4">
+                        <img src="/images/logo.png" alt="Prime Promotions Logo"
+                            class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300" />
+                        <span class="hidden lg:flex flex-col text-black text-4xl tracking-wide brand-font leading-tight">
+                            <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
+                            <span class="text-xl text-blue-400">(574) 202-7050</span>
+                            <span class="text-xl text-blue-400 italic">sales@primepromollc.com</span>
+                        </span>
+                    </a>
+
+                    <button id="menu-toggle" class="md:hidden relative w-8 h-8 focus:outline-none z-50">
+                        <span
+                            class="menu-line block absolute left-0 top-0 w-8 h-0.5 bg-black transition-transform duration-300"></span>
+                        <span
+                            class="menu-line block absolute left-0 top-3.5 w-8 h-0.5 bg-black transition-opacity duration-300"></span>
+                        <span
+                            class="menu-line block absolute left-0 top-7 w-8 h-0.5 bg-black transition-transform duration-300"></span>
+                    </button>
+
+                    <nav id="nav-menu"
+                        class="hidden fixed top-full left-0 w-full h-screen overflow-y-auto bg-white text-black flex-col justify-start items-center text-3xl space-y-10 z-50 transition-all duration-500 ease-in-out pt-5 md:relative md:flex md:h-auto md:overflow-visible md:bg-transparent md:flex-row md:space-y-0 md:space-x-10 md:text-black md:text-lg md:justify-end md:pt-0">
+
+                        <a href="index.html" class="relative group">
+                            <span class="text-black group-hover:text-blue-400 transition brand-font text-4xl mt-[2px]">
+                                Home
+                            </span>
+                            <span
+                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+
+                        <a href="products.html" class="relative group">
+                            <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Catalogs</span>
+                            <span
+                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+
+                        <a href="shopify.html" class="relative group">
+                            <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Shopify</span>
+                            <span
+                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                        </a>
+
+                        <a href="contact.html" class="relative group">
+                            <span class="text-blue-400 brand-font text-4xl">Contact</span>
+                            <span
+                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
+                        </a>
+
+                        <a id="cart-icon" class="relative group cursor-pointer">
+                            <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2">
+                                <i class="fas fa-shopping-cart"></i>
+                            </span>
+                            <span id="cart-count"
+                                class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
+                        </a>
+
+                        <div class="flex flex-col items-center py-1 md:hidden">
+                            <img src="/images/logo.png" alt="Prime Promotions Logo"
+                                class="h-36 w-auto rounded-full border-4 border-white shadow-xl mb-4" />
+                            <span class="text-2xl text-blue-400 brand-font">
+                                (574) 202-7050 <span class="text-black">|</span>
+                                sales@primepromollc.com
+                            </span>
+
+                            <span class="text-xl text-blue-400 brand-font">
+                                514 S Main Street, Middlebury, IN 46540
+                            </span>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+
+            <section class="py-20 px-6 max-w-4xl mx-auto">
+                <h1 class="brand-font text-6xl font-bold text-center mb-6">Contact Us</h1>
+                <p class="brand-font text-center text-black/80 text-2xl mb-10">
+                    Let us know what you're interested in and how we can help.
+                </p>
+
+                <form id="contact-form" class="space-y-6">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="brand-font text-2xl mb-1 block">
+                                First Name<span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="first-name" name="first-name" required
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                        </div>
+
+                        <div>
+                            <label class="brand-font text-2xl mb-1 block">
+                                Last Name<span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="last-name" name="last-name" required
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="brand-font text-2xl mb-1 block">
+                                Phone<span class="text-red-500">*</span>
+                            </label>
+                            <input type="tel" id="phone" name="phone" required
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                placeholder="(555) 555-5555" />
+                        </div>
+
+                        <div>
+                            <label class="brand-font text-2xl mb-1 block">
+                                Email<span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                placeholder="you@example.com" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="brand-font text-2xl mb-1 block">Company / Organization</label>
+                            <input type="text" id="company" name="company"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                        </div>
+
+                        <div>
+                            <label class="brand-font text-2xl mb-1 block">Type of Item</label>
+                            <input type="text" id="products" name="products"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                placeholder="e.g., Tumblers, Hats..." />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="brand-font text-2xl mb-1 block">
+                            Message<span class="text-red-500">*</span>
+                        </label>
+                        <textarea id="notes" name="notes" rows="5" required
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            placeholder="Let us know how we can help..."></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="inline-block brand-font text-2xl bg-blue-400 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition">
+                        Send My Message
+                    </button>
+
+                </form>
+            </section>
+        </div>
+
+        <footer class="bg-black text-white">
+            <div
+                class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div class="flex items-center gap-4">
+                    <img src="/images/logo.png" class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl" />
+                    <div>
+                        <span class="text-white text-3xl brand-font">
+                            Prime Promotions LLC
+                            <br>
+                            <span class="text-xl text-blue-400">(574) 202-7050</span>
+                            <br>
+                            <span class="text-xl text-blue-400">sales@primepromollc.com</span>
+                            <br>
+                            <span class="text-xl text-blue-400">514 S Main Street, Middlebury, IN 46540</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl brand-font text-white font-normal mb-2">
+                        Let’s Make Your Brand Unforgettable
+                    </h3>
+                    <p class="text-2xl brand-font text-grey font-normal mb-4 italic">
+                        Reach out to our team to get your order started today.
+                    </p>
+                    <a href="mailto:sales@primepromollc.com"
+                        class="bg-blue-400 brand-font text-2xl px-5 py-2 rounded-full hover:bg-blue-500 transition">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center text-sm text-white opacity-70 pb-6">
+                &copy; <span id="year"></span> Prime Promotions LLC. All rights reserved.
+                <br>
+                Site by
+                <a href="https://www.linkedin.com/in/drewmcollins/" target="_blank"
+                    class="underline hover:text-blue-400 transition">
+                    Drew Collins
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const cartPanel = document.getElementById('cart-panel');
+        const cartBackdrop = document.getElementById('cart-backdrop');
+        const cartList = document.getElementById('cart-list');
+        const cartIcon = document.getElementById('cart-icon');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartTotalLabel = document.getElementById('cart-total-label');
+        const cartCount = document.getElementById('cart-count');
+
+        function getCart() {
+            return JSON.parse(localStorage.getItem('catalogCart')) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('catalogCart', JSON.stringify(cart));
+        }
+
+        function updateCartCount() {
+            const cart = getCart();
+
+            cartCount.textContent = cart.length;
+            cartCount.classList.toggle('hidden', cart.length === 0);
+
+            if (cartTotalLabel) {
+                cartTotalLabel.textContent = cart.length;
+            }
+        }
+
+        function formatLinks(links) {
+            const parts = links.split(/\s*[\n,]+\s*/).filter(Boolean);
+
+            return parts.map(link => {
+                return `<a href="${link}" target="_blank" class="text-blue-500 underline block mb-1 break-all">${link}</a>`;
+            }).join('');
+        }
+
+        function updateCartList() {
+            const cart = getCart();
+            cartList.innerHTML = '';
+
+            if (cartTotalLabel) {
+                cartTotalLabel.textContent = cart.length;
+            }
+
+            if (cart.length === 0) {
+                cartList.innerHTML = `
+                    <li class="text-center py-12">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-blue-50 border border-blue-100 shadow-sm flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-cart-shopping text-2xl text-blue-300"></i>
+                        </div>
+                        <p class="brand-font text-3xl text-gray-800">No saved items yet</p>
+                        <p class="text-sm text-gray-500 mt-1">
+                            Save catalogs you like and they will show up here.
+                        </p>
+                    </li>
+                `;
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+
+                li.className = "bg-white border border-blue-100 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:border-blue-300 transition relative";
+
+                li.innerHTML = `
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="pr-4">
+                            <p class="text-xs uppercase tracking-widest text-blue-400 font-semibold mb-1">
+                                Saved Item
+                            </p>
+
+                            <a href="${item.link}" target="_blank"
+                                class="brand-font text-2xl text-gray-900 hover:text-blue-500 transition leading-none block">
+                                ${item.name}
+                            </a>
+                        </div>
+
+                        <button class="remove-btn w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-red-500 hover:text-white transition flex items-center justify-center shrink-0"
+                            data-index="${index}" title="Remove item">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+
+                    ${item.productLinks ? `
+                        <div class="mt-4 bg-blue-50 border border-blue-100 rounded-xl p-3">
+                            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-2">
+                                Product Links
+                            </p>
+                            <div class="text-sm">
+                                ${formatLinks(item.productLinks)}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    ${item.notes ? `
+                        <div class="mt-3 bg-gray-50 border border-gray-100 rounded-xl p-3">
+                            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-1">
+                                Notes
+                            </p>
+                            <p class="text-sm text-gray-700 whitespace-pre-line">${item.notes}</p>
+                        </div>
+                    ` : ''}
+                `;
+
+                cartList.appendChild(li);
+            });
+
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                    const updatedCart = getCart();
+
+                    updatedCart.splice(index, 1);
+                    saveCart(updatedCart);
+
+                    updateCartCount();
+                    updateCartList();
+                });
+            });
+        }
+
+        function openCart() {
+            updateCartList();
+            document.body.classList.add('cart-open');
+
+            if (window.innerWidth < 1024) {
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeCart() {
+            document.body.classList.remove('cart-open');
+            document.body.style.overflow = '';
+        }
+
+        cartIcon.addEventListener('click', openCart);
+        closeCartBtn.addEventListener('click', closeCart);
+        cartBackdrop.addEventListener('click', closeCart);
+
+        document.getElementById('send-email').addEventListener('click', () => {
+            const cart = getCart();
+
+            if (cart.length === 0) {
+                alert("Your saved list is empty!");
+                return;
+            }
+
+            let body = "Here are the items I'm interested in:\n\n";
+
+            cart.forEach(item => {
+                body += `Item: ${item.name}\n`;
+                if (item.link) body += `Link: ${item.link}\n`;
+                if (item.productLinks) body += `Product Links:\n${item.productLinks}\n`;
+                if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
+                body += `\n`;
+            });
+
+            const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Items&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        });
+
+        updateCartCount();
+    </script>
+
     <script>
         document.getElementById('contact-form').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -326,166 +544,9 @@
             const mailto = `mailto:sales@primepromollc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             window.location.href = mailto;
         });
-    </script>
 
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-
-
-
-    <!-- SAVE CATALOG POPUP -->
-    <div id="save-popup"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden transition-opacity duration-300">
-        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 animate-fade-in">
-
-            <!-- Close Button -->
-            <button id="popup-cancel" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl font-bold">
-                &times;
-            </button>
-
-            <!-- Header -->
-            <div class="mb-6 text-center">
-                <div class="flex justify-center mb-4">
-                    <div class="w-40 h-40 flex items-center justify-center rounded-full bg-white shadow-md border-2 "">
-                     <img src=" /images/logo.png" alt="Popup Logo" class="w-24 h-24 object-contain" />
-                </div>
-            </div>
-
-
-            <h2 class="text-2xl font-bold text-gray-800 mt-4">Save <span id="popup-catalog-name"
-                    class="text-blue-500">Catalog</span></h2>
-            <p class="text-sm text-gray-500 mt-1">Let us know which products you liked or have
-                questions about.</p>
-        </div>
-
-        <!-- Input: Product Links -->
-        <div class="mb-4">
-            <label for="popup-links" class="block text-sm font-medium text-gray-700 mb-1">
-                Product Links <span class="text-gray-400 text-xs">(optional)</span>
-            </label>
-            <textarea id="popup-links"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                rows="3" placeholder="Paste one or more product URLs here..."></textarea>
-        </div>
-
-        <!-- Input: Notes/Questions -->
-        <div class="mb-6">
-            <label for="popup-notes" class="block text-sm font-medium text-gray-700 mb-1">
-                Notes or Questions <span class="text-gray-400 text-xs">(optional)</span>
-            </label>
-            <textarea id="popup-notes"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                rows="3" placeholder="Anything you'd like us to know or discuss..."></textarea>
-        </div>
-
-        <!-- Buttons -->
-        <div class="flex justify-end gap-3">
-            <!-- <button id="popup-cancel-duplicate"
-                 class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
-                 Cancel
-             </button> -->
-            <button id="popup-confirm" class="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-                Save Catalog
-            </button>
-        </div>
-    </div>
-    </div>
-
-
-    <script>
-        const saveButtons = document.querySelectorAll('.save-btn');
-        const popup = document.getElementById('save-popup');
-        const popupCatalogName = document.getElementById('popup-catalog-name');
-        const popupLinks = document.getElementById('popup-links');
-        const popupNotes = document.getElementById('popup-notes');
-        const popupCancel = document.getElementById('popup-cancel');
-        const popupConfirm = document.getElementById('popup-confirm');
-        const cartCount = document.getElementById('cart-count');
-        let currentCatalog = '';
-        let currentButton = null;
-
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-            cartCount.textContent = cart.length;
-            cartCount.classList.toggle('hidden', cart.length === 0);
-        }
-
-        saveButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentButton = btn;
-                currentCatalog = btn.getAttribute('data-name'); // specific to this button
-                popupCatalogName.textContent = currentCatalog;
-                popupCatalogName.setAttribute('data-link', btn.getAttribute('data-link')); // store the link too just in case
-
-                popupLinks.value = '';
-                popupNotes.value = '';
-                popup.classList.remove('hidden');
-            });
-        });
-
-
-
-        popupCancel.addEventListener('click', () => {
-            popup.classList.add('hidden');
-        });
-        function updateCartList() {
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-            cartList.innerHTML = '';
-
-            if (cart.length === 0) {
-                cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
-            } else {
-                cart.forEach((item, index) => {
-                    const li = document.createElement('li');
-                    li.className = "border-b pb-2 mb-2 relative";
-                    li.innerHTML = `
-             <a href="${item.link}" target="_blank"
-                class="brand-font text-lg text-blue-600 hover:text-blue-800 underline block mb-1">
-                 ${item.name}
-             </a>
-             ${item.productLinks ? formatLinks(item.productLinks) : ''}
-             ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
-             <button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
-         `;
-                    cartList.appendChild(li);
-                });
-
-                // Re-attach remove button handlers
-                document.querySelectorAll('.remove-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-                        updatedCart.splice(index, 1);
-                        localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
-                        updateCartCount();
-                        updateCartList();
-                    });
-                });
-            }
-        }
-
-
-        popupConfirm.addEventListener('click', () => {
-            if (!currentButton) return;
-
-            const name = currentButton.getAttribute('data-name'); // ✅ reliable
-            const link = currentButton.getAttribute('data-link');
-            const productLinks = popupLinks.value.trim();
-            const notes = popupNotes.value.trim();
-
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-            cart.push({ name, link, productLinks, notes });
-
-            localStorage.setItem('catalogCart', JSON.stringify(cart));
-            updateCartCount();
-            popup.classList.add('hidden');
-            updateCartList(); // ✅ This uses saved name
-            cartPanel.classList.remove('hidden');
-        });
-
-
-        updateCartCount();
-    </script>
-    <script>
         const menuToggle = document.getElementById('menu-toggle');
         const navMenu = document.getElementById('nav-menu');
 
@@ -494,239 +555,14 @@
             navMenu.classList.toggle('hidden');
             navMenu.classList.toggle('flex');
         });
-    </script>
 
-    <div id="cart-panel"
-        class="fixed bottom-0 right-0 bg-white w-full max-w-md h-[30rem] shadow-2xl border-l border-t z-50 rounded-tl-2xl p-6 hidden overflow-y-auto animate-fade-in">
-
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="brand-font text-3xl text-gray-800">Saved Catalogs</h3>
-            <button id="close-cart"
-                class="text-gray-400 hover:text-red-500 text-lg font-bold focus:outline-none">&times;</button>
-        </div>
-
-        <!-- Saved Items -->
-        <ul id="cart-list" class="space-y-4 text-md text-gray-800">
-            <!-- Items will be rendered here -->
-        </ul>
-
-        <!-- CTA Message -->
-        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
-            <div class="text-blue-500">
-                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg> -->
-            </div>
-            <div class="text-sm text-gray-700 leading-snug">
-                <span class="brand-font text-xl block text-blue-600">Let’s get going!</span>
-                Click the mail icon to email your saved catalogs and product notes to our team so we can help
-                bring
-                your vision to life.
-            </div>
-            <div class="mt-4 flex justify-center">
-                <button id="send-email"
-                    class="mt-3 text-blue-500 hover:text-blue-700 transition-transform hover:scale-110"
-                    title="Email My Saved Catalogs">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Email Icon -->
-
-
-
-
-    </div>
-
-
-    <script>
-        const cartPanel = document.getElementById('cart-panel');
-        const cartList = document.getElementById('cart-list');
-        const cartIcon = document.getElementById('cart-icon');
-
-        cartIcon.addEventListener('click', () => {
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-            cartList.innerHTML = '';
-
-            if (cart.length === 0) {
-                cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
-            } else {
-                cart.forEach((item, index) => {
-                    const li = document.createElement('li');
-                    li.className = "border-b pb-2 mb-2 relative";
-                    li.innerHTML = `
-<a href="${item.link}" target="_blank"
-  class="brand-font text-lg text-blue-600 hover:text-blue-800 underline block mb-1">
- ${item.name}
-</a>
-${item.productLinks ? formatLinks(item.productLinks) : ''}
-${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
-<button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
-`;
-
-                    cartList.appendChild(li);
-                });
-
-                // Attach remove handlers
-                document.querySelectorAll('.remove-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-                        updatedCart.splice(index, 1);
-                        localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
-
-                        // Refresh cart
-                        cartIcon.click(); // close
-                        cartIcon.click(); // reopen
-                    });
-                });
+        document.addEventListener("keydown", (e) => {
+            if (document.body.classList.contains('cart-open') && e.key === "Escape") {
+                document.body.classList.remove('cart-open');
+                document.body.style.overflow = '';
             }
-
-            cartPanel.classList.toggle('hidden');
         });
     </script>
-
-    <script>
-        document.getElementById('send-email').addEventListener('click', () => {
-            const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-            if (cart.length === 0) {
-                alert("Your cart is empty!");
-                return;
-            }
-
-            let body = "Here are the catalogs I'm interested in:\n\n";
-
-            cart.forEach(item => {
-                body += `Catalog: ${item.name}\n`;
-                if (item.link) body += `Catalog Link: ${item.link}\n`;
-                if (item.productLinks) body += `Product Links:\n${item.productLinks}\n`;
-                if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
-                body += `\n`;
-            });
-
-            const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Catalogs&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
-        });
-
-
-
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cartIcon = document.getElementById('cart-icon');
-            const cartPanel = document.getElementById('cart-panel');
-            const cartList = document.getElementById('cart-list');
-            const closeCartBtn = document.getElementById('close-cart');
-
-            cartIcon?.addEventListener('click', () => {
-                const cart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-                cartList.innerHTML = '';
-
-                if (cart.length === 0) {
-                    cartList.innerHTML = '<li class="text-gray-500">No saved catalogs yet.</li>';
-                } else {
-                    cart.forEach((item, index) => {
-                        const li = document.createElement('li');
-                        li.className = "border-b pb-2 mb-2 relative";
-                        li.innerHTML = `
-                         <a href="${item.link}" target="_blank"
-                            class="brand-font text-lg text-blue-600 hover:text-blue-800 underline block mb-1">
-                             ${item.name}
-                         </a>
-                         ${item.productLinks ? formatLinks(item.productLinks) : ''}
-                         ${item.notes ? `<div class="text-sm text-gray-700 mt-1"><strong>Notes:</strong><br><span class="whitespace-pre-line">${item.notes}</span></div>` : ''}
-                         <button class="remove-btn absolute top-0 right-0 text-xs text-red-500 hover:underline" data-index="${index}">Remove</button>
-                     `;
-                        cartList.appendChild(li);
-                    });
-
-                    // Add remove logic
-                    document.querySelectorAll('.remove-btn').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const index = parseInt(e.target.getAttribute('data-index'));
-                            const updatedCart = JSON.parse(localStorage.getItem('catalogCart')) || [];
-                            updatedCart.splice(index, 1);
-                            localStorage.setItem('catalogCart', JSON.stringify(updatedCart));
-                            updateCartCount();
-                            updateCartList();
-                        });
-                    });
-                }
-
-                cartPanel.classList.remove('hidden');
-            });
-
-            closeCartBtn?.addEventListener('click', () => {
-                cartPanel?.classList.add('hidden');
-            });
-        });
-    </script>
-
-    <script>
-        function formatLinks(links) {
-            // Assume links are newline-separated or comma-separated
-            const parts = links.split(/\s*[\n,]+\s*/).filter(Boolean);
-            return parts.map(link => {
-                return `<a href="${link}" target="_blank" class="text-blue-500 underline block mb-1">${link}</a>`;
-            }).join('');
-        }
-    </script>
-
-
-    <!-- Slider Script -->
-    <script>
-        window.addEventListener("DOMContentLoaded", () => {
-            const slider = document.querySelector(".slider");
-
-            const carObject = [
-                { "img": "/images/51.jpeg" },
-                { "img": "/images/50.jpeg" },
-                { "img": "/images/52.jpeg" }
-            ];
-
-            let cars = "";
-            for (let car of carObject) {
-                cars += `<div class="slide">
-          <img src="${car.img}" alt="Showcase image" />
-        </div>`;
-            }
-            slider.innerHTML = cars;
-
-            const tinySliderInstance = tns({
-                container: ".slider",
-                items: 1,
-                gutter: 15,
-                slideBy: 1,
-                nav: false,
-                speed: 400,
-                controls: false,
-                responsive: {
-                    640: { items: 2 },
-                    1024: { items: 3 }
-                }
-            });
-
-            const prevBtn = document.querySelector(".previous");
-            const nextBtn = document.querySelector(".next");
-
-            prevBtn.addEventListener("click", () => tinySliderInstance.goTo("prev"));
-            nextBtn.addEventListener("click", () => tinySliderInstance.goTo("next"));
-        });
-    </script>
-
-
-
-
-
-
 
 </body>
 
