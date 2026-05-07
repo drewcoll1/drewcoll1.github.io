@@ -18,10 +18,8 @@
     <!-- Updated Prime Promotions Catalog Page -->
 <!-- Styling updated with premium layered background while keeping existing blue accents -->
 
+
 <style>
-/* =========================
-   BASE PAGE SETUP
-========================= */
 html {
     scroll-behavior: smooth;
 }
@@ -29,42 +27,70 @@ html {
 body {
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-
-    /* Professional layered background */
-    background:
-        radial-gradient(circle at top left, rgba(96,165,250,0.10) 0%, transparent 28%),
-        radial-gradient(circle at top right, rgba(59,130,246,0.08) 0%, transparent 24%),
-        linear-gradient(to bottom, #f8fbff 0%, #eef5ff 100%);
+    background: #f8fbff;
 }
 
-/* Main page wrapper */
 .site-shell {
-    background: transparent;
     transition: padding-right 0.35s ease;
 }
 
-/* Main catalog section */
-#catalog-directory {
-    background: transparent !important;
-}
-
-/* =========================
-   BRAND FONT
-========================= */
 .brand-font {
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400 !important;
     letter-spacing: 0.01em;
 }
 
-/* =========================
-   CATEGORY BUTTONS
-========================= */
+/* Cart Panel */
+@media (min-width: 1024px) {
+    body.cart-open .site-shell {
+        padding-right: 420px;
+    }
+}
+
+#cart-panel {
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+}
+
+body.cart-open #cart-panel {
+    transform: translateX(0);
+}
+
+#cart-backdrop {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+body.cart-open #cart-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@media (min-width: 1024px) {
+    #cart-backdrop {
+        display: none;
+    }
+}
+
+/* Mobile Menu */
+.menu-open .menu-line:nth-child(1) {
+    transform: translateY(14px) rotate(45deg);
+}
+
+.menu-open .menu-line:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-open .menu-line:nth-child(3) {
+    transform: translateY(-14px) rotate(-45deg);
+}
+
+/* Buttons */
 .category-btn {
     color: #374151 !important;
-    border: 1px solid #bfdbfe !important;
-    background: rgba(255,255,255,0.88) !important;
-    backdrop-filter: blur(10px);
+    border-color: #93c5fd !important;
+    background: #ffffff !important;
     font-weight: 700;
     transition: all 0.25s ease;
 }
@@ -76,33 +102,19 @@ body {
     border-color: #60a5fa !important;
 }
 
-/* =========================
-   CATALOG CARDS
-========================= */
+/* Catalog Cards */
 .catalog-card {
-    backdrop-filter: blur(10px);
-    background: rgba(255,255,255,0.92);
-    border: 1px solid rgba(191,219,254,0.9);
-    box-shadow:
-        0 10px 30px rgba(37,99,235,0.05),
-        0 2px 10px rgba(0,0,0,0.03);
-
+    background: white;
     border-radius: 1.5rem;
     overflow: hidden;
-
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 .catalog-card:hover {
     transform: translateY(-4px);
-    box-shadow:
-        0 18px 45px rgba(37,99,235,0.12),
-        0 8px 20px rgba(0,0,0,0.06);
 }
 
-/* =========================
-   IMAGE BOXES
-========================= */
+/* Catalog Images */
 .catalog-image-box {
     width: 100%;
     height: 230px;
@@ -121,26 +133,15 @@ body {
     object-fit: contain !important;
     object-position: center !important;
     transform: none !important;
-    scale: 1 !important;
 }
 
-/* =========================
-   INSTRUCTION BOX
-========================= */
+/* Instructions Box */
 .direction-box {
     max-width: 1080px;
     margin: 0 auto 2rem;
-
-    background: rgba(255,255,255,0.75);
-    backdrop-filter: blur(14px);
-
-    border: 1px solid rgba(191,219,254,0.8);
-
+    background: white;
+    border: 1px solid #dbeafe;
     border-radius: 2rem;
-
-    box-shadow:
-        0 10px 40px rgba(59,130,246,0.08);
-
     overflow: hidden;
 }
 
@@ -164,22 +165,12 @@ body {
     margin-bottom: 1rem;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* Footer */
 footer {
-    background:
-        linear-gradient(
-            135deg,
-            #07111f 0%,
-            #0f1d35 50%,
-            #111827 100%
-        );
+    background: #000;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* Mobile */
 @media (max-width: 767px) {
 
     .direction-box {
@@ -197,6 +188,7 @@ footer {
     }
 }
 </style>
+
 
 </head>
 
@@ -272,7 +264,7 @@ footer {
             <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
                 <a href="index.html" class="flex items-center gap-4">
                     <img src="/images/logo.png" alt="Prime Promotions Logo"
-                        class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300" />
+                        class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover: transition-transform duration-300" />
                     <span class="hidden lg:flex flex-col text-black text-4xl tracking-wide brand-font leading-tight">
                         <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
                         <span class="text-xl text-blue-400">(574) 202-7050</span>
@@ -435,7 +427,7 @@ footer {
                         data-category="headwear">
                         <div class="catalog-image-box">
                             <img src="/images/cap copy.jpg" alt="Cap America Catalog"
-                                class="w-full h-full object-contain scale-110">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -466,7 +458,7 @@ footer {
                         data-category="headwear">
                         <div class="catalog-image-box">
                             <img src="/images/outdoor.png" alt="Outdoor Cap Catalog"
-                                class="w-full h-full object-contain scale-110">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -495,7 +487,7 @@ footer {
                         data-category="headwear">
                         <div class="catalog-image-box">
                             <img src="/images/richardson.png" alt="Richardson Sports Catalog"
-                                class="w-full h-full object-cover">
+                                class="w-full h-full object-contain">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -523,7 +515,7 @@ footer {
                         data-category="headwear">
                         <div class="catalog-image-box">
                             <img src="/images/ps.webp" alt="Pacific Headwear Catalog"
-                                class="w-full h-full object-contain scale-110">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -553,7 +545,7 @@ footer {
                         data-category="headwear">
                         <div class="catalog-image-box">
                             <img src="/images/max.png" alt="Max Apparel Catalog"
-                                class="w-full h-full object-contain scale-110">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -581,7 +573,7 @@ footer {
                         data-category="apparel">
                         <div class="catalog-image-box">
                             <img src="/images/sanmar.webp" alt="SanMar Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -609,7 +601,7 @@ footer {
                         data-category="apparel">
                         <div class="catalog-image-box">
                             <img src="/images/ss.png" alt="S&S Activewear Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -637,7 +629,7 @@ footer {
                         data-category="apparel">
                         <div class="catalog-image-box">
                             <img src="/images/di.png" alt="Driving Impressions Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -665,7 +657,7 @@ footer {
                         data-category="apparel">
                         <div class="catalog-image-box">
                             <img src="/images/scales22.avif" alt="Scales Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -693,7 +685,7 @@ footer {
                         data-category="apparel">
                         <div class="catalog-image-box">
                             <img src="/images/gill.jpg" alt="Gill Marine Catalog"
-                                class="w-full h-full object-cover">
+                                class="w-full h-full object-contain">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -721,7 +713,7 @@ footer {
                         data-category="apparel">
                         <div class="catalog-image-box">
                             <img src="/images/ubix.png" alt="Ubix Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -749,7 +741,7 @@ footer {
                         data-category="tradeshows">
                         <div class="catalog-image-box">
                             <img src="/images/orbus.png" alt="Orbus Catalog"
-                                class="w-full h-full object-contain scale-110">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -777,7 +769,7 @@ footer {
                         data-category="tradeshows">
                         <div class="catalog-image-box">
                             <img src="/images/showdown.png" alt="Showdown Displays Catalog"
-                                class="w-full h-full object-cover">
+                                class="w-full h-full object-contain">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -805,7 +797,7 @@ footer {
                         data-category="tradeshows">
                         <div class="catalog-image-box">
                             <img src="/images/soar.png" alt="Soar Display Catalog"
-                                class="w-full h-full object-contain scale-110">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -833,7 +825,7 @@ footer {
                         data-category="promotions">
                         <div class="catalog-image-box">
                             <img src="/images/pcna.png" alt="PCNA Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -861,7 +853,7 @@ footer {
                         data-category="promotions">
                         <div class="catalog-image-box">
                             <img src="/images/gemline.avif" alt="Gemline Catalog"
-                                class="w-full h-full object-cover">
+                                class="w-full h-full object-contain">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -889,7 +881,7 @@ footer {
                         data-category="promotions">
                         <div class="catalog-image-box">
                             <img src="/images/diamond.png" alt="Diamondback Branding Catalog"
-                                class="w-full h-full object-contain scale-110">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -917,7 +909,7 @@ footer {
                         data-category="promotions">
                         <div class="catalog-image-box">
                             <img src="/images/boxer.jpg" alt="Thirsty Boxer Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -945,7 +937,7 @@ footer {
                         data-category="promotions">
                         <div class="catalog-image-box">
                             <img src="/images/hit.png" alt="Hit Promotional Products Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -973,7 +965,7 @@ footer {
                         data-category="promotions">
                         <div class="catalog-image-box">
                             <img src="/images/koozie.jpg" alt="Koozie Group Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
@@ -1001,7 +993,7 @@ footer {
                         data-category="awards">
                         <div class="catalog-image-box">
                             <img src="/images/vision.gif" alt="Vision Awards Catalog"
-                                class="w-full h-full object-contain scale-105">
+                                class="w-full h-full object-contain ">
                         </div>
                         <div class="p-6">
                             <div class="flex items-start justify-between gap-4 mb-3">
