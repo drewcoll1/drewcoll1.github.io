@@ -26,17 +26,17 @@ html {
 body {
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    background: #f1f3f5;
+    background: #f5f5f4;
 }
 body,
-.site-shell,
-#catalog-directory {
-    background: #f1f3f5; !important;
+
+.site-shell,#catalog-directory {
+    background: #f5f5f4 !important;
 }
 
 /* Main page background */
 .site-shell {
-    background: #f1f3f5;
+    background: #f5f5f4;
     transition: padding-right 0.35s ease;
 }
 
@@ -44,6 +44,112 @@ body,
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400 !important;
     letter-spacing: 0.01em;
+}
+
+
+/* =========================
+   HEADER / NAVIGATION
+========================= */
+.site-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.header-brand-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-logo {
+    height: 6rem;
+    width: auto;
+    border-radius: 9999px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    transition: transform 0.3s ease;
+}
+
+.header-logo:hover {
+    transform: scale(1.05);
+}
+
+.header-brand-text {
+    display: flex;
+    flex-direction: column;
+    color: #000000;
+    font-size: 2.25rem;
+    line-height: 1;
+    letter-spacing: 0.025em;
+}
+
+.header-contact-line {
+    font-size: 1.25rem;
+    color: #60a5fa;
+}
+
+.header-contact-line.email {
+    font-style: italic;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2.5rem;
+}
+
+@media (max-width: 767px) {
+    .site-header-inner {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .header-brand-link {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 0.65rem;
+    }
+
+    .header-logo {
+        height: 5.25rem;
+    }
+
+    .header-brand-text {
+        display: flex;
+        font-size: 2.35rem;
+        text-align: center;
+    }
+
+    .header-contact-line {
+        display: none;
+    }
+
+    .header-nav {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.85rem 1.25rem;
+        padding-top: 0.25rem;
+    }
+
+    .header-nav span.brand-font {
+        font-size: 2rem !important;
+    }
+
+    #cart-icon > span:first-child {
+        font-size: 1.85rem !important;
+        padding-right: 0 !important;
+    }
 }
 
 /* =========================
@@ -333,55 +439,6 @@ body.cart-open #cart-backdrop {
         -webkit-overflow-scrolling: touch;
     }
 }
-
-
-/* =========================
-   MOBILE STACKED HEADER
-========================= */
-@media (max-width: 767px) {
-    .mobile-stacked-header {
-        align-items: center;
-        gap: 1rem;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
-
-    .mobile-brand-block {
-        width: 100%;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .mobile-brand-logo {
-        height: 5.75rem;
-    }
-
-    .mobile-nav-row {
-        width: 100%;
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 0.75rem 1.15rem;
-        position: static !important;
-        height: auto !important;
-        padding-top: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    .mobile-nav-link {
-        font-size: 1.9rem !important;
-        line-height: 1;
-    }
-
-    .mobile-cart-icon {
-        font-size: 1.75rem !important;
-        padding-right: 0 !important;
-    }
-}
-
 </style>
 </head>
 
@@ -451,53 +508,42 @@ body.cart-open #cart-backdrop {
 
     <div class="site-shell min-h-screen">
     <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between relative mobile-stacked-header">
-            <a href="index.html" class="flex items-center gap-4 mobile-brand-block">
-                <img src="/images/logo.png" alt="Prime Promotions Logo"
-                    class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300 mobile-brand-logo" />
-                <span class="flex flex-col text-black tracking-wide brand-font leading-tight">
-                    <span class="whitespace-nowrap font-semibold text-3xl sm:text-4xl lg:text-4xl">Prime Promotions LLC</span>
-                    <span class="text-lg sm:text-xl text-blue-400">(574) 202-7050</span>
-                    <span class="text-lg sm:text-xl text-blue-400 italic">sales@primepromollc.com</span>
+        <div class="site-header-inner max-w-7xl mx-auto px-6 py-4 relative">
+            <a href="index.html" class="header-brand-link">
+                <img src="/images/logo.png" alt="Prime Promotions Logo" class="header-logo" />
+                <span class="header-brand-text brand-font">
+                    <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
+                    <span class="header-contact-line">(574) 202-7050</span>
+                    <span class="header-contact-line email">sales@primepromollc.com</span>
                 </span>
             </a>
 
-            <button id="menu-toggle" class="hidden" aria-label="Toggle navigation"></button>
-
-            <nav id="nav-menu"
-                class="flex flex-row flex-wrap justify-center items-center gap-x-6 gap-y-3 text-black md:justify-end md:space-x-10 md:gap-x-0 mobile-nav-row">
-
+            <nav id="nav-menu" class="header-nav">
                 <a href="index.html" class="relative group">
-                    <span
-                        class="text-black hover:text-blue-400 transition brand-font text-4xl mt-[2px] inline-block mobile-nav-link">Home</span>
-                    <span
-                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl mt-[2px] inline-block">Home</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                 </a>
 
                 <a href="products.html" class="relative group">
-                    <span class="text-blue-400 brand-font text-4xl mobile-nav-link">Catalogs</span>
-                    <span
-                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
+                    <span class="text-blue-400 brand-font text-4xl">Catalogs</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
                 </a>
 
                 <a href="shopify.html" class="relative group">
-                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl mobile-nav-link">Shopify</span>
-                    <span
-                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Shopify</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                 </a>
 
                 <a href="contact.html" class="relative group">
-                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl mobile-nav-link">Contact</span>
-                    <span
-                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Contact</span>
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                 </a>
 
                 <a id="cart-icon" class="relative group cursor-pointer">
-                    <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2 mobile-cart-icon">
+                    <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2">
                         <i class="fas fa-shopping-cart"></i>
                     </span>
-                    <span id="cart-count"
-                        class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
                 </a>
             </nav>
         </div>
@@ -1430,7 +1476,7 @@ body.cart-open #cart-backdrop {
         });
     }
 
-    document.addEventListener('keydown' , (e) => {
+    document.addEventListener('keydown', (e) => {
         if (document.body.classList.contains('cart-open') && e.key === 'Escape') {
             closeCart();
         }
