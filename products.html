@@ -15,461 +15,189 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <style>
-    /* =========================================================
-       PRIME PROMOTIONS CATALOG PAGE STYLING
-       Professional navy / blue refresh with clean white cards
-    ========================================================= */
+    <!-- Updated Prime Promotions Catalog Page -->
+<!-- Styling updated with premium layered background while keeping existing blue accents -->
 
-    /* ---------- Brand Color System ---------- */
-    :root {
-        --brand-navy: #0f2f57;
-        --brand-navy-dark: #081b33;
-        --brand-blue: #2563eb;
-        --brand-sky: #38bdf8;
-        --brand-soft-blue: #eef6ff;
-        --brand-soft-blue-2: #f7fbff;
-        --brand-border: #cfe3ff;
-        --brand-text: #111827;
-        --brand-muted: #5f6f82;
-        --brand-card: #ffffff;
-    }
+<style>
+/* =========================
+   BASE PAGE SETUP
+========================= */
+html {
+    scroll-behavior: smooth;
+}
 
-    /* ---------- Base Page Setup ---------- */
-    html {
-        scroll-behavior: smooth;
-    }
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 
-    body {
-        font-family: 'Inter', sans-serif;
-        overflow-x: hidden;
-        color: var(--brand-text);
-        background:
-            radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 34%),
-            linear-gradient(180deg, #f7fbff 0%, #eef6ff 45%, #f8fbff 100%) !important;
-    }
+    /* Professional layered background */
+    background:
+        radial-gradient(circle at top left, rgba(96,165,250,0.10) 0%, transparent 28%),
+        radial-gradient(circle at top right, rgba(59,130,246,0.08) 0%, transparent 24%),
+        linear-gradient(to bottom, #f8fbff 0%, #eef5ff 100%);
+}
 
-    .site-shell,
-    #catalog-directory {
-        background: transparent !important;
-    }
+/* Main page wrapper */
+.site-shell {
+    background: transparent;
+    transition: padding-right 0.35s ease;
+}
 
-    .site-shell {
-        transition: padding-right 0.35s ease;
-    }
+/* Main catalog section */
+#catalog-directory {
+    background: transparent !important;
+}
 
-    .brand-font {
-        font-family: "Bebas Neue", sans-serif;
-        font-weight: 400 !important;
-        letter-spacing: 0.01em;
-    }
+/* =========================
+   BRAND FONT
+========================= */
+.brand-font {
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400 !important;
+    letter-spacing: 0.01em;
+}
 
-    /* ---------- Tailwind Color Refresh Overrides ---------- */
-    .text-blue-400,
-    .text-blue-500 {
-        color: var(--brand-blue) !important;
-    }
+/* =========================
+   CATEGORY BUTTONS
+========================= */
+.category-btn {
+    color: #374151 !important;
+    border: 1px solid #bfdbfe !important;
+    background: rgba(255,255,255,0.88) !important;
+    backdrop-filter: blur(10px);
+    font-weight: 700;
+    transition: all 0.25s ease;
+}
 
-    .hover\:text-blue-400:hover,
-    .hover\:text-blue-500:hover,
-    .hover\:text-blue-700:hover {
-        color: var(--brand-navy) !important;
-    }
+.category-btn:hover,
+.category-btn.active {
+    background: #60a5fa !important;
+    color: white !important;
+    border-color: #60a5fa !important;
+}
 
-    .bg-blue-400,
-    .bg-blue-500 {
-        background: var(--brand-blue) !important;
-    }
+/* =========================
+   CATALOG CARDS
+========================= */
+.catalog-card {
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(191,219,254,0.9);
+    box-shadow:
+        0 10px 30px rgba(37,99,235,0.05),
+        0 2px 10px rgba(0,0,0,0.03);
 
-    .hover\:bg-blue-400:hover,
-    .hover\:bg-blue-500:hover {
-        background: var(--brand-navy) !important;
-    }
+    border-radius: 1.5rem;
+    overflow: hidden;
 
-    .bg-blue-50,
-    .bg-blue-50\/80 {
-        background: var(--brand-soft-blue) !important;
-    }
+    transition: all 0.3s ease;
+}
 
-    .border-blue-100,
-    .border-blue-200,
-    .hover\:border-blue-200:hover,
-    .hover\:border-blue-300:hover {
-        border-color: var(--brand-border) !important;
-    }
+.catalog-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 18px 45px rgba(37,99,235,0.12),
+        0 8px 20px rgba(0,0,0,0.06);
+}
 
-    /* ---------- Header / Navigation ---------- */
-    header {
-        background: rgba(255, 255, 255, 0.92) !important;
-        backdrop-filter: blur(16px);
-        border-bottom: 1px solid rgba(15, 47, 87, 0.10) !important;
-        box-shadow: 0 12px 30px rgba(15, 47, 87, 0.08) !important;
-    }
+/* =========================
+   IMAGE BOXES
+========================= */
+.catalog-image-box {
+    width: 100%;
+    height: 230px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    border-bottom: 1px solid #e5e7eb;
+    overflow: hidden;
+}
 
-    header img {
-        box-shadow: 0 12px 28px rgba(15, 47, 87, 0.14) !important;
-    }
+.catalog-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+    scale: 1 !important;
+}
 
-    nav a span {
-        transition: color 0.25s ease;
-    }
+/* =========================
+   INSTRUCTION BOX
+========================= */
+.direction-box {
+    max-width: 1080px;
+    margin: 0 auto 2rem;
 
-    nav a span:hover {
-        color: var(--brand-blue) !important;
-    }
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(14px);
 
-    nav a span.absolute,
-    nav .absolute.bottom-0 {
-        background: var(--brand-blue) !important;
-    }
+    border: 1px solid rgba(191,219,254,0.8);
 
-    /* ---------- Cart Panel ---------- */
-    @media (min-width: 1024px) {
-        body.cart-open .site-shell {
-            padding-right: 420px;
-        }
-    }
+    border-radius: 2rem;
 
-    #cart-panel {
-        transform: translateX(100%);
-        transition: transform 0.35s ease;
-    }
+    box-shadow:
+        0 10px 40px rgba(59,130,246,0.08);
 
-    body.cart-open #cart-panel {
-        transform: translateX(0);
-    }
+    overflow: hidden;
+}
 
-    #cart-backdrop {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.35s ease;
-    }
+.direction-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 
-    body.cart-open #cart-backdrop {
-        opacity: 1;
-        pointer-events: auto;
-    }
+.direction-item {
+    padding: 1.25rem 1rem;
+    text-align: center;
+    border-right: 1px solid #dbeafe;
+}
 
-    @media (min-width: 1024px) {
-        #cart-backdrop {
-            display: none;
-        }
-    }
+.direction-item:last-child {
+    border-right: 0;
+}
 
-    #cart-panel .absolute.top-0.left-0 {
-        background: linear-gradient(90deg, var(--brand-navy), var(--brand-blue), var(--brand-sky)) !important;
-    }
+.direction-icon {
+    color: #60a5fa;
+    margin-bottom: 1rem;
+}
 
-    #send-email {
-        background: linear-gradient(135deg, var(--brand-blue), var(--brand-navy)) !important;
-        box-shadow: 0 14px 24px rgba(37, 99, 235, 0.22) !important;
-    }
+/* =========================
+   FOOTER
+========================= */
+footer {
+    background:
+        linear-gradient(
+            135deg,
+            #07111f 0%,
+            #0f1d35 50%,
+            #111827 100%
+        );
+}
 
-    #send-email:hover,
-    #send-email:focus,
-    #send-email:active {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, var(--brand-navy), var(--brand-navy-dark)) !important;
-        outline: none;
-    }
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 767px) {
 
-    /* ---------- Mobile Menu Icon ---------- */
-    .menu-open .menu-line:nth-child(1) {
-        transform: translateY(14px) rotate(45deg);
-    }
-
-    .menu-open .menu-line:nth-child(2) {
-        opacity: 0;
-    }
-
-    .menu-open .menu-line:nth-child(3) {
-        transform: translateY(-14px) rotate(-45deg);
-    }
-
-    /* ---------- Catalog Hero Text ---------- */
-    #catalog-directory .text-center p {
-        color: var(--brand-blue) !important;
-    }
-
-    #catalog-directory .text-center h2 {
-        color: var(--brand-navy-dark) !important;
-        text-shadow: 0 10px 30px rgba(15, 47, 87, 0.08);
-    }
-
-    /* ---------- Category Buttons ---------- */
-    .category-filter-wrap {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-        width: 100%;
-        max-width: 1080px;
-        margin: 0 auto 3rem;
-        padding: 1.25rem;
-    }
-
-    .category-btn {
-        color: var(--brand-navy) !important;
-        border: 1px solid var(--brand-border) !important;
-        background: rgba(255, 255, 255, 0.86) !important;
-        font-weight: 800;
-        text-align: center;
-        white-space: nowrap;
-        outline: none !important;
-        -webkit-tap-highlight-color: transparent;
-        transition: all 0.25s ease;
-        box-shadow: 0 8px 18px rgba(15, 47, 87, 0.05);
-    }
-
-    .category-btn:hover,
-    .category-btn:focus,
-    .category-btn:active {
-        color: #ffffff !important;
-        background: var(--brand-navy) !important;
-        border-color: var(--brand-navy) !important;
-        box-shadow: 0 12px 24px rgba(15, 47, 87, 0.16);
-    }
-
-    .category-btn.active,
-    .category-btn.active:hover,
-    .category-btn.active:focus,
-    .category-btn.active:active {
-        background: linear-gradient(135deg, var(--brand-blue), var(--brand-navy)) !important;
-        color: #ffffff !important;
-        border-color: transparent !important;
-        box-shadow: 0 14px 28px rgba(37, 99, 235, 0.22);
-    }
-
-    /* ---------- Instruction Box ---------- */
     .direction-box {
-        max-width: 1080px;
-        margin: 0 auto 2rem;
-        background: rgba(255, 255, 255, 0.88);
-        backdrop-filter: blur(14px);
-        border: 1px solid var(--brand-border);
-        border-radius: 2rem;
-        box-shadow: 0 20px 50px rgba(15, 47, 87, 0.10);
-        overflow: hidden;
+        overflow-x: auto;
     }
 
     .direction-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        align-items: stretch;
-        gap: 0;
+        grid-template-columns: repeat(3, minmax(160px, 1fr));
+        min-width: 560px;
     }
 
-    .direction-item {
-        padding: 1.35rem 1rem;
-        text-align: center;
-        border-right: 1px solid var(--brand-border);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-    }
-
-    .direction-item:last-child {
-        border-right: 0;
-    }
-
-    .direction-icon {
-        color: var(--brand-blue);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
-    }
-
-    .direction-icon svg,
-    .direction-icon i {
-        width: 2.3rem;
-        height: 2.3rem;
-        font-size: 2.3rem;
-    }
-
-    .direction-item h2 {
-        color: var(--brand-navy-dark) !important;
-    }
-
-    .direction-item p {
-        color: var(--brand-muted) !important;
-    }
-
-    /* ---------- Catalog Cards ---------- */
-    .catalog-card {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        background: var(--brand-card) !important;
-        border: 1px solid rgba(207, 227, 255, 0.95) !important;
-        border-radius: 1.5rem;
-        box-shadow: 0 14px 30px rgba(15, 47, 87, 0.08) !important;
-    }
-
-    .catalog-card:hover {
-        border-color: rgba(37, 99, 235, 0.45) !important;
-        box-shadow: 0 22px 45px rgba(15, 47, 87, 0.14) !important;
-        transform: translateY(-3px);
-    }
-
-    .catalog-card > div:last-child {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .catalog-card > div:last-child a {
-        margin-top: auto;
-        color: var(--brand-blue) !important;
-    }
-
-    .catalog-card > div:last-child a:hover {
-        color: var(--brand-navy) !important;
-    }
-
-    .catalog-card h3 {
-        color: var(--brand-navy-dark) !important;
-    }
-
-    .catalog-card p.text-xs {
-        color: var(--brand-blue) !important;
-    }
-
-    .catalog-card p.text-sm {
-        color: var(--brand-muted) !important;
-    }
-
-    /* Keeps every catalog image consistent without cropping or stretching */
     .catalog-image-box {
-        width: 100%;
-        height: 230px;
-        background:
-            linear-gradient(180deg, rgba(248, 251, 255, 0.95), #ffffff) !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        border-bottom: 1px solid var(--brand-border);
-        overflow: hidden;
+        height: 190px;
+        padding: 18px;
     }
-
-    .catalog-image-box img {
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain !important;
-        object-position: center !important;
-        transform: none !important;
-        scale: 1 !important;
-        display: block;
-    }
-
-    /* ---------- Save Buttons ---------- */
-    .save-btn {
-        background: var(--brand-soft-blue) !important;
-        color: var(--brand-blue) !important;
-        border: 1px solid var(--brand-border);
-        box-shadow: 0 8px 16px rgba(15, 47, 87, 0.06);
-    }
-
-    .save-btn:hover {
-        background: var(--brand-blue) !important;
-        color: #ffffff !important;
-        border-color: var(--brand-blue);
-        box-shadow: 0 12px 22px rgba(37, 99, 235, 0.22);
-    }
-
-    .save-btn:focus,
-    .save-btn:active,
-    #cart-icon:focus,
-    #cart-icon:active {
-        outline: none;
-    }
-
-    /* ---------- Footer ---------- */
-    footer.bg-black {
-        background:
-            radial-gradient(circle at top right, rgba(56, 189, 248, 0.18), transparent 35%),
-            linear-gradient(135deg, var(--brand-navy-dark), var(--brand-navy)) !important;
-    }
-
-    footer .text-blue-400 {
-        color: #7dd3fc !important;
-    }
-
-    footer a.bg-blue-400 {
-        background: #ffffff !important;
-        color: var(--brand-navy) !important;
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
-    }
-
-    footer a.bg-blue-400:hover {
-        background: #7dd3fc !important;
-        color: var(--brand-navy-dark) !important;
-    }
-
-    /* ---------- Mobile Styling ---------- */
-    @media (max-width: 767px) {
-        #catalog-directory {
-            padding-top: 4rem;
-            padding-bottom: 4rem;
-        }
-
-        .catalog-image-box {
-            height: 190px;
-            padding: 18px;
-        }
-
-        .category-btn {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        .category-filter-wrap {
-            margin-bottom: 2rem;
-            padding: 1rem 0;
-        }
-
-        /* Keeps the instruction box horizontal on mobile */
-        .direction-box {
-            overflow-x: auto;
-            border-radius: 1.5rem;
-        }
-
-        .direction-grid {
-            grid-template-columns: repeat(3, minmax(160px, 1fr));
-            min-width: 560px;
-        }
-
-        .direction-item {
-            padding: 1rem 0.75rem;
-        }
-
-        .direction-icon {
-            margin-bottom: 0.75rem;
-        }
-
-        .direction-icon svg,
-        .direction-icon i {
-            width: 1.8rem;
-            height: 1.8rem;
-            font-size: 1.8rem;
-        }
-
-        .direction-item h2 {
-            font-size: 1.6rem;
-            line-height: 1;
-        }
-
-        .direction-item p {
-            font-size: 0.75rem;
-            line-height: 1.25rem;
-        }
-    }
+}
 </style>
+
 </head>
 
 <body>
