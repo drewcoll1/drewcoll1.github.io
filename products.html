@@ -10,83 +10,174 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bebas+Neue&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <style>
-    html {
-        scroll-behavior: smooth;
-    }
-
-    body {
-        font-family: 'Poppins', sans-serif;
-        overflow-x: hidden;
-    }
-
-    .brand-font {
-        font-family: "Bebas Neue", sans-serif;
-    }
-
-    .site-shell {
-        transition: padding-right 0.35s ease;
-    }
-
-    @media (min-width: 1024px) {
-        body.cart-open .site-shell {
-            padding-right: 420px;
+        html {
+            scroll-behavior: smooth;
         }
-    }
 
-    #cart-panel {
-        transform: translateX(100%);
-        transition: transform 0.35s ease;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background: #ffffff;
+        }
 
-    body.cart-open #cart-panel {
-        transform: translateX(0);
-    }
+        .brand-font {
+            font-family: "Bebas Neue", sans-serif;
+            font-weight: 400 !important;
+            letter-spacing: 0.01em;
+        }
 
-    #cart-backdrop {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.35s ease;
-    }
+        .site-shell {
+            transition: padding-right 0.35s ease;
+        }
 
-    body.cart-open #cart-backdrop {
-        opacity: 1;
-        pointer-events: auto;
-    }
+        @media (min-width: 1024px) {
+            body.cart-open .site-shell {
+                padding-right: 420px;
+            }
+        }
 
-    @media (min-width: 1024px) {
+        #cart-panel {
+            transform: translateX(100%);
+            transition: transform 0.35s ease;
+        }
+
+        body.cart-open #cart-panel {
+            transform: translateX(0);
+        }
+
         #cart-backdrop {
-            display: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
         }
-    }
 
-    .menu-open .menu-line:nth-child(1) {
-        transform: translateY(14px) rotate(45deg);
-    }
+        body.cart-open #cart-backdrop {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-    .menu-open .menu-line:nth-child(2) {
-        opacity: 0;
-    }
+        @media (min-width: 1024px) {
+            #cart-backdrop {
+                display: none;
+            }
+        }
 
-    .menu-open .menu-line:nth-child(3) {
-        transform: translateY(-14px) rotate(-45deg);
-    }
+        .menu-open .menu-line:nth-child(1) {
+            transform: translateY(14px) rotate(45deg);
+        }
 
-    .category-btn.active {
-background: #60a5fa;
-color: white;
-border-color: #60a5fa;
-box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
+        .menu-open .menu-line:nth-child(2) {
+            opacity: 0;
+        }
 
-}.category-btn {color: inherit;border-color: #e5e7eb;}
+        .menu-open .menu-line:nth-child(3) {
+            transform: translateY(-14px) rotate(-45deg);
+        }
 
-.category-btn.active {border-color: #60a5fa;}
+        .category-btn {
+            color: #374151 !important;
+            border-color: #e5e7eb !important;
+            background: #ffffff !important;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
+        }
 
+        .category-btn:hover,
+        .category-btn:focus,
+        .category-btn:active {
+            color: #374151 !important;
+            background: #ffffff !important;
+            border-color: #60a5fa !important;
+        }
+
+        .category-btn.active,
+        .category-btn.active:hover,
+        .category-btn.active:focus,
+        .category-btn.active:active {
+            background: #60a5fa !important;
+            color: #ffffff !important;
+            border-color: #60a5fa !important;
+            box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
+        }
+
+        .catalog-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .catalog-card > div:last-child {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .catalog-card > div:last-child a {
+            margin-top: auto;
+        }
+
+        .catalog-image-box {
+            height: 220px;
+            background: #f9fafb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            border-bottom: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .catalog-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform: none !important;
+        }
+
+        .save-btn:focus,
+        .save-btn:active,
+        #send-email:focus,
+        #send-email:active,
+        #cart-icon:focus,
+        #cart-icon:active {
+            color: inherit;
+            outline: none;
+        }
+
+        #send-email:focus,
+        #send-email:active {
+            color: #ffffff !important;
+            background: #60a5fa !important;
+        }
+
+        @media (max-width: 767px) {
+            #catalog-directory {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+
+            .catalog-image-box {
+                height: 190px;
+            }
+
+            .category-btn {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
 <div id="cart-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80]"></div>
 
 <aside id="cart-panel"
@@ -286,62 +377,61 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
         <section id="catalog-directory" class="py-20 px-6 bg-white">
             <div class="max-w-7xl mx-auto">
 
-                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
-                    <div>
-                        <p class="uppercase tracking-[0.25em] text-blue-400 text-sm font-bold mb-2">
-                            Browse by category
-                        </p>
-                        <h2 class="brand-font text-5xl md:text-6xl text-gray-950 leading-none">
-                            Catalog Directory
-                        </h2>
-                        <p class="text-gray-500 max-w-2xl mt-3">
-                            Browse supplier catalogs and save the ones you like directly into your quote panel.
-                        </p>
-                    </div>
+                <div class="text-center mb-8">
+                    <p class="uppercase tracking-[0.25em] text-blue-400 text-sm font-bold mb-2">
+                        Browse by category
+                    </p>
+                    <h2 class="brand-font text-5xl md:text-6xl text-gray-950 leading-none">
+                        Catalog Directory
+                    </h2>
+                    <p class="text-gray-500 max-w-2xl mx-auto mt-3">
+                        Browse supplier catalogs and save the ones you like directly into your quote panel.
+                    </p>
+                </div>
 
-                   <div class="grid grid-cols-6 gap-3 w-full max-w-4xl">
+                <div class="flex flex-wrap items-center justify-center gap-3 w-full max-w-5xl mx-auto mb-12">
+                    <button
+                        class="category-btn active border px-5 py-2 rounded-full transition"
+                        data-category="all">
+                        All
+                    </button>
 
-<button
-    class="category-btn active border border-blue-400 bg-blue-400 text-white px-5 py-2 rounded-full font-semibold transition"
-    data-category="all">
-    All
-</button>
+                    <button
+                        class="category-btn border px-5 py-2 rounded-full transition"
+                        data-category="headwear">
+                        Headwear
+                    </button>
 
-<button
-    class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
-    data-category="headwear">
-    Headwear
-</button>
+                    <button
+                        class="category-btn border px-5 py-2 rounded-full transition"
+                        data-category="apparel">
+                        Apparel
+                    </button>
 
-<button
-    class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
-    data-category="apparel">
-    Apparel
-</button>
+                    <button
+                        class="category-btn border px-5 py-2 rounded-full transition"
+                        data-category="tradeshows">
+                        Tradeshows
+                    </button>
 
-<button
-    class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
-    data-category="tradeshows">
-    Tradeshows
-</button>
+                    <button
+                        class="category-btn border px-5 py-2 rounded-full transition"
+                        data-category="promotions">
+                        Promotions
+                    </button>
 
-<button
-    class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
-    data-category="promotions">
-    Promotions
-</button>
-
-<button
-    class="category-btn border border-gray-200 bg-white text-gray-700 px-5 py-2 rounded-full font-semibold transition"
-    data-category="awards">
-    Awards
-</button>
+                    <button
+                        class="category-btn border px-5 py-2 rounded-full transition"
+                        data-category="awards">
+                        Awards
+                    </button>
+                </div>
 
                 <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="headwear">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/cap copy.jpg" alt="Cap America Catalog"
                                 class="w-full h-full object-contain scale-110">
                         </div>
@@ -372,7 +462,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="headwear">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/outdoor.png" alt="Outdoor Cap Catalog"
                                 class="w-full h-full object-contain scale-110">
                         </div>
@@ -401,7 +491,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="headwear">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/rich.webp" alt="Richardson Sports Catalog"
                                 class="w-full h-full object-cover">
                         </div>
@@ -429,7 +519,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="headwear">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/ps.webp" alt="Pacific Headwear Catalog"
                                 class="w-full h-full object-contain scale-110">
                         </div>
@@ -459,7 +549,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="headwear">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/max.png" alt="Max Apparel Catalog"
                                 class="w-full h-full object-contain scale-110">
                         </div>
@@ -487,7 +577,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="apparel">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/sanmar.webp" alt="SanMar Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -515,7 +605,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="apparel">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/ss.png" alt="S&S Activewear Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -543,7 +633,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="apparel">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/di.png" alt="Driving Impressions Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -571,7 +661,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="apparel">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/scales22.avif" alt="Scales Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -599,7 +689,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="apparel">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/gill.jpg" alt="Gill Marine Catalog"
                                 class="w-full h-full object-cover">
                         </div>
@@ -627,7 +717,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="apparel">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/ubix.png" alt="Ubix Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -655,7 +745,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="tradeshows">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/orbus.png" alt="Orbus Catalog"
                                 class="w-full h-full object-contain scale-110">
                         </div>
@@ -683,7 +773,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="tradeshows">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/showdown.jpeg" alt="Showdown Displays Catalog"
                                 class="w-full h-full object-cover">
                         </div>
@@ -711,7 +801,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="tradeshows">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/soar.png" alt="Soar Display Catalog"
                                 class="w-full h-full object-contain scale-110">
                         </div>
@@ -739,7 +829,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="promotions">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/pcna.png" alt="PCNA Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -767,7 +857,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="promotions">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/gemline.avif" alt="Gemline Catalog"
                                 class="w-full h-full object-cover">
                         </div>
@@ -795,7 +885,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="promotions">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/diamond.png" alt="Diamondback Branding Catalog"
                                 class="w-full h-full object-contain scale-110">
                         </div>
@@ -823,7 +913,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="promotions">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/boxer.jpg" alt="Thirsty Boxer Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -851,7 +941,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="promotions">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/hit.png" alt="Hit Promotional Products Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -879,7 +969,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="promotions">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/koozie.jpg" alt="Koozie Group Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -907,7 +997,7 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
 
                     <div class="catalog-card bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-xl hover:border-blue-200 transition overflow-hidden"
                         data-category="awards">
-                        <div class="h-52 bg-gray-50 flex items-center justify-center p-4 border-b overflow-hidden">
+                        <div class="catalog-image-box">
                             <img src="/images/vision.gif" alt="Vision Awards Catalog"
                                 class="w-full h-full object-contain scale-105">
                         </div>
@@ -1146,12 +1236,10 @@ box-shadow: 0 12px 28px rgba(96, 165, 250, 0.25);
             const selectedCategory = button.getAttribute('data-category');
 
             categoryButtons.forEach(btn => {
-                btn.classList.remove('active', 'bg-blue-400', 'text-white', 'border-blue-400');
-                btn.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
+                btn.classList.remove('active');
             });
 
-            button.classList.add('active', 'bg-blue-400', 'text-white', 'border-blue-400');
-            button.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
+            button.classList.add('active');
 
             catalogCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
