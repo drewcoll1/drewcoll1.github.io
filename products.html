@@ -7,15 +7,15 @@
     <title>Prime Promotions LLC</title>
 
     <link rel="icon" href="/images/favicon.png" type="image/jpeg" />
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap"
-    rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-<style>
+    <style>
 /* =========================
    BASE PAGE SETUP
 ========================= */
@@ -314,6 +314,30 @@ body.cart-open #cart-backdrop {
     }
 }
 
+
+
+/* Make the mobile horizontal instruction box easier to swipe without showing a harsh scrollbar */
+.direction-box::-webkit-scrollbar {
+    height: 6px;
+}
+
+.direction-box::-webkit-scrollbar-thumb {
+    background: #bfdbfe;
+    border-radius: 999px;
+}
+
+@media (max-width: 767px) {
+    .direction-box {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+</style>
+</head>
+
+<body>
+    <div id="cart-backdrop" class="fixed inset-0 z-[60] bg-black/40"></div>
+
+    <aside id="cart-panel" class="fixed top-0 right-0 z-[70] h-screen w-full max-w-[420px] bg-white shadow-2xl flex flex-col">
 <div class="relative px-6 py-6 border-b border-blue-100 bg-white">
     <div class="absolute top-0 left-0 w-full h-2 bg-blue-400"></div>
 
@@ -372,6 +396,9 @@ body.cart-open #cart-backdrop {
     </div>
 </div>
 
+    </aside>
+
+    <div class="site-shell min-h-screen">
     <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
         <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
             <a href="index.html" class="flex items-center gap-4">
@@ -1177,141 +1204,215 @@ body.cart-open #cart-backdrop {
     </div>
 </footer>
 
-            </div>
-        `;
-
-        cartList.appendChild(li);
-    });
-
-    document.querySelectorAll('.remove-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const index = parseInt(e.currentTarget.getAttribute('data-index'));
-            const updatedCart = getCart();
-
-            updatedCart.splice(index, 1);
-            saveCart(updatedCart);
-
-            updateCartCount();
-            updateCartList();
-        });
-    });
-
-    document.querySelectorAll('.cart-notes').forEach(input => {
-        input.addEventListener('input', (e) => {
-            const index = parseInt(e.target.getAttribute('data-index'));
-            const cart = getCart();
-
-            cart[index].notes = e.target.value;
-            saveCart(cart);
-        });
-    });
-}
-
-function openCart() {
-    updateCartList();
-    document.body.classList.add('cart-open');
-
-    if (window.innerWidth < 1024) {
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeCart() {
-    document.body.classList.remove('cart-open');
-    document.body.style.overflow = '';
-}
-
-cartIcon.addEventListener('click', openCart);
-closeCartBtn.addEventListener('click', closeCart);
-cartBackdrop.addEventListener('click', closeCart);
-
-saveButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const name = btn.getAttribute('data-name');
-        const link = btn.getAttribute('data-link');
-        const cart = getCart();
-
-        const alreadySaved = cart.some(item => item.name === name && item.link === link);
-
-        if (!alreadySaved) {
-            cart.push({
-                name,
-                link,
-                notes: ''
-            });
-
-            saveCart(cart);
-        }
-
-        updateCartCount();
-        openCart();
-    });
-});
-
-categoryButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const selectedCategory = button.getAttribute('data-category');
-
-        categoryButtons.forEach(btn => {
-            btn.classList.remove('active');
-        });
-
-        button.classList.add('active');
-
-        catalogCards.forEach(card => {
-            const cardCategory = card.getAttribute('data-category');
-
-            if (selectedCategory === 'all' || selectedCategory === cardCategory) {
-                card.classList.remove('hidden');
-            } else {
-                card.classList.add('hidden');
-            }
-        });
-    });
-});
-
-document.getElementById('send-email').addEventListener('click', () => {
-    const cart = getCart();
-
-    if (cart.length === 0) {
-        alert("Your saved list is empty!");
-        return;
-    }
-
-    let body = "Here are the catalogs I'm interested in:\n\n";
-
-    cart.forEach(item => {
-        body += `Catalog: ${item.name}\n`;
-        if (item.link) body += `Catalog Link: ${item.link}\n`;
-        if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
-        body += `\n`;
-    });
-
-    const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Catalogs&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
-});
-
-updateCartCount();
-</script>
-
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const menuToggle = document.getElementById('menu-toggle');
     const navMenu = document.getElementById('nav-menu');
+    const cartIcon = document.getElementById('cart-icon');
+    const closeCartBtn = document.getElementById('close-cart');
+    const cartBackdrop = document.getElementById('cart-backdrop');
+    const cartList = document.getElementById('cart-list');
+    const cartCount = document.getElementById('cart-count');
+    const cartTotalLabel = document.getElementById('cart-total-label');
+    const saveButtons = document.querySelectorAll('.save-btn');
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const catalogCards = document.querySelectorAll('.catalog-card');
+    const sendEmailBtn = document.getElementById('send-email');
 
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('menu-open');
-        navMenu.classList.toggle('hidden');
-        navMenu.classList.toggle('flex');
+    function getCart() {
+        try {
+            return JSON.parse(localStorage.getItem('primePromoSavedCatalogs')) || [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem('primePromoSavedCatalogs', JSON.stringify(cart));
+    }
+
+    function updateCartCount() {
+        const cart = getCart();
+        const count = cart.length;
+
+        cartTotalLabel.textContent = count;
+        cartCount.textContent = count;
+
+        if (count > 0) {
+            cartCount.classList.remove('hidden');
+        } else {
+            cartCount.classList.add('hidden');
+        }
+    }
+
+    function updateCartList() {
+        const cart = getCart();
+        cartList.innerHTML = '';
+        cartTotalLabel.textContent = cart.length;
+
+        if (cart.length === 0) {
+            cartList.innerHTML = `
+                <li class="rounded-3xl border border-blue-100 bg-blue-50/70 p-5 text-center">
+                    <p class="brand-font text-3xl text-gray-950 leading-none">No saved catalogs yet</p>
+                    <p class="text-sm text-gray-500 mt-2">Use the blue cart buttons to save catalogs you like.</p>
+                </li>
+            `;
+            return;
+        }
+
+        cart.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.className = 'rounded-3xl border border-blue-100 bg-white p-5 shadow-sm';
+
+            li.innerHTML = `
+                <div class="flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                        <p class="brand-font text-3xl text-gray-950 leading-none">${item.name}</p>
+                        ${item.link ? `<a href="${item.link}" target="_blank" class="text-sm text-blue-500 hover:text-blue-700 break-all">${item.link}</a>` : ''}
+                    </div>
+                    <button class="remove-btn w-9 h-9 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white text-gray-500 flex items-center justify-center shrink-0 transition" data-index="${index}" aria-label="Remove ${item.name}">
+                        <i class="fa-solid fa-trash text-sm"></i>
+                    </button>
+                </div>
+
+                <label class="block mt-4 text-xs uppercase tracking-widest text-gray-400 font-bold">Notes / Questions</label>
+                <textarea class="cart-notes mt-2 w-full min-h-[92px] rounded-2xl border border-blue-100 bg-blue-50/40 px-4 py-3 text-sm text-gray-700 outline-none focus:border-blue-400 focus:bg-white transition" data-index="${index}" placeholder="Add sizes, quantities, colors, logos, timeline, or questions...">${item.notes || ''}</textarea>
+            `;
+
+            cartList.appendChild(li);
+        });
+
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(e.currentTarget.getAttribute('data-index'), 10);
+                const updatedCart = getCart();
+
+                updatedCart.splice(index, 1);
+                saveCart(updatedCart);
+
+                updateCartCount();
+                updateCartList();
+            });
+        });
+
+        document.querySelectorAll('.cart-notes').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const index = parseInt(e.target.getAttribute('data-index'), 10);
+                const cart = getCart();
+
+                if (cart[index]) {
+                    cart[index].notes = e.target.value;
+                    saveCart(cart);
+                }
+            });
+        });
+    }
+
+    function openCart() {
+        updateCartList();
+        document.body.classList.add('cart-open');
+
+        if (window.innerWidth < 1024) {
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeCart() {
+        document.body.classList.remove('cart-open');
+        document.body.style.overflow = '';
+    }
+
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('menu-open');
+            navMenu.classList.toggle('hidden');
+            navMenu.classList.toggle('flex');
+        });
+    }
+
+    if (cartIcon) cartIcon.addEventListener('click', openCart);
+    if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+    if (cartBackdrop) cartBackdrop.addEventListener('click', closeCart);
+
+    saveButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const name = btn.getAttribute('data-name');
+            const link = btn.getAttribute('data-link');
+            const cart = getCart();
+            const alreadySaved = cart.some(item => item.name === name && item.link === link);
+
+            if (!alreadySaved) {
+                cart.push({
+                    name,
+                    link,
+                    notes: ''
+                });
+
+                saveCart(cart);
+            }
+
+            updateCartCount();
+            openCart();
+        });
     });
 
-    document.addEventListener("keydown", (e) => {
-        if (document.body.classList.contains('cart-open') && e.key === "Escape") {
-            document.body.classList.remove('cart-open');
-            document.body.style.overflow = '';
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const selectedCategory = button.getAttribute('data-category');
+
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            catalogCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+
+                if (selectedCategory === 'all' || selectedCategory === cardCategory) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    if (sendEmailBtn) {
+        sendEmailBtn.addEventListener('click', () => {
+            const cart = getCart();
+
+            if (cart.length === 0) {
+                alert('Your saved list is empty!');
+                return;
+            }
+
+            let body = "Here are the catalogs I'm interested in:
+
+";
+
+            cart.forEach(item => {
+                body += `Catalog: ${item.name}
+`;
+                if (item.link) body += `Catalog Link: ${item.link}
+`;
+                if (item.notes) body += `Notes/Questions:
+${item.notes}
+`;
+                body += '
+';
+            });
+
+            const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Catalogs&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (document.body.classList.contains('cart-open') && e.key === 'Escape') {
+            closeCart();
         }
     });
+
+    updateCartCount();
 </script>
 
 </body>
