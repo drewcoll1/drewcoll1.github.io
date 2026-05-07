@@ -9,13 +9,19 @@
     <link rel="icon" href="/images/favicon.png" type="image/jpeg" />
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
         rel="stylesheet">
 
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
     <style>
+        /* =========================
+           BASE PAGE SETUP
+        ========================= */
         html {
             scroll-behavior: smooth;
         }
@@ -29,12 +35,13 @@
 
         .brand-font {
             font-family: "Bebas Neue", sans-serif;
+            font-weight: 400 !important;
+            letter-spacing: 0.01em;
         }
 
         /* =========================
-           NAVIGATION
+           SHARED HEADER / NAV
         ========================= */
-
         .header-shell {
             max-width: 120rem;
             margin-left: auto;
@@ -107,14 +114,13 @@
         }
 
         @media (max-width: 767px) {
-
             .header-shell {
                 padding: 0.9rem 1rem;
                 justify-content: center;
                 align-items: center;
             }
 
-            .header-shell>a img.header-logo {
+            .header-shell > a img.header-logo {
                 display: none !important;
             }
 
@@ -122,7 +128,7 @@
                 display: none !important;
             }
 
-            .header-shell>a {
+            .header-shell > a {
                 display: none;
             }
 
@@ -147,312 +153,623 @@
         }
 
         /* =========================
-           CONTACT SECTION
+           CONTACT PAGE
         ========================= */
-
-        .contact-shell {
-            max-width: 1150px;
-            margin: 0 auto;
-            padding: 5rem 1.5rem;
+        .contact-section {
+            background:
+                radial-gradient(circle at top left, rgba(96, 165, 250, 0.16), transparent 36%),
+                linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+            padding: 5rem 1.5rem 6rem;
         }
 
-        .contact-card {
-            background: white;
+        .contact-wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: #60a5fa;
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.4fr;
+            gap: 1.5rem;
+            align-items: stretch;
+            margin-top: 2.75rem;
+        }
+
+        .info-panel {
+            background: #0f172a;
+            color: #ffffff;
+            border-radius: 2rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
+        }
+
+        .info-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 15%, rgba(96, 165, 250, 0.42), transparent 34%),
+                radial-gradient(circle at 95% 90%, rgba(96, 165, 250, 0.26), transparent 30%);
+            pointer-events: none;
+        }
+
+        .info-panel-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-logo {
+            width: 7rem;
+            height: 7rem;
+            object-fit: contain;
+            border-radius: 9999px;
+            border: 4px solid #ffffff;
+            background: #ffffff;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.24);
+            margin-bottom: 1.75rem;
+        }
+
+        .contact-info-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.75rem;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.25rem;
+        }
+
+        .contact-info-icon {
+            width: 2.35rem;
+            height: 2.35rem;
+            border-radius: 9999px;
+            background: #60a5fa;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+        }
+
+        .info-bottom {
+            margin-top: auto;
+            padding-top: 2rem;
+        }
+
+        .form-panel {
+            background: #ffffff;
             border: 1px solid #dbeafe;
             border-radius: 2rem;
-            padding: 3rem;
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.10);
+            padding: 2rem;
+            box-shadow: 0 18px 45px rgba(59, 130, 246, 0.10);
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #dbeafe;
+        }
+
+        .form-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: #eff6ff;
+            color: #3b82f6;
+            border: 1px solid #dbeafe;
+            border-radius: 9999px;
+            padding: 0.5rem 0.9rem;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            white-space: nowrap;
+        }
+
+        .field-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .field-label {
+            color: #0f172a;
+            font-size: 1.55rem;
+            line-height: 1;
+        }
+
+        .required {
+            color: #60a5fa;
         }
 
         .contact-input {
             width: 100%;
-            border: 1px solid #dbeafe;
-            background: #ffffff;
+            background: #f8fbff;
+            border: 2px solid transparent;
             color: #0f172a;
-            border-radius: 1rem;
-            padding: 1rem 1rem;
+            border-radius: 1.25rem;
+            padding: 1.05rem 1.15rem;
             outline: none;
+            font-size: 1rem;
             transition: all 0.25s ease;
+            box-shadow:
+                inset 0 1px 2px rgba(15, 23, 42, 0.04),
+                0 2px 10px rgba(59, 130, 246, 0.04);
+        }
+
+        .contact-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .contact-input:hover {
+            background: #ffffff;
+            border-color: #dbeafe;
         }
 
         .contact-input:focus {
+            background: #ffffff;
             border-color: #60a5fa;
-            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15);
+            box-shadow:
+                0 0 0 5px rgba(96, 165, 250, 0.16),
+                0 10px 30px rgba(59, 130, 246, 0.10);
+        }
+
+        textarea.contact-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-top: 0.5rem;
         }
 
         .submit-btn {
             background: #60a5fa;
-            color: white;
+            color: #ffffff;
             border-radius: 9999px;
             padding: 0.9rem 2rem;
-            font-size: 1.7rem;
+            font-size: 1.8rem;
             transition: 0.25s ease;
+            box-shadow: 0 16px 30px rgba(96, 165, 250, 0.28);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
         }
 
         .submit-btn:hover {
             background: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .small-note {
+            color: #64748b;
+            font-size: 0.9rem;
+            max-width: 300px;
+        }
+
+        @media (max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-panel {
+                order: 2;
+            }
+
+            .form-panel {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .contact-section {
+                padding: 3.5rem 1rem 4.5rem;
+            }
+
+            .contact-grid {
+                gap: 1rem;
+                margin-top: 2rem;
+            }
+
+            .form-panel,
+            .info-panel {
+                border-radius: 1.5rem;
+                padding: 1.25rem;
+            }
+
+            .form-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .submit-row {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .submit-btn {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .small-note {
+                max-width: none;
+                text-align: center;
+            }
         }
 
         /* =========================
            FOOTER
         ========================= */
-
         footer {
-            background: #0f172a;
+            background: #000000;
             color: white;
         }
     </style>
 </head>
 
 <body>
+    <div class="site-shell min-h-screen flex flex-col">
 
-    <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
-        <div class="header-shell">
+        <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
+            <div class="header-shell">
+                <a href="index.html" class="flex items-center gap-4">
+                    <img src="/images/logo.png" alt="Prime Promotions Logo" class="header-logo" />
 
-            <a href="index.html" class="flex items-center gap-4">
-                <img src="/images/logo.png"
-                    alt="Prime Promotions Logo"
-                    class="header-logo" />
-
-                <span class="header-brand-text brand-font">
-                    <span class="whitespace-nowrap font-semibold">
-                        Prime Promotions LLC
+                    <span class="header-brand-text brand-font">
+                        <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
+                        <span class="header-contact-line">(574) 202-7050</span>
+                        <span class="header-contact-line email">sales@primepromollc.com</span>
                     </span>
-
-                    <span class="header-contact-line">
-                        (574) 202-7050
-                    </span>
-
-                    <span class="header-contact-line email">
-                        sales@primepromollc.com
-                    </span>
-                </span>
-            </a>
-
-            <nav id="nav-menu">
-
-                <a href="index.html" class="relative group">
-                    <span class="text-black group-hover:text-blue-400 transition brand-font text-4xl mt-[2px]">
-                        Home
-                    </span>
-
-                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                 </a>
 
-                <a href="products.html" class="relative group">
-                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl">
-                        Catalogs
-                    </span>
+                <nav id="nav-menu">
+                    <a href="index.html" class="relative group">
+                        <span class="text-black group-hover:text-blue-400 transition brand-font text-4xl mt-[2px]">
+                            Home
+                        </span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    </a>
 
-                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                </a>
+                    <a href="products.html" class="relative group">
+                        <span class="text-black hover:text-blue-400 transition brand-font text-4xl">
+                            Catalogs
+                        </span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    </a>
 
-                <a href="shopify.html" class="relative group">
-                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl">
-                        Shopify
-                    </span>
+                    <a href="shopify.html" class="relative group">
+                        <span class="text-black hover:text-blue-400 transition brand-font text-4xl">
+                            Shopify
+                        </span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                    </a>
 
-                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                </a>
+                    <a href="contact.html" class="relative group">
+                        <span class="text-blue-400 brand-font text-4xl">
+                            Contact
+                        </span>
+                        <span
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
+                    </a>
+                </nav>
+            </div>
+        </header>
 
-                <a href="contact.html" class="relative group">
-                    <span class="text-blue-400 brand-font text-4xl">
-                        Contact
-                    </span>
+        <main class="flex-grow">
+            <section class="contact-section">
+                <div class="contact-wrap">
 
-                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
-                </a>
+                    <div class="text-center">
+                        <p class="eyebrow">
+                            Start Your Project
+                        </p>
 
-            </nav>
-        </div>
-    </header>
+                        <h1 class="brand-font text-6xl md:text-8xl text-slate-900 leading-none">
+                            CONTACT<span class="text-blue-400">.</span>
+                        </h1>
 
-    <section class="contact-shell">
-
-        <div class="text-center mb-12">
-            <p class="uppercase tracking-[0.25em] text-blue-400 text-lg font-bold mb-3">
-                Start Your Project
-            </p>
-
-            <h1 class="brand-font text-6xl md:text-8xl text-slate-900 leading-none">
-                CONTACT<span class="text-blue-400">.</span>
-            </h1>
-
-            <p class="brand-font text-2xl text-slate-700 mt-5">
-                Let us know what you're interested in and how we can help.
-            </p>
-        </div>
-
-        <div class="contact-card">
-
-            <form id="contact-form" class="space-y-6">
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    <div>
-                        <label class="brand-font text-2xl mb-2 block text-slate-900">
-                            First Name<span class="text-blue-400">*</span>
-                        </label>
-
-                        <input type="text"
-                            class="contact-input"
-                            required>
+                        <p class="brand-font text-2xl md:text-3xl text-slate-700 mt-5 max-w-3xl mx-auto leading-tight">
+                            Tell us what you're looking for, and our team will help guide the next step.
+                        </p>
                     </div>
 
-                    <div>
-                        <label class="brand-font text-2xl mb-2 block text-slate-900">
-                            Last Name<span class="text-blue-400">*</span>
-                        </label>
+                    <div class="contact-grid">
 
-                        <input type="text"
-                            class="contact-input"
-                            required>
+                        <aside class="info-panel">
+                            <div class="info-panel-content">
+                                <img src="/images/logo.png" alt="Prime Promotions Logo" class="info-logo">
+
+                                <div>
+                                    <p class="uppercase tracking-[0.22em] text-blue-300 text-xs font-bold mb-3">
+                                        Prime Promotions LLC
+                                    </p>
+
+                                    <h2 class="brand-font text-5xl leading-none text-white">
+                                        Let's build something memorable.
+                                    </h2>
+
+                                    <p class="text-white/75 mt-4 leading-relaxed">
+                                        From apparel and hats to branded giveaways and online stores, send us the details
+                                        and we will help point you in the right direction.
+                                    </p>
+                                </div>
+
+                                <div class="contact-info-list">
+                                    <a href="tel:5742027050" class="contact-info-item">
+                                        <span class="contact-info-icon">
+                                            <i class="fa-solid fa-phone"></i>
+                                        </span>
+
+                                        <span>
+                                            <span class="block text-xs uppercase tracking-widest text-white/50 font-bold">
+                                                Phone
+                                            </span>
+                                            <span class="block text-white font-semibold">
+                                                (574) 202-7050
+                                            </span>
+                                        </span>
+                                    </a>
+
+                                    <a href="mailto:sales@primepromollc.com" class="contact-info-item">
+                                        <span class="contact-info-icon">
+                                            <i class="fa-solid fa-envelope"></i>
+                                        </span>
+
+                                        <span>
+                                            <span class="block text-xs uppercase tracking-widest text-white/50 font-bold">
+                                                Email
+                                            </span>
+                                            <span class="block text-white font-semibold break-all">
+                                                sales@primepromollc.com
+                                            </span>
+                                        </span>
+                                    </a>
+
+                                    <div class="contact-info-item">
+                                        <span class="contact-info-icon">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                        </span>
+
+                                        <span>
+                                            <span class="block text-xs uppercase tracking-widest text-white/50 font-bold">
+                                                Location
+                                            </span>
+                                            <span class="block text-white font-semibold">
+                                                514 S Main Street, Middlebury, IN 46540
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="info-bottom">
+                                    <p class="brand-font text-3xl text-white leading-none">
+                                        Promotional products made simple.
+                                    </p>
+                                    <p class="text-white/60 text-sm mt-2">
+                                        Share your timeline, product ideas, quantities, and logo needs.
+                                    </p>
+                                </div>
+                            </div>
+                        </aside>
+
+                        <section class="form-panel">
+                            <div class="form-header">
+                                <div>
+                                    <p class="brand-font text-4xl text-slate-900 leading-none">
+                                        Project Details
+                                    </p>
+                                    <p class="text-slate-500 mt-1">
+                                        Fill this out and it will open an email with your information.
+                                    </p>
+                                </div>
+
+                                <span class="form-badge">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                    Inquiry Form
+                                </span>
+                            </div>
+
+                            <form id="contact-form" class="space-y-6">
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div class="field-group">
+                                        <label for="first-name" class="field-label brand-font">
+                                            First Name <span class="required">*</span>
+                                        </label>
+                                        <input type="text" id="first-name" name="first-name" class="contact-input"
+                                            placeholder="First name" required>
+                                    </div>
+
+                                    <div class="field-group">
+                                        <label for="last-name" class="field-label brand-font">
+                                            Last Name <span class="required">*</span>
+                                        </label>
+                                        <input type="text" id="last-name" name="last-name" class="contact-input"
+                                            placeholder="Last name" required>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div class="field-group">
+                                        <label for="phone" class="field-label brand-font">
+                                            Phone <span class="required">*</span>
+                                        </label>
+                                        <input type="tel" id="phone" name="phone" class="contact-input"
+                                            placeholder="(555) 555-5555" required>
+                                    </div>
+
+                                    <div class="field-group">
+                                        <label for="email" class="field-label brand-font">
+                                            Email <span class="required">*</span>
+                                        </label>
+                                        <input type="email" id="email" name="email" class="contact-input"
+                                            placeholder="you@example.com" required>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div class="field-group">
+                                        <label for="company" class="field-label brand-font">
+                                            Company / Organization
+                                        </label>
+                                        <input type="text" id="company" name="company" class="contact-input"
+                                            placeholder="Company name">
+                                    </div>
+
+                                    <div class="field-group">
+                                        <label for="products" class="field-label brand-font">
+                                            Type of Item
+                                        </label>
+                                        <input type="text" id="products" name="products" class="contact-input"
+                                            placeholder="Hats, shirts, tumblers...">
+                                    </div>
+                                </div>
+
+                                <div class="field-group">
+                                    <label for="notes" class="field-label brand-font">
+                                        Message <span class="required">*</span>
+                                    </label>
+                                    <textarea id="notes" name="notes" class="contact-input" rows="6"
+                                        placeholder="Tell us about your project, quantity, colors, timeline, logo needs, or questions..."
+                                        required></textarea>
+                                </div>
+
+                                <div class="submit-row">
+                                    <button type="submit" class="submit-btn brand-font">
+                                        Send My Message
+                                        <i class="fa-solid fa-arrow-right text-base"></i>
+                                    </button>
+
+                                    <p class="small-note">
+                                        Required fields are marked with an asterisk.
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+
                     </div>
-
                 </div>
+            </section>
+        </main>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    <div>
-                        <label class="brand-font text-2xl mb-2 block text-slate-900">
-                            Phone<span class="text-blue-400">*</span>
-                        </label>
-
-                        <input type="tel"
-                            class="contact-input"
-                            required>
-                    </div>
+        <footer>
+            <div
+                class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div class="flex items-center gap-4">
+                    <img src="/images/logo.png" class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl"
+                        alt="Prime Promotions Logo" />
 
                     <div>
-                        <label class="brand-font text-2xl mb-2 block text-slate-900">
-                            Email<span class="text-blue-400">*</span>
-                        </label>
-
-                        <input type="email"
-                            class="contact-input"
-                            required>
+                        <span class="text-white text-3xl brand-font">
+                            Prime Promotions LLC
+                            <br>
+                            <span class="text-xl text-blue-400">(574) 202-7050</span>
+                            <br>
+                            <span class="text-xl text-blue-400">sales@primepromollc.com</span>
+                            <br>
+                            <span class="text-xl text-blue-400">514 S Main Street, Middlebury, IN 46540</span>
+                        </span>
                     </div>
-
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    <div>
-                        <label class="brand-font text-2xl mb-2 block text-slate-900">
-                            Company / Organization
-                        </label>
-
-                        <input type="text"
-                            class="contact-input">
-                    </div>
-
-                    <div>
-                        <label class="brand-font text-2xl mb-2 block text-slate-900">
-                            Type of Item
-                        </label>
-
-                        <input type="text"
-                            class="contact-input"
-                            placeholder="Tumblers, Hats, Apparel...">
-                    </div>
-
                 </div>
 
                 <div>
-                    <label class="brand-font text-2xl mb-2 block text-slate-900">
-                        Message<span class="text-blue-400">*</span>
-                    </label>
+                    <h3 class="text-2xl brand-font text-white font-normal mb-2">
+                        Let’s Make Your Brand Unforgettable
+                    </h3>
 
-                    <textarea rows="6"
-                        class="contact-input"
-                        required
-                        placeholder="Tell us about your project..."></textarea>
-                </div>
+                    <p class="text-2xl brand-font text-white/70 font-normal mb-4 italic">
+                        Reach out to our team to get your order started today.
+                    </p>
 
-                <button type="submit"
-                    class="submit-btn brand-font shadow-lg">
-                    Send My Message
-                </button>
-
-            </form>
-
-        </div>
-
-    </section>
-
-    <footer>
-        <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-
-            <div class="flex items-center gap-4">
-                <img src="/images/logo.png"
-                    class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl" />
-
-                <div>
-                    <span class="text-white text-3xl brand-font">
-                        Prime Promotions LLC
-                        <br>
-
-                        <span class="text-xl text-blue-400">
-                            (574) 202-7050
-                        </span>
-
-                        <br>
-
-                        <span class="text-xl text-blue-400">
-                            sales@primepromollc.com
-                        </span>
-
-                        <br>
-
-                        <span class="text-xl text-blue-400">
-                            514 S Main Street, Middlebury, IN 46540
-                        </span>
-                    </span>
+                    <a href="mailto:sales@primepromollc.com"
+                        class="bg-blue-400 brand-font text-2xl px-5 py-2 rounded-full hover:bg-blue-500 transition">
+                        Get in Touch
+                    </a>
                 </div>
             </div>
 
-            <div>
-                <h3 class="text-2xl brand-font text-white mb-2">
-                    Let’s Make Your Brand Unforgettable
-                </h3>
-
-                <p class="text-2xl brand-font text-white/70 mb-4 italic">
-                    Reach out to our team to get your order started today.
-                </p>
-
-                <a href="mailto:sales@primepromollc.com"
-                    class="bg-blue-400 brand-font text-2xl px-5 py-2 rounded-full hover:bg-blue-500 transition">
-                    Get in Touch
+            <div class="text-center text-sm text-white opacity-70 pb-6">
+                &copy; <span id="year"></span> Prime Promotions LLC. All rights reserved.
+                <br>
+                Site by
+                <a href="https://www.linkedin.com/in/drewmcollins/" target="_blank"
+                    class="underline hover:text-blue-400 transition">
+                    Drew Collins
                 </a>
             </div>
+        </footer>
 
-        </div>
-
-        <div class="text-center text-sm text-white opacity-70 pb-6">
-            &copy; <span id="year"></span> Prime Promotions LLC. All rights reserved.
-            <br>
-
-            Site by
-            <a href="https://www.linkedin.com/in/drewmcollins/"
-                target="_blank"
-                class="underline hover:text-blue-400 transition">
-                Drew Collins
-            </a>
-        </div>
-    </footer>
+    </div>
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+        document.getElementById('contact-form').addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const subject = encodeURIComponent("New Inquiry from Website");
-            const body = encodeURIComponent("Hello Prime Promotions, I would like more information.");
+            const first = document.getElementById('first-name').value.trim();
+            const last = document.getElementById('last-name').value.trim();
+            const name = `${first} ${last}`.trim();
 
-            window.location.href = `mailto:sales@primepromollc.com?subject=${subject}&body=${body}`;
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const company = document.getElementById('company').value.trim();
+            const products = document.getElementById('products').value.trim();
+            const notes = document.getElementById('notes').value.trim();
+
+            const subject = "New Inquiry from Website";
+
+            let body = "";
+            body += `Name: ${name}\n`;
+            body += `Email: ${email}\n`;
+            body += `Phone: ${phone}\n`;
+
+            if (company) {
+                body += `Company / Organization: ${company}\n`;
+            }
+
+            if (products) {
+                body += `Interested In: ${products}\n`;
+            }
+
+            body += `\nMessage:\n${notes}\n`;
+
+            const mailto = `mailto:sales@primepromollc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailto;
         });
     </script>
-
 </body>
+
 </html>
