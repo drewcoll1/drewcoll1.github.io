@@ -29,6 +29,12 @@
         background: #f3f8ff;
     }
 
+    /* Main page background */
+    .site-shell {
+        background: #f3f8ff;
+        transition: padding-right 0.35s ease;
+    }
+
     .brand-font {
         font-family: "Bebas Neue", sans-serif;
         font-weight: 400 !important;
@@ -38,10 +44,6 @@
     /* =========================
        CART PANEL
     ========================= */
-    .site-shell {
-        transition: padding-right 0.35s ease;
-    }
-
     @media (min-width: 1024px) {
         body.cart-open .site-shell {
             padding-right: 420px;
@@ -94,13 +96,14 @@
     ========================= */
     .category-btn {
         color: #374151 !important;
-        border-color: #60a5fa !important;
+        border: 1px solid #bfdbfe !important;
         background: #ffffff !important;
         font-weight: 700;
         text-align: center;
         white-space: nowrap;
         outline: none !important;
         -webkit-tap-highlight-color: transparent;
+        transition: all 0.25s ease;
     }
 
     .category-btn:hover,
@@ -141,6 +144,7 @@
         display: flex;
         flex-direction: column;
         background: #ffffff;
+        border-radius: 1.5rem;
     }
 
     .catalog-card > div:last-child {
@@ -153,7 +157,7 @@
         margin-top: auto;
     }
 
-    /* Keeps all catalog images same size and prevents cropping/stretching */
+    /* Catalog image sizing */
     .catalog-image-box {
         width: 100%;
         height: 230px;
@@ -184,10 +188,10 @@
     .direction-box {
         max-width: 1080px;
         margin: 0 auto 2rem;
-        background: #ffffff;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
         border: 1px solid #dbeafe;
         border-radius: 2rem;
-        box-shadow: none;
         overflow: hidden;
     }
 
@@ -213,16 +217,11 @@
     }
 
     .direction-icon {
-        width: auto;
-        height: auto;
-        border-radius: 0;
-        background: transparent;
         color: #60a5fa;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 1rem;
-        box-shadow: none;
     }
 
     .direction-icon svg,
@@ -233,7 +232,7 @@
     }
 
     /* =========================
-       BUTTON / ICON FOCUS FIXES
+       BUTTON / ICON FIXES
     ========================= */
     .save-btn:focus,
     .save-btn:active,
@@ -254,6 +253,7 @@
        MOBILE STYLING
     ========================= */
     @media (max-width: 767px) {
+
         #catalog-directory {
             padding-top: 4rem;
             padding-bottom: 4rem;
@@ -270,28 +270,23 @@
         }
 
         .category-filter-wrap {
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             padding: 1rem 0;
         }
 
-        /* Keeps instruction box horizontal on mobile */
+        /* Keep instructions horizontal */
         .direction-box {
-            border-radius: 1.5rem;
             overflow-x: auto;
+            border-radius: 1.5rem;
         }
 
         .direction-grid {
-            grid-template-columns: repeat(3, minmax(150px, 1fr));
-            min-width: 520px;
+            grid-template-columns: repeat(3, minmax(160px, 1fr));
+            min-width: 560px;
         }
 
         .direction-item {
             padding: 1rem 0.75rem;
-            border-right: 1px solid #dbeafe;
-        }
-
-        .direction-item:last-child {
-            border-right: 0;
         }
 
         .direction-icon {
@@ -300,13 +295,13 @@
 
         .direction-icon svg,
         .direction-icon i {
-            width: 1.9rem;
-            height: 1.9rem;
-            font-size: 1.9rem;
+            width: 1.8rem;
+            height: 1.8rem;
+            font-size: 1.8rem;
         }
 
         .direction-item h2 {
-            font-size: 1.75rem;
+            font-size: 1.6rem;
             line-height: 1;
         }
 
