@@ -401,60 +401,73 @@ body.cart-open #cart-backdrop {
         padding: 1rem 0;
     }
 
-    /* Keep instructions horizontal */
+    /* Mobile directions: keep all 3 items visible on the page with no horizontal scroll */
     .direction-box {
-        overflow-x: auto;
-        border-radius: 1.5rem;
+        overflow: hidden;
+        border-radius: 1.35rem;
+        width: 100%;
     }
 
     .direction-grid {
-        grid-template-columns: repeat(3, minmax(160px, 1fr));
-        min-width: 560px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        min-width: 0;
+        width: 100%;
     }
 
     .direction-item {
-        padding: 1rem 0.75rem;
+        padding: 0.85rem 0.35rem;
+        min-width: 0;
     }
 
     .direction-icon {
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.45rem;
     }
 
     .direction-icon svg,
     .direction-icon i {
-        width: 1.8rem;
-        height: 1.8rem;
-        font-size: 1.8rem;
+        width: 1.35rem;
+        height: 1.35rem;
+        font-size: 1.35rem;
     }
 
     .direction-item h2 {
-        font-size: 1.6rem;
-        line-height: 1;
+        font-size: 1.15rem;
+        line-height: 0.95;
+        margin-bottom: 0.35rem;
+        white-space: normal;
     }
 
     .direction-item p {
-        font-size: 0.75rem;
-        line-height: 1.25rem;
+        font-size: 0.62rem;
+        line-height: 0.95rem;
+        max-width: 100%;
     }
 }
 
 
 
-/* Make the mobile horizontal instruction box easier to swipe without showing a harsh scrollbar */
-.direction-box::-webkit-scrollbar {
-    height: 6px;
-}
+@media (max-width: 390px) {
+    .direction-item {
+        padding: 0.75rem 0.25rem;
+    }
 
-.direction-box::-webkit-scrollbar-thumb {
-    background: #bfdbfe;
-    border-radius: 999px;
-}
+    .direction-icon svg,
+    .direction-icon i {
+        width: 1.15rem;
+        height: 1.15rem;
+        font-size: 1.15rem;
+    }
 
-@media (max-width: 767px) {
-    .direction-box {
-        -webkit-overflow-scrolling: touch;
+    .direction-item h2 {
+        font-size: 1rem;
+    }
+
+    .direction-item p {
+        font-size: 0.56rem;
+        line-height: 0.85rem;
     }
 }
+
 </style>
 </head>
 
