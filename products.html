@@ -26,15 +26,17 @@ html {
 body {
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    background: linear-gradient(to bottom, #f8fafc, #eef2f7);
+    background: #f1f3f5;
 }
 body,
-
-.site-shell,#catalog-directory {background: linear-gradient(to bottom, #f8fafc, #eef2f7); !important;}
+.site-shell,
+#catalog-directory {
+    background: #f1f3f5; !important;
+}
 
 /* Main page background */
 .site-shell {
-    background: linear-gradient(to bottom, #f8fafc, #eef2f7);
+    background: #f1f3f5;
     transition: padding-right 0.35s ease;
 }
 
@@ -331,6 +333,55 @@ body.cart-open #cart-backdrop {
         -webkit-overflow-scrolling: touch;
     }
 }
+
+
+/* =========================
+   MOBILE STACKED HEADER
+========================= */
+@media (max-width: 767px) {
+    .mobile-stacked-header {
+        align-items: center;
+        gap: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .mobile-brand-block {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .mobile-brand-logo {
+        height: 5.75rem;
+    }
+
+    .mobile-nav-row {
+        width: 100%;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.75rem 1.15rem;
+        position: static !important;
+        height: auto !important;
+        padding-top: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .mobile-nav-link {
+        font-size: 1.9rem !important;
+        line-height: 1;
+    }
+
+    .mobile-cart-icon {
+        font-size: 1.75rem !important;
+        padding-right: 0 !important;
+    }
+}
+
 </style>
 </head>
 
@@ -400,74 +451,54 @@ body.cart-open #cart-backdrop {
 
     <div class="site-shell min-h-screen">
     <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
-        <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
-            <a href="index.html" class="flex items-center gap-4">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between relative mobile-stacked-header">
+            <a href="index.html" class="flex items-center gap-4 mobile-brand-block">
                 <img src="/images/logo.png" alt="Prime Promotions Logo"
-                    class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300" />
-                <span class="hidden lg:flex flex-col text-black text-4xl tracking-wide brand-font leading-tight">
-                    <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
-                    <span class="text-xl text-blue-400">(574) 202-7050</span>
-                    <span class="text-xl text-blue-400 italic">sales@primepromollc.com</span>
+                    class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300 mobile-brand-logo" />
+                <span class="flex flex-col text-black tracking-wide brand-font leading-tight">
+                    <span class="whitespace-nowrap font-semibold text-3xl sm:text-4xl lg:text-4xl">Prime Promotions LLC</span>
+                    <span class="text-lg sm:text-xl text-blue-400">(574) 202-7050</span>
+                    <span class="text-lg sm:text-xl text-blue-400 italic">sales@primepromollc.com</span>
                 </span>
             </a>
 
-            <button id="menu-toggle" class="md:hidden relative w-8 h-8 focus:outline-none z-50">
-                <span
-                    class="menu-line block absolute left-0 top-0 w-8 h-0.5 bg-black transition-transform duration-300"></span>
-                <span
-                    class="menu-line block absolute left-0 top-3.5 w-8 h-0.5 bg-black transition-opacity duration-300"></span>
-                <span
-                    class="menu-line block absolute left-0 top-7 w-8 h-0.5 bg-black transition-transform duration-300"></span>
-            </button>
+            <button id="menu-toggle" class="hidden" aria-label="Toggle navigation"></button>
 
             <nav id="nav-menu"
-                class="hidden fixed top-full left-0 w-full h-screen bg-white text-black flex-col justify-start items-center text-3xl space-y-10 z-50 transition-all duration-500 ease-in-out pt-5 md:relative md:flex md:h-auto md:bg-transparent md:flex-row md:space-y-0 md:space-x-10 md:text-black md:text-lg md:justify-end md:pt-0">
+                class="flex flex-row flex-wrap justify-center items-center gap-x-6 gap-y-3 text-black md:justify-end md:space-x-10 md:gap-x-0 mobile-nav-row">
 
                 <a href="index.html" class="relative group">
                     <span
-                        class="text-black hover:text-blue-400 transition brand-font text-4xl mt-[2px] inline-block">Home</span>
+                        class="text-black hover:text-blue-400 transition brand-font text-4xl mt-[2px] inline-block mobile-nav-link">Home</span>
                     <span
                         class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                 </a>
 
                 <a href="products.html" class="relative group">
-                    <span class="text-blue-400 brand-font text-4xl">Catalogs</span>
+                    <span class="text-blue-400 brand-font text-4xl mobile-nav-link">Catalogs</span>
                     <span
                         class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
                 </a>
 
                 <a href="shopify.html" class="relative group">
-                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Shopify</span>
+                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl mobile-nav-link">Shopify</span>
                     <span
                         class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                 </a>
 
                 <a href="contact.html" class="relative group">
-                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Contact</span>
+                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl mobile-nav-link">Contact</span>
                     <span
                         class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                 </a>
 
                 <a id="cart-icon" class="relative group cursor-pointer">
-                    <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2">
+                    <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2 mobile-cart-icon">
                         <i class="fas fa-shopping-cart"></i>
                     </span>
                     <span id="cart-count"
                         class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
                 </a>
-
-                <div class="flex flex-col items-center py-1 md:hidden">
-                    <img src="/images/logo.png" alt="Prime Promotions Logo"
-                        class="h-36 w-auto rounded-full border-4 border-white shadow-xl mb-4" />
-                    <span class="text-2xl text-blue-400 brand-font">
-                        (574) 202-7050<span class="text-black">|</span>
-                        sales@primepromollc.com
-                    </span>
-
-                    <span class="text-xl text-blue-400 brand-font">
-                        514 S Main Street, Middlebury, IN 46540
-                    </span>
-                </div>
             </nav>
         </div>
     </header>
@@ -1385,20 +1416,13 @@ body.cart-open #cart-backdrop {
                 return;
             }
 
-            let body = "Here are the catalogs I'm interested in:
-
-";
+            let body = "Here are the catalogs I'm interested in:\n\n";
 
             cart.forEach(item => {
-                body += `Catalog: ${item.name}
-`;
-                if (item.link) body += `Catalog Link: ${item.link}
-`;
-                if (item.notes) body += `Notes/Questions:
-${item.notes}
-`;
-                body += '
-';
+                body += `Catalog: ${item.name}\n`;
+                if (item.link) body += `Catalog Link: ${item.link}\n`;
+                if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
+                body += '\n';
             });
 
             const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Catalogs&body=${encodeURIComponent(body)}`;
@@ -1406,7 +1430,7 @@ ${item.notes}
         });
     }
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown' , (e) => {
         if (document.body.classList.contains('cart-open') && e.key === 'Escape') {
             closeCart();
         }
