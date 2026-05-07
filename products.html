@@ -1474,105 +1474,156 @@ body.cart-open #cart-backdrop {
 </footer>
 
 <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.addEventListener('DOMContentLoaded', () => {
+        const yearEl = document.getElementById('year');
+        const cartIcon = document.getElementById('cart-icon');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartBackdrop = document.getElementById('cart-backdrop');
+        const cartList = document.getElementById('cart-list');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotalLabel = document.getElementById('cart-total-label');
+        const saveButtons = document.querySelectorAll('.save-btn');
+        const categorySelect = document.getElementById('category-select');
+        const catalogCards = document.querySelectorAll('.catalog-card');
+        const sendEmailBtn = document.getElementById('send-email');
 
-    const cartIcon = document.getElementById('cart-icon');
-    const closeCartBtn = document.getElementById('close-cart');
-    const cartBackdrop = document.getElementById('cart-backdrop');
-    const cartList = document.getElementById('cart-list');
-    const cartCount = document.getElementById('cart-count');
-    const cartTotalLabel = document.getElementById('cart-total-label');
-    const saveButtons = document.querySelectorAll('.save-btn');
-    const categorySelect = document.getElementById('category-select');
-    const catalogCards = document.querySelectorAll('.catalog-card');
-    const sendEmailBtn = document.getElementById('send-email');
+        const CART_KEY = 'primePromoSavedCatalogs';
 
-    function getCart() {
-        try {
-            return JSON.parse(localStorage.getItem('primePromoSavedCatalogs')) || [];
-        } catch (error) {
-            return [];
-        }
-    }
-
-    function saveCart(cart) {
-        localStorage.setItem('primePromoSavedCatalogs', JSON.stringify(cart));
-    }
-
-    function updateCartCount() {
-        const cart = getCart();
-        const count = cart.length;
-
-        if (cartTotalLabel) {
-            cartTotalLabel.textContent = count;
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
         }
 
-        if (cartCount) {
-            cartCount.textContent = count;
-            cartCount.classList.toggle('hidden', count === 0);
-        }
-    }
-
-    function updateCartList() {
-        const cart = getCart();
-
-        if (!cartList) return;
-
-        cartList.innerHTML = '';
-
-        if (cartTotalLabel) {
-            cartTotalLabel.textContent = cart.length;
+        function escapeHTML(value) {
+            return String(value || '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
         }
 
-        if (cart.length === 0) {
-            cartList.innerHTML = `
-                <li class="rounded-3xl border border-blue-100 bg-blue-50/70 p-5 text-center">
-                    <p class="brand-font text-3xl text-gray-950 leading-none">No saved catalogs yet</p>
-                    <p class="text-sm text-gray-500 mt-2">Use the blue cart buttons to save catalogs you like.</p>
-                </li>
-            `;
-            return;
+        function getCart() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(CART_KEY));
+                return Array.isArray(saved) ? saved : [];
+            } catch (error) {
+                return [];
+            }
         }
 
-        cart.forEach((item, index) => {
-            const li = document.createElement('li');
-            li.className = 'rounded-3xl border border-blue-100 bg-white p-5 shadow-sm';
+        function saveCart(cart) {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        }
 
-            li.innerHTML = `
-                <div class="flex items-start justify-between gap-4">
-                    <div class="min-w-0">
-                        <p class="brand-font text-3xl text-gray-950 leading-none">${item.name}</p>
-                        ${item.link ? `<a href="${item.link}" target="_blank" class="text-sm text-blue-500 hover:text-blue-700 break-all">${item.link}</a>` : ''}
+        function updateCartCount() {
+            const count = getCart().length;
+
+            if (cartTotalLabel) {
+                cartTotalLabel.textContent = count;
+            }
+
+            if (cartCount) {
+                cartCount.textContent = count;
+                cartCount.classList.toggle('hidden', count === 0);
+            }
+        }
+
+        function updateCartList() {
+            const cart = getCart();
+
+            if (!cartList) return;
+
+            cartList.innerHTML = '';
+
+            if (cartTotalLabel) {
+                cartTotalLabel.textContent = cart.length;
+            }
+
+            if (cart.length === 0) {
+                cartList.innerHTML = `
+                    <li class="rounded-3xl border border-blue-100 bg-blue-50/70 p-5 text-center">
+                        <p class="brand-font text-3xl text-gray-950 leading-none">No saved catalogs yet</p>
+                        <p class="text-sm text-gray-500 mt-2">Use the blue cart buttons to save catalogs you like.</p>
+                    </li>
+                `;
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.className = 'rounded-3xl border border-blue-100 bg-white p-5 shadow-sm';
+
+                const safeName = escapeHTML(item.name);
+                const safeLink = escapeHTML(item.link);
+                const safeNotes = escapeHTML(item.notes);
+
+                li.innerHTML = `
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="min-w-0">
+                            <p class="brand-font text-3xl text-gray-950 leading-none">${safeName}</p>
+                            ${item.link ? `<a href="${safeLink}" target="_blank" class="text-sm text-blue-500 hover:text-blue-700 break-all">${safeLink}</a>` : ''}
+                        </div>
+
+                        <button class="remove-btn w-9 h-9 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white text-gray-500 flex items-center justify-center shrink-0 transition" data-index="${index}" aria-label="Remove ${safeName}">
+                            <i class="fa-solid fa-trash text-sm"></i>
+                        </button>
                     </div>
 
-                    <button class="remove-btn w-9 h-9 rounded-full bg-gray-100 hover:bg-red-500 hover:text-white text-gray-500 flex items-center justify-center shrink-0 transition" data-index="${index}" aria-label="Remove ${item.name}">
-                        <i class="fa-solid fa-trash text-sm"></i>
-                    </button>
-                </div>
+                    <label class="block mt-4 text-xs uppercase tracking-widest text-gray-400 font-bold">Notes / Questions</label>
+                    <textarea class="cart-notes mt-2 w-full min-h-[92px] rounded-2xl border border-blue-100 bg-blue-50/40 px-4 py-3 text-sm text-gray-700 outline-none focus:border-blue-400 focus:bg-white transition" data-index="${index}" placeholder="Add sizes, quantities, colors, logos, timeline, or questions...">${safeNotes}</textarea>
+                `;
 
-                <label class="block mt-4 text-xs uppercase tracking-widest text-gray-400 font-bold">Notes / Questions</label>
-                <textarea class="cart-notes mt-2 w-full min-h-[92px] rounded-2xl border border-blue-100 bg-blue-50/40 px-4 py-3 text-sm text-gray-700 outline-none focus:border-blue-400 focus:bg-white transition" data-index="${index}" placeholder="Add sizes, quantities, colors, logos, timeline, or questions...">${item.notes || ''}</textarea>
-            `;
-
-            cartList.appendChild(li);
-        });
-
-        document.querySelectorAll('.remove-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const index = parseInt(e.currentTarget.getAttribute('data-index'), 10);
-                const updatedCart = getCart();
-
-                updatedCart.splice(index, 1);
-                saveCart(updatedCart);
-
-                updateCartCount();
-                updateCartList();
+                cartList.appendChild(li);
             });
-        });
+        }
 
-        document.querySelectorAll('.cart-notes').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const index = parseInt(e.target.getAttribute('data-index'), 10);
+        function openCart() {
+            updateCartCount();
+            updateCartList();
+            document.body.classList.add('cart-open');
+
+            if (window.innerWidth < 1024) {
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeCart() {
+            document.body.classList.remove('cart-open');
+            document.body.style.overflow = '';
+        }
+
+        if (cartIcon) {
+            cartIcon.addEventListener('click', openCart);
+        }
+
+        if (closeCartBtn) {
+            closeCartBtn.addEventListener('click', closeCart);
+        }
+
+        if (cartBackdrop) {
+            cartBackdrop.addEventListener('click', closeCart);
+        }
+
+        if (cartList) {
+            cartList.addEventListener('click', (e) => {
+                const removeBtn = e.target.closest('.remove-btn');
+                if (!removeBtn) return;
+
+                const index = Number(removeBtn.dataset.index);
+                const cart = getCart();
+
+                if (Number.isInteger(index)) {
+                    cart.splice(index, 1);
+                    saveCart(cart);
+                    updateCartCount();
+                    updateCartList();
+                }
+            });
+
+            cartList.addEventListener('input', (e) => {
+                if (!e.target.classList.contains('cart-notes')) return;
+
+                const index = Number(e.target.dataset.index);
                 const cart = getCart();
 
                 if (cart[index]) {
@@ -1580,102 +1631,74 @@ body.cart-open #cart-backdrop {
                     saveCart(cart);
                 }
             });
-        });
-    }
-
-    function openCart() {
-        updateCartList();
-        document.body.classList.add('cart-open');
-
-        if (window.innerWidth < 1024) {
-            document.body.style.overflow = 'hidden';
         }
-    }
 
-    function closeCart() {
-        document.body.classList.remove('cart-open');
-        document.body.style.overflow = '';
-    }
+        saveButtons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.name || '';
+                const link = btn.dataset.link || '';
+                const cart = getCart();
+                const alreadySaved = cart.some((item) => item.name === name && item.link === link);
 
-    if (cartIcon) cartIcon.addEventListener('click', openCart);
-    if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
-    if (cartBackdrop) cartBackdrop.addEventListener('click', closeCart);
+                if (!alreadySaved) {
+                    cart.push({ name, link, notes: '' });
+                    saveCart(cart);
+                }
 
-    saveButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const name = btn.getAttribute('data-name');
-            const link = btn.getAttribute('data-link');
-            const cart = getCart();
-            const alreadySaved = cart.some(item => item.name === name && item.link === link);
+                updateCartCount();
+                openCart();
+            });
+        });
 
-            if (!alreadySaved) {
-                cart.push({
-                    name,
-                    link,
-                    notes: ''
+        if (categorySelect) {
+            categorySelect.addEventListener('change', () => {
+                const selectedCategory = categorySelect.value;
+
+                catalogCards.forEach((card) => {
+                    const cardCategory = card.dataset.category;
+                    const shouldShow = selectedCategory === 'all' || selectedCategory === cardCategory;
+                    card.classList.toggle('hidden', !shouldShow);
+                });
+            });
+        }
+
+        if (sendEmailBtn) {
+            sendEmailBtn.addEventListener('click', () => {
+                const cart = getCart();
+
+                if (cart.length === 0) {
+                    alert('Your saved list is empty!');
+                    return;
+                }
+
+                let body = "Here are the catalogs I'm interested in:\n\n";
+
+                cart.forEach((item) => {
+                    body += `Catalog: ${item.name}\n`;
+                    if (item.link) body += `Catalog Link: ${item.link}\n`;
+                    if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
+                    body += '\n';
                 });
 
-                saveCart(cart);
-            }
-
-            updateCartCount();
-            openCart();
-        });
-    });
-
-    if (categorySelect) {
-        categorySelect.addEventListener('change', () => {
-            const selectedCategory = categorySelect.value;
-
-            catalogCards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
-
-                if (selectedCategory === 'all' || selectedCategory === cardCategory) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
+                const mailtoLink = `mailto:sales@primepromollc.com?subject=${encodeURIComponent('Saved Catalogs')}&body=${encodeURIComponent(body)}`;
+                window.location.href = mailtoLink;
             });
-        });
-    }
-
-    if (sendEmailBtn) {
-        sendEmailBtn.addEventListener('click', () => {
-            const cart = getCart();
-
-            if (cart.length === 0) {
-                alert('Your saved list is empty!');
-                return;
-            }
-
-            let body = "Here are the catalogs I'm interested in:
-
-";
-
-            cart.forEach(item => {
-                body += `Catalog: ${item.name}
-`;
-                if (item.link) body += `Catalog Link: ${item.link}
-`;
-                if (item.notes) body += `Notes/Questions:
-${item.notes}
-`;
-                body += '
-';
-            });
-
-            const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Catalogs&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
-        });
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (document.body.classList.contains('cart-open') && e.key === 'Escape') {
-            closeCart();
         }
-    });
 
-    updateCartCount();
+        document.addEventListener('keydown', (e) => {
+            if (document.body.classList.contains('cart-open') && e.key === 'Escape') {
+                closeCart();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024 && document.body.classList.contains('cart-open')) {
+                document.body.style.overflow = '';
+            }
+        });
+
+        updateCartCount();
+    });
 </script>
 
 </body>
