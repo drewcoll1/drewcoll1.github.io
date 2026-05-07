@@ -241,48 +241,65 @@ body.cart-open #cart-backdrop {
 }
 
 /* =========================
-   CATEGORY BUTTONS
+   CATEGORY DROPDOWN FILTER
 ========================= */
-.category-btn {
-    color: #374151 !important;
-    border: 1px solid #bfdbfe !important;
-    background: #ffffff !important;
-    font-weight: 700;
-    text-align: center;
-    white-space: nowrap;
-    outline: none !important;
-    -webkit-tap-highlight-color: transparent;
-    transition: all 0.25s ease;
-}
-
-.category-btn:hover,
-.category-btn:focus,
-.category-btn:active {
-    color: #ffffff !important;
-    background: #60a5fa !important;
-    border-color: #60a5fa !important;
-}
-
-.category-btn.active,
-.category-btn.active:hover,
-.category-btn.active:focus,
-.category-btn.active:active {
-    background: #60a5fa !important;
-    color: #ffffff !important;
-    border-color: #60a5fa !important;
-    box-shadow: none;
-}
-
 .category-filter-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
     width: 100%;
-    max-width: 1080px;
+    max-width: 440px;
     margin: 0 auto 3rem;
-    padding: 1.25rem;
+    padding: 0;
+}
+
+.category-select-label {
+    display: block;
+    margin-bottom: 0.55rem;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #60a5fa;
+}
+
+.category-select-shell {
+    position: relative;
+    width: 100%;
+}
+
+.category-select-shell::after {
+    content: "\\f107";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #60a5fa;
+    pointer-events: none;
+    font-size: 1rem;
+}
+
+#category-select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid #bfdbfe;
+    background: #ffffff;
+    color: #111827;
+    border-radius: 9999px;
+    padding: 0.95rem 3rem 0.95rem 1.25rem;
+    font-weight: 800;
+    font-size: 0.95rem;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+#category-select:hover,
+#category-select:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 16px 36px rgba(96, 165, 250, 0.18);
 }
 
 /* =========================
@@ -413,25 +430,20 @@ body.cart-open #cart-backdrop {
         padding: 18px;
     }
 
-    /* Mobile filters: keep all category tabs on one line */
     .category-filter-wrap {
-        flex-wrap: nowrap;
-        justify-content: center;
-        gap: 0.35rem;
-        margin-bottom: 2rem;
-        padding: 0.75rem 0;
-        width: 100%;
         max-width: 100%;
-        overflow: visible;
+        margin-bottom: 2rem;
     }
 
-    .category-btn {
-        flex: 0 1 auto;
-        min-width: 0;
-        padding: 0.42rem 0.48rem !important;
+    .category-select-label {
         font-size: 0.68rem;
-        line-height: 1;
-        white-space: nowrap;
+        margin-bottom: 0.45rem;
+    }
+
+    #category-select {
+        font-size: 0.85rem;
+        padding-top: 0.82rem;
+        padding-bottom: 0.82rem;
     }
 
     /* Mobile directions: keep all 3 items visible on the page with no horizontal scroll */
@@ -480,15 +492,6 @@ body.cart-open #cart-backdrop {
 
 
 @media (max-width: 390px) {
-    .category-filter-wrap {
-        gap: 0.22rem;
-    }
-
-    .category-btn {
-        padding: 0.38rem 0.34rem !important;
-        font-size: 0.58rem;
-    }
-
     .direction-item {
         padding: 0.75rem 0.25rem;
     }
@@ -674,41 +677,18 @@ body.cart-open #cart-backdrop {
             </div>
 
             <div class="category-filter-wrap">
-                <button
-                    class="category-btn active border px-5 py-2 rounded-full transition"
-                    data-category="all">
-                    All
-                </button>
+                <label for="category-select" class="category-select-label">Filter Catalogs</label>
 
-                <button
-                    class="category-btn border px-5 py-2 rounded-full transition"
-                    data-category="headwear">
-                    Headwear
-                </button>
-
-                <button
-                    class="category-btn border px-5 py-2 rounded-full transition"
-                    data-category="apparel">
-                    Apparel
-                </button>
-
-                <button
-                    class="category-btn border px-5 py-2 rounded-full transition"
-                    data-category="tradeshows">
-                    Tradeshows
-                </button>
-
-                <button
-                    class="category-btn border px-5 py-2 rounded-full transition"
-                    data-category="promotions">
-                    Promotions
-                </button>
-
-                <button
-                    class="category-btn border px-5 py-2 rounded-full transition"
-                    data-category="awards">
-                    Awards
-                </button>
+                <div class="category-select-shell">
+                    <select id="category-select" aria-label="Filter catalogs by category">
+                        <option value="all">All Catalogs</option>
+                        <option value="headwear">Headwear</option>
+                        <option value="apparel">Apparel</option>
+                        <option value="tradeshows">Tradeshows</option>
+                        <option value="promotions">Promotions</option>
+                        <option value="awards">Awards</option>
+                    </select>
+                </div>
             </div>
 
             <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -1367,7 +1347,7 @@ body.cart-open #cart-backdrop {
     const cartCount = document.getElementById('cart-count');
     const cartTotalLabel = document.getElementById('cart-total-label');
     const saveButtons = document.querySelectorAll('.save-btn');
-    const categoryButtons = document.querySelectorAll('.category-btn');
+    const categorySelect = document.getElementById('category-select');
     const catalogCards = document.querySelectorAll('.catalog-card');
     const sendEmailBtn = document.getElementById('send-email');
 
@@ -1500,12 +1480,9 @@ body.cart-open #cart-backdrop {
         });
     });
 
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const selectedCategory = button.getAttribute('data-category');
-
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+    if (categorySelect) {
+        categorySelect.addEventListener('change', () => {
+            const selectedCategory = categorySelect.value;
 
             catalogCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
@@ -1517,7 +1494,7 @@ body.cart-open #cart-backdrop {
                 }
             });
         });
-    });
+    }
 
     if (sendEmailBtn) {
         sendEmailBtn.addEventListener('click', () => {
