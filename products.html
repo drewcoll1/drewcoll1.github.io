@@ -98,7 +98,7 @@ body,
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 2.5rem;
+    gap: 2.25rem;
 }
 
 @media (max-width: 767px) {
@@ -156,15 +156,37 @@ body,
         white-space: nowrap;
     }
 
-    #cart-icon > span:first-child {
-        font-size: 1.55rem !important;
-        padding-right: 0 !important;
-        white-space: nowrap;
+}
+
+
+/* =========================
+   FLOATING CART BUTTON
+========================= */
+#cart-icon {
+    touch-action: manipulation;
+}
+
+body.cart-open #cart-icon {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9);
+}
+
+@media (max-width: 767px) {
+    #cart-icon {
+        width: 3.65rem;
+        height: 3.65rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+
+    #cart-icon i {
+        font-size: 1.35rem;
     }
 
     #cart-count {
-        top: -0.6rem !important;
-        right: -0.6rem !important;
+        top: -0.45rem;
+        right: -0.45rem;
     }
 }
 
@@ -555,6 +577,15 @@ body.cart-open #cart-backdrop {
 
     </aside>
 
+
+    <button id="cart-icon"
+        class="fixed bottom-6 right-6 z-[55] w-16 h-16 rounded-full bg-blue-400 hover:bg-blue-500 text-white shadow-2xl flex items-center justify-center transition hover:scale-105"
+        aria-label="Open saved catalogs cart">
+        <i class="fas fa-shopping-cart text-2xl"></i>
+        <span id="cart-count"
+            class="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
+    </button>
+
     <div class="site-shell min-h-screen">
     <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
         <div class="site-header-inner max-w-7xl mx-auto px-6 py-4 relative">
@@ -588,12 +619,6 @@ body.cart-open #cart-backdrop {
                     <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                 </a>
 
-                <a id="cart-icon" class="relative group cursor-pointer">
-                    <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2">
-                        <i class="fas fa-shopping-cart"></i>
-                    </span>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
-                </a>
             </nav>
         </div>
     </header>
