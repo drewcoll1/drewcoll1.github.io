@@ -151,22 +151,23 @@
         ========================= */
 
         .contact-shell {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 0 auto;
             padding: 5rem 1.5rem;
         }
 
         .contact-card {
-            background: #60a5fa;
+            background: white;
+            border: 1px solid #dbeafe;
             border-radius: 2rem;
             padding: 3rem;
-            box-shadow: 0 25px 50px rgba(96, 165, 250, 0.22);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.10);
         }
 
         .contact-input {
             width: 100%;
-            border: 1px solid rgba(255,255,255,0.3);
-            background: white;
+            border: 1px solid #dbeafe;
+            background: #ffffff;
             color: #0f172a;
             border-radius: 1rem;
             padding: 1rem 1rem;
@@ -175,12 +176,13 @@
         }
 
         .contact-input:focus {
-            box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15);
         }
 
         .submit-btn {
-            background: white;
-            color: #60a5fa;
+            background: #60a5fa;
+            color: white;
             border-radius: 9999px;
             padding: 0.9rem 2rem;
             font-size: 1.7rem;
@@ -188,7 +190,7 @@
         }
 
         .submit-btn:hover {
-            background: #eff6ff;
+            background: #3b82f6;
         }
 
         /* =========================
@@ -267,16 +269,16 @@
 
     <section class="contact-shell">
 
-        <div class="text-center mb-10">
+        <div class="text-center mb-12">
             <p class="uppercase tracking-[0.25em] text-blue-400 text-lg font-bold mb-3">
                 Start Your Project
             </p>
 
-            <h1 class="brand-font text-6xl md:text-7xl text-slate-900 leading-none">
-                Contact Us
+            <h1 class="brand-font text-6xl md:text-8xl text-slate-900 leading-none">
+                CONTACT<span class="text-blue-400">.</span>
             </h1>
 
-            <p class="brand-font text-2xl text-slate-700 mt-4">
+            <p class="brand-font text-2xl text-slate-700 mt-5">
                 Let us know what you're interested in and how we can help.
             </p>
         </div>
@@ -288,8 +290,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     <div>
-                        <label class="brand-font text-2xl mb-2 block text-white">
-                            First Name<span class="text-white">*</span>
+                        <label class="brand-font text-2xl mb-2 block text-slate-900">
+                            First Name<span class="text-blue-400">*</span>
                         </label>
 
                         <input type="text"
@@ -298,8 +300,8 @@
                     </div>
 
                     <div>
-                        <label class="brand-font text-2xl mb-2 block text-white">
-                            Last Name<span class="text-white">*</span>
+                        <label class="brand-font text-2xl mb-2 block text-slate-900">
+                            Last Name<span class="text-blue-400">*</span>
                         </label>
 
                         <input type="text"
@@ -312,8 +314,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     <div>
-                        <label class="brand-font text-2xl mb-2 block text-white">
-                            Phone<span class="text-white">*</span>
+                        <label class="brand-font text-2xl mb-2 block text-slate-900">
+                            Phone<span class="text-blue-400">*</span>
                         </label>
 
                         <input type="tel"
@@ -322,8 +324,8 @@
                     </div>
 
                     <div>
-                        <label class="brand-font text-2xl mb-2 block text-white">
-                            Email<span class="text-white">*</span>
+                        <label class="brand-font text-2xl mb-2 block text-slate-900">
+                            Email<span class="text-blue-400">*</span>
                         </label>
 
                         <input type="email"
@@ -336,7 +338,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     <div>
-                        <label class="brand-font text-2xl mb-2 block text-white">
+                        <label class="brand-font text-2xl mb-2 block text-slate-900">
                             Company / Organization
                         </label>
 
@@ -345,7 +347,7 @@
                     </div>
 
                     <div>
-                        <label class="brand-font text-2xl mb-2 block text-white">
+                        <label class="brand-font text-2xl mb-2 block text-slate-900">
                             Type of Item
                         </label>
 
@@ -357,8 +359,8 @@
                 </div>
 
                 <div>
-                    <label class="brand-font text-2xl mb-2 block text-white">
-                        Message<span class="text-white">*</span>
+                    <label class="brand-font text-2xl mb-2 block text-slate-900">
+                        Message<span class="text-blue-400">*</span>
                     </label>
 
                     <textarea rows="6"
