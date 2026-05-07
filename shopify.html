@@ -6,285 +6,372 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prime Promotions LLC</title>
     <link rel="icon" href="/images/favicon.png" type="image/jpeg" />
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Barlow+Condensed:wght@500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bebas+Neue&display=swap"
         rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <style>
+        /* =========================
+           BASE PAGE SETUP
+        ========================= */
         html {
             scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            background: #f5f5f4;
+        }
+
+        .site-shell {
+            min-height: 100vh;
+            background: #f5f5f4;
         }
 
         .brand-font {
             font-family: "Bebas Neue", sans-serif;
+            font-weight: 400 !important;
+            letter-spacing: 0.01em;
         }
 
-        .site-shell {
-            transition: padding-right 0.35s ease;
+        /* =========================
+           SHARED HEADER / NAV
+        ========================= */
+        .header-shell {
+            max-width: 120rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .header-logo {
+            height: 6rem;
+            width: auto;
+            border-radius: 9999px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .header-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .header-brand-text {
+            display: none;
         }
 
         @media (min-width: 1024px) {
-            body.cart-open .site-shell {
-                padding-right: 420px;
+            .header-brand-text {
+                display: flex;
+                flex-direction: column;
+                color: #000000;
+                font-size: 2.25rem;
+                line-height: 1.05;
+                letter-spacing: 0.025em;
             }
         }
 
-        #cart-panel {
-            transform: translateX(100%);
-            transition: transform 0.35s ease;
+        .header-contact-line {
+            font-size: 1.25rem;
+            color: #60a5fa;
+            padding-top: 0.18rem;
+            padding-bottom: 0.18rem;
         }
 
-        body.cart-open #cart-panel {
-            transform: translateX(0);
+        .header-contact-line.email {
+            font-style: italic;
         }
 
-        #cart-backdrop {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease;
+        #nav-menu {
+            display: none;
         }
 
-        body.cart-open #cart-backdrop {
-            opacity: 1;
-            pointer-events: auto;
+        @media (min-width: 768px) {
+            #nav-menu {
+                position: relative;
+                display: flex !important;
+                width: auto;
+                height: auto;
+                overflow: visible;
+                background: transparent;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 2.5rem;
+                padding-top: 0;
+                font-size: 1.125rem;
+                color: #000000;
+            }
         }
 
-        @media (min-width: 1024px) {
-            #cart-backdrop {
+        @media (max-width: 767px) {
+            .header-shell {
+                padding: 0.9rem 1rem;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .header-shell > a {
                 display: none;
             }
+
+            .header-brand-text {
+                display: none !important;
+            }
+
+            #nav-menu {
+                display: flex !important;
+                position: relative;
+                width: 100%;
+                height: auto;
+                overflow: visible;
+                background: transparent;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 1.15rem;
+                padding-top: 0;
+                white-space: nowrap;
+            }
+
+            #nav-menu a {
+                flex: 0 0 auto;
+            }
+
+            #nav-menu .brand-font {
+                font-size: 1.8rem !important;
+                line-height: 1;
+            }
         }
 
-        .menu-open .menu-line:nth-child(1) {
-            transform: translateY(14px) rotate(45deg);
+        /* =========================
+           SHOPIFY PAGE
+        ========================= */
+        .shopify-section {
+            background: #f5f5f4;
         }
 
-        .menu-open .menu-line:nth-child(2) {
-            opacity: 0;
+        .shopify-banner {
+            width: 100%;
+            max-width: 54rem;
+            height: 13rem;
+            object-fit: contain;
         }
 
-        .menu-open .menu-line:nth-child(3) {
-            transform: translateY(-14px) rotate(-45deg);
+        .shopify-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .shopify-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .shopify-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        .shopify-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+            transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .shopify-card:hover {
+            border-color: #bfdbfe;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .shopify-image-box {
+            width: 100%;
+            height: 230px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 22px;
+            border-bottom: 1px solid #e5e7eb;
+            overflow: hidden;
+        }
+
+        .shopify-image-box img {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain !important;
+            object-position: center !important;
+            display: block;
+        }
+
+        .shopify-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .store-link {
+            margin-top: auto;
+        }
+
+        @media (max-width: 767px) {
+            .shopify-section {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+
+            .shopify-banner {
+                height: 9rem;
+            }
+
+            .shopify-image-box {
+                height: 190px;
+                padding: 18px;
+            }
         }
     </style>
 </head>
 
-<body class="text-gray-900 bg-white min-h-screen">
-
-    <div id="cart-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[80]"></div>
-
-    <aside id="cart-panel"
-        class="fixed top-0 right-0 h-screen w-full max-w-[420px] bg-white z-[90] shadow-2xl border-l border-blue-100 flex flex-col">
-
-        <div class="relative px-6 py-6 border-b border-blue-100 bg-white">
-            <div class="absolute top-0 left-0 w-full h-2 bg-blue-400"></div>
-
-            <div class="flex items-start justify-between gap-4 pt-2">
-                <div class="flex items-center gap-4">
-                    <div
-                        class="w-14 h-14 rounded-full bg-white border-4 border-blue-100 shadow-md flex items-center justify-center shrink-0">
-                        <img src="/images/logo.png" alt="Prime Promotions Logo"
-                            class="w-10 h-10 object-contain rounded-full">
-                    </div>
-
-                    <div>
-                        <p class="text-xs uppercase tracking-[0.22em] text-blue-400 font-bold">
-                            Prime Promotions
-                        </p>
-                        <h3 class="brand-font text-4xl leading-none text-gray-950 mt-1">
-                            Saved Items
-                        </h3>
-                    </div>
-                </div>
-
-                <button id="close-cart"
-                    class="w-10 h-10 rounded-full bg-gray-100 hover:bg-blue-400 hover:text-white text-gray-600 flex items-center justify-center transition shadow-sm">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="px-6 py-4 bg-blue-50/80 border-b border-blue-100">
-            <div class="flex items-center justify-between gap-4">
-                <div>
-                    <p class="brand-font text-3xl text-gray-950 leading-none mt-1">
-                        <span id="cart-total-label">0</span> Saved Items
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex-1 overflow-y-auto px-5 py-5 bg-white">
-            <ul id="cart-list" class="space-y-4 text-md text-gray-800"></ul>
-        </div>
-
-        <div class="px-5 py-5 bg-gray-50 border-t border-gray-200">
-            <div class="rounded-3xl bg-white border border-blue-100 p-5 shadow-sm">
-                <p class="brand-font text-3xl text-gray-950 leading-none">
-                    Send to our team
-                </p>
-                <p class="text-sm text-gray-500 mt-1 mb-4">
-                    Your selected catalogs are ready to send.
-                </p>
-
-                <button id="send-email"
-                    class="w-full bg-blue-400 hover:bg-blue-500 text-white brand-font text-2xl px-6 py-3 rounded-full shadow-lg transition flex items-center justify-center gap-3 whitespace-nowrap">
-                    <i class="fa-solid fa-envelope"></i>
-                </button>
-            </div>
-        </div>
-    </aside>
-
-    <div class="site-shell min-h-screen flex flex-col">
+<body>
+    <div class="site-shell flex flex-col">
         <div class="flex-grow">
-
             <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
-                <div class="max-w-7.5xl mx-auto px-6 py-4 flex items-center justify-between relative">
+                <div class="header-shell">
                     <a href="index.html" class="flex items-center gap-4">
-                        <img src="/images/logo.png" alt="Prime Promotions Logo"
-                            class="h-24 w-auto rounded-full border-2 border-white shadow-xl hover:scale-105 transition-transform duration-300" />
-                        <span class="hidden lg:flex flex-col text-black text-4xl tracking-wide brand-font leading-tight">
+                        <img src="/images/logo.png" alt="Prime Promotions Logo" class="header-logo" />
+
+                        <span class="header-brand-text brand-font">
                             <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
-                            <span class="text-xl text-blue-400">(574) 202-7050</span>
-                            <span class="text-xl text-blue-400 italic">sales@primepromollc.com</span>
+                            <span class="header-contact-line">(574) 202-7050</span>
+                            <span class="header-contact-line email">sales@primepromollc.com</span>
                         </span>
                     </a>
 
-                    <button id="menu-toggle" class="md:hidden relative w-8 h-8 focus:outline-none z-50">
-                        <span
-                            class="menu-line block absolute left-0 top-0 w-8 h-0.5 bg-black transition-transform duration-300"></span>
-                        <span
-                            class="menu-line block absolute left-0 top-3.5 w-8 h-0.5 bg-black transition-opacity duration-300"></span>
-                        <span
-                            class="menu-line block absolute left-0 top-7 w-8 h-0.5 bg-black transition-transform duration-300"></span>
-                    </button>
-
-                    <nav id="nav-menu"
-                        class="hidden fixed top-full left-0 w-full h-screen overflow-y-auto bg-white text-black flex-col justify-start items-center text-3xl space-y-10 z-50 transition-all duration-500 ease-in-out pt-5 md:relative md:flex md:h-auto md:overflow-visible md:bg-transparent md:flex-row md:space-y-0 md:space-x-10 md:text-black md:text-lg md:justify-end md:pt-0">
-
+                    <nav id="nav-menu">
                         <a href="index.html" class="relative group">
                             <span class="text-black group-hover:text-blue-400 transition brand-font text-4xl mt-[2px]">
                                 Home
                             </span>
-                            <span
-                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                         </a>
 
                         <a href="products.html" class="relative group">
                             <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Catalogs</span>
-                            <span
-                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                         </a>
 
                         <a href="shopify.html" class="relative group">
                             <span class="text-blue-400 brand-font text-4xl">Shopify</span>
-                            <span
-                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
                         </a>
 
                         <a href="contact.html" class="relative group">
                             <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Contact</span>
-                            <span
-                                class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
                         </a>
-
-                        <a id="cart-icon" class="relative group cursor-pointer">
-                            <span class="text-4xl text-gray-700 hover:text-blue-500 pr-2">
-                                <i class="fas fa-shopping-cart"></i>
-                            </span>
-                            <span id="cart-count"
-                                class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
-                        </a>
-
-                        <div class="flex flex-col items-center py-1 md:hidden">
-                            <img src="/images/logo.png" alt="Prime Promotions Logo"
-                                class="h-36 w-auto rounded-full border-4 border-white shadow-xl mb-4" />
-                            <span class="text-2xl text-blue-400 brand-font">
-                                (574) 202-7050 <span class="text-black">|</span>
-                                sales@primepromollc.com
-                            </span>
-
-                            <span class="text-xl text-blue-400 brand-font">
-                                514 S Main Street, Middlebury, IN 46540
-                            </span>
-                        </div>
                     </nav>
                 </div>
             </header>
 
-            <section class="py-16 px-6 bg-white text-center">
-                <div class="mb-8 flex justify-center">
-                    <img src="./images/shopify.png" alt="Shopify Banner"
-                        class="w-full max-w-4xl h-56 object-contain">
-                </div>
+            <section class="shopify-section py-16 px-6 text-center">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-8 flex justify-center">
+                        <img src="./images/shopify.png" alt="Shopify Banner" class="shopify-banner">
+                    </div>
 
-                <div class="flex flex-wrap justify-center gap-8">
-
-                    <div
-                        class="catalog-card relative border rounded-lg shadow-lg p-6 flex flex-col w-96 hover:shadow-xl transition-transform duration-300">
-
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-3xl"
-                            data-name="Greentech Renewables" data-link="https://greentechpromoshop.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-
-                        <img src="/images/greentechshop.svg" alt="Greentech Renewables"
-                            class="w-full h-80 object-contain bg-white p-4 rounded-lg mb-4 shadow-sm">
-
-                        <p class="text-3xl mb-2 brand-font">
-                            Greentech Renewables
+                    <div class="text-center mb-8">
+                        <p class="uppercase tracking-[0.25em] text-blue-400 text-xl font-bold mb-2">
+                            Custom Online Stores
                         </p>
-
-                        <a href="https://greentechpromoshop.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Store
-                        </a>
+                        <h1 class="brand-font text-6xl md:text-7xl lg:text-7xl text-gray-950 leading-none">
+                            Shopify Stores
+                        </h1>
                     </div>
 
-                    <div
-                        class="catalog-card relative border rounded-lg shadow-lg p-6 flex flex-col w-96 hover:shadow-xl transition-transform duration-300">
+                    <div class="shopify-grid">
+                        <div class="shopify-card">
+                            <div class="shopify-image-box">
+                                <img src="/images/greentechshop.svg" alt="Greentech Renewables Shopify Store">
+                            </div>
 
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-3xl"
-                            data-name="Monteith's BestOne" data-link="https://monteithmerch.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
+                            <div class="shopify-card-content text-left">
+                                <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Shopify Store</p>
+                                <h2 class="brand-font text-4xl text-gray-950 leading-none mb-3">
+                                    Greentech Renewables
+                                </h2>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Branded promotional store built for Greentech Renewables merchandise and company apparel.
+                                </p>
+                                <a href="https://greentechpromoshop.com/" target="_blank"
+                                    class="store-link brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Store <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
 
-                        <img src="./images/monteithshop.png" alt="Monteith Merch"
-                            class="w-full h-80 object-contain bg-white p-4 rounded-lg mb-4 shadow-sm">
+                        <div class="shopify-card">
+                            <div class="shopify-image-box">
+                                <img src="./images/monteithshop.png" alt="Monteith's BestOne Shopify Store">
+                            </div>
 
-                        <p class="text-3xl mb-2 brand-font">Monteith's BestOne</p>
+                            <div class="shopify-card-content text-left">
+                                <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Shopify Store</p>
+                                <h2 class="brand-font text-4xl text-gray-950 leading-none mb-3">
+                                    Monteith's BestOne
+                                </h2>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Company merchandise store designed for branded apparel, accessories, and team products.
+                                </p>
+                                <a href="https://monteithmerch.com/" target="_blank"
+                                    class="store-link brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Store <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
 
-                        <a href="https://monteithmerch.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Store
-                        </a>
-                    </div>
+                        <div class="shopify-card">
+                            <div class="shopify-image-box">
+                                <img src="./images/journeyshop.png" alt="The Journey Shopify Store">
+                            </div>
 
-                    <div
-                        class="catalog-card relative border rounded-lg shadow-lg p-6 flex flex-col w-96 hover:shadow-xl transition-transform duration-300">
-
-                        <button class="save-btn absolute top-4 right-4 text-gray-300 hover:text-blue-500 text-3xl"
-                            data-name="The Journey" data-link="https://thejourneyshop.com/">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-
-                        <img src="./images/journeyshop.png" alt="The Journey Shop"
-                            class="w-full h-80 object-contain bg-white p-4 rounded-lg mb-4 shadow-sm">
-
-                        <p class="text-3xl mb-2 brand-font">The Journey</p>
-
-                        <a href="https://thejourneyshop.com/" target="_blank"
-                            class="inline-block brand-font text-xl bg-blue-400 text-white px-1 py-0.5 rounded-full shadow-lg hover:bg-blue-500 transition">
-                            View Store
-                        </a>
+                            <div class="shopify-card-content text-left">
+                                <p class="text-xs uppercase tracking-widest text-blue-400 font-bold">Shopify Store</p>
+                                <h2 class="brand-font text-4xl text-gray-950 leading-none mb-3">
+                                    The Journey
+                                </h2>
+                                <p class="text-sm text-gray-600 italic mb-5">
+                                    Clean custom storefront created for branded Journey merchandise and online ordering.
+                                </p>
+                                <a href="https://thejourneyshop.com/" target="_blank"
+                                    class="store-link brand-font text-xl inline-flex items-center gap-2 text-blue-500 hover:text-blue-700">
+                                    View Store <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -294,7 +381,7 @@
             <div
                 class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
                 <div class="flex items-center gap-4">
-                    <img src="/images/logo.png" class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl" />
+                    <img src="/images/logo.png" class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl" alt="Prime Promotions Logo" />
                     <div>
                         <span class="text-white text-3xl brand-font">
                             Prime Promotions LLC
@@ -334,278 +421,9 @@
         </footer>
     </div>
 
-    <div id="save-popup"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] hidden transition-opacity duration-300 px-4">
-        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 animate-fade-in">
-
-            <button id="popup-cancel" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl font-bold">
-                &times;
-            </button>
-
-            <div class="mb-6 text-center">
-                <div class="flex justify-center mb-4">
-                    <div class="w-28 h-28 p-1 flex items-center justify-center rounded-full bg-white shadow-md border-2">
-                        <img src="/images/logo.png" alt="Popup Logo" class="w-full h-full object-contain rounded-full" />
-                    </div>
-                </div>
-
-                <h2 class="text-3xl brand-font text-gray-800 mt-4">
-                    Save <span id="popup-catalog-name" class="text-blue-500">Item</span>
-                </h2>
-                <p class="text-xl brand-font text-gray-700 italic mt-1">
-                    <span class="pl-1 text-gray-400 text-xl">
-                        Add product links or notes before sending to our team.
-                    </span>
-                </p>
-            </div>
-
-            <div class="mb-4">
-                <label for="popup-links" class="brand-font pl-3 text-xl font-medium text-gray-700 mb-1">
-                    Product Links <span class="pl-1 text-gray-400 text-sm">(optional)</span>
-                </label>
-                <textarea id="popup-links"
-                    class="w-full py-2 pl-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                    rows="3" placeholder="Paste one or more product URLs here..."></textarea>
-            </div>
-
-            <div class="mb-6">
-                <label for="popup-notes" class="block brand-font pl-3 text-xl font-medium text-gray-700 mb-1">
-                    Notes or Questions <span class="pl-1 text-gray-400 text-sm">(optional)</span>
-                </label>
-                <textarea id="popup-notes"
-                    class="w-full py-2 pl-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                    rows="3" placeholder="Anything you'd like us to know or discuss..."></textarea>
-            </div>
-
-            <div class="flex justify-end gap-3">
-                <button id="popup-confirm"
-                    class="bg-blue-400 text-white brand-font text-2xl px-5 py-2 rounded-full font-semibold hover:bg-blue-500 transition">
-                    Save Item
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const cartPanel = document.getElementById('cart-panel');
-        const cartBackdrop = document.getElementById('cart-backdrop');
-        const cartList = document.getElementById('cart-list');
-        const cartIcon = document.getElementById('cart-icon');
-        const closeCartBtn = document.getElementById('close-cart');
-        const cartTotalLabel = document.getElementById('cart-total-label');
-        const cartCount = document.getElementById('cart-count');
-
-        const saveButtons = document.querySelectorAll('.save-btn');
-        const popup = document.getElementById('save-popup');
-        const popupCatalogName = document.getElementById('popup-catalog-name');
-        const popupLinks = document.getElementById('popup-links');
-        const popupNotes = document.getElementById('popup-notes');
-        const popupCancel = document.getElementById('popup-cancel');
-        const popupConfirm = document.getElementById('popup-confirm');
-
-        let currentButton = null;
-
-        function getCart() {
-            return JSON.parse(localStorage.getItem('catalogCart')) || [];
-        }
-
-        function saveCart(cart) {
-            localStorage.setItem('catalogCart', JSON.stringify(cart));
-        }
-
-        function updateCartCount() {
-            const cart = getCart();
-
-            cartCount.textContent = cart.length;
-            cartCount.classList.toggle('hidden', cart.length === 0);
-
-            if (cartTotalLabel) {
-                cartTotalLabel.textContent = cart.length;
-            }
-        }
-
-        function formatLinks(links) {
-            const parts = links.split(/\s*[\n,]+\s*/).filter(Boolean);
-
-            return parts.map(link => {
-                return `<a href="${link}" target="_blank" class="text-blue-500 underline block mb-1 break-all">${link}</a>`;
-            }).join('');
-        }
-
-        function updateCartList() {
-            const cart = getCart();
-            cartList.innerHTML = '';
-
-            if (cartTotalLabel) {
-                cartTotalLabel.textContent = cart.length;
-            }
-
-            if (cart.length === 0) {
-                cartList.innerHTML = `
-                    <li class="text-center py-12">
-                        <div class="w-16 h-16 mx-auto rounded-full bg-blue-50 border border-blue-100 shadow-sm flex items-center justify-center mb-4">
-                            <i class="fa-solid fa-cart-shopping text-2xl text-blue-300"></i>
-                        </div>
-                        <p class="brand-font text-3xl text-gray-800">No saved items yet</p>
-                        <p class="text-sm text-gray-500 mt-1">
-                            Save stores or catalogs you like and they will show up here.
-                        </p>
-                    </li>
-                `;
-                return;
-            }
-
-           cart.forEach((item, index) => {
-                const li = document.createElement('li');
-
-                li.className = "bg-white border border-blue-100 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:border-blue-300 transition relative";
-
-                li.innerHTML = `
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="pr-4">
-                            <p class="text-xs uppercase tracking-widest text-blue-400 font-semibold mb-1">
-                                Saved Catalog
-                            </p>
-
-                            <a href="${item.link}" target="_blank"
-                                class="brand-font text-2xl text-gray-900 hover:text-blue-500 transition leading-none block">
-                                ${item.name}
-                            </a>
-                        </div>
-
-                        <button class="remove-btn w-9 h-9 rounded-full bg-gray-100 text-gray-500 hover:bg-red-500 hover:text-white transition flex items-center justify-center shrink-0"
-                            data-index="${index}" title="Remove item">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-
-                    <div class="mt-4">
-                        <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-1 block">
-                            Notes
-                        </label>
-                        <textarea
-                            class="cart-notes w-full border border-blue-100 rounded-xl p-3 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
-                            rows="3"
-                            data-index="${index}"
-                            placeholder="Add notes, quantities, colors, sizes, logo placement, questions, etc...">${item.notes || ''}</textarea>
-                    </div>
-                `;
-
-                cartList.appendChild(li);
-            });
-
-
-            document.querySelectorAll('.remove-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
-                    const updatedCart = getCart();
-
-                    updatedCart.splice(index, 1);
-                    saveCart(updatedCart);
-
-                    updateCartCount();
-                    updateCartList();
-                });
-            });
-        }
-
-        function openCart() {
-            updateCartList();
-            document.body.classList.add('cart-open');
-
-            if (window.innerWidth < 1024) {
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeCart() {
-            document.body.classList.remove('cart-open');
-            document.body.style.overflow = '';
-        }
-
-        cartIcon.addEventListener('click', openCart);
-        closeCartBtn.addEventListener('click', closeCart);
-        cartBackdrop.addEventListener('click', closeCart);
-
-        saveButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentButton = btn;
-                popupCatalogName.textContent = btn.getAttribute('data-name');
-
-                popupLinks.value = '';
-                popupNotes.value = '';
-                popup.classList.remove('hidden');
-            });
-        });
-
-        popupCancel.addEventListener('click', () => {
-            popup.classList.add('hidden');
-        });
-
-        popupConfirm.addEventListener('click', () => {
-            if (!currentButton) return;
-
-            const name = currentButton.getAttribute('data-name');
-            const link = currentButton.getAttribute('data-link');
-            const productLinks = popupLinks.value.trim();
-            const notes = popupNotes.value.trim();
-
-            const cart = getCart();
-            cart.push({ name, link, productLinks, notes });
-
-            saveCart(cart);
-            updateCartCount();
-            updateCartList();
-
-            popup.classList.add('hidden');
-            openCart();
-        });
-
-        document.getElementById('send-email').addEventListener('click', () => {
-            const cart = getCart();
-
-            if (cart.length === 0) {
-                alert("Your saved list is empty!");
-                return;
-            }
-
-            let body = "Here are the items I'm interested in:\n\n";
-
-            cart.forEach(item => {
-                body += `Item: ${item.name}\n`;
-                if (item.link) body += `Link: ${item.link}\n`;
-                if (item.productLinks) body += `Product Links:\n${item.productLinks}\n`;
-                if (item.notes) body += `Notes/Questions:\n${item.notes}\n`;
-                body += `\n`;
-            });
-
-            const mailtoLink = `mailto:sales@primepromollc.com?subject=Saved Items&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
-        });
-
-        updateCartCount();
-    </script>
-
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
-
-        const menuToggle = document.getElementById('menu-toggle');
-        const navMenu = document.getElementById('nav-menu');
-
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('menu-open');
-            navMenu.classList.toggle('hidden');
-            navMenu.classList.toggle('flex');
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (document.body.classList.contains('cart-open') && e.key === "Escape") {
-                document.body.classList.remove('cart-open');
-                document.body.style.overflow = '';
-            }
-        });
     </script>
-
 </body>
 
 </html>
