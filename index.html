@@ -22,556 +22,199 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
 
     <style>
-    html {
-        scroll-behavior: smooth;
-    }
+        html {
+            scroll-behavior: smooth;
+            overflow-y: scroll;
+        }
 
-    body {
-        font-family: 'Inter', sans-serif;
-        overflow-x: hidden;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
 
-    .brand-font {
-        font-family: "Bebas Neue", sans-serif;
-    }
-.slider .slide img {
-        cursor: zoom-in;
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
+        .brand-font {
+            font-family: "Bebas Neue", sans-serif;
+        }
 
-    .slider .slide img:hover {
-        transform: scale(1.02);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
-    }
+        .header-shell {
+            max-width: 120rem;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
 
-    .lightbox {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.88);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        padding: 2rem;
-    }
+        .header-logo {
+            height: 6rem;
+            width: auto;
+            border-radius: 9999px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+                0 8px 10px -6px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease;
+        }
 
-    .lightbox.hidden {
-        display: none;
-    }
+        .header-logo:hover {
+            transform: scale(1.05);
+        }
 
-    .lightbox-content {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        max-width: 95vw;
-        max-height: 95vh;
-    }
+        .header-brand-text {
+            display: none;
+        }
 
-    .lightbox img {
-        max-width: 90vw;
-        max-height: 85vh;
-        object-fit: contain;
-        display: block;
-        border-radius: 1rem;
-        background: white;
-        transition: transform 0.25s ease;
-        cursor: zoom-in;
-    }
+        @media (min-width: 1024px) {
+            .header-brand-text {
+                display: flex;
+                flex-direction: column;
+                color: #000000;
+                font-size: 2.25rem;
+                line-height: 1.05;
+                letter-spacing: 0.025em;
+            }
+        }
 
-    .lightbox img.zoomed {
-        transform: scale(1.75);
-        cursor: zoom-out;
-    }
+        .header-contact-line {
+            font-size: 1.25rem;
+            color: #60a5fa;
+            padding-top: 0.18rem;
+            padding-bottom: 0.18rem;
+        }
 
-    .lightbox-close {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        width: 44px;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        border-radius: 9999px;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(6px);
-        color: #111827;
-        font-size: 1.2rem;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-        transition: all 0.25s ease;
-    }
+        .header-contact-line.email {
+            font-style: italic;
+        }
 
-    .lightbox-close:hover {
-        background: #111827;
-        color: white;
-        transform: scale(1.1);
-    }
+        #nav-menu {
+            display: none;
+        }
 
-    
-/* =========================
-   FINAL SHARED HEADER / NAV
-========================= */
-.header-shell {
-    max-width: 120rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-}
+        @media (min-width: 768px) {
+            #nav-menu {
+                position: relative;
+                display: flex !important;
+                width: auto;
+                height: auto;
+                overflow: visible;
+                background: transparent;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 2.5rem;
+                padding-top: 0;
+            }
+        }
 
-.header-logo {
-    height: 6rem;
-    width: auto;
-    border-radius: 9999px;
-    border: 2px solid #ffffff;
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    transition: transform 0.3s ease;
-}
+        @media (max-width: 767px) {
+            .header-shell {
+                padding: 0.9rem 1rem;
+                justify-content: center;
+                align-items: center;
+            }
 
-.header-logo:hover {
-    transform: scale(1.05);
-}
+            .header-shell>a img.header-logo {
+                display: none !important;
+            }
 
-.header-brand-text {
-    display: none;
-}
+            .header-brand-text {
+                display: none !important;
+            }
 
-@media (min-width: 1024px) {
-    .header-brand-text {
-        display: flex;
-        flex-direction: column;
-        color: #000000;
-        font-size: 2.25rem;
-        line-height: 1.05;
-        letter-spacing: 0.025em;
-    }
-}
+            .header-shell>a {
+                display: none;
+            }
 
-.header-contact-line {
-    font-size: 1.25rem;
-    color: #60a5fa;
-    padding-top: 0.18rem;
-    padding-bottom: 0.18rem;
-}
+            #nav-menu {
+                display: flex !important;
+                position: relative;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                gap: 1.15rem;
+                white-space: nowrap;
+            }
 
-.header-contact-line.email {
-    font-style: italic;
-}
+            #nav-menu a {
+                flex: 0 0 auto;
+            }
 
-#nav-menu {
-    display: none;
-}
+            #nav-menu .brand-font {
+                font-size: 1.8rem !important;
+                line-height: 1;
+            }
+        }
+    </style>
+</head>
 
-@media (min-width: 768px) {
-    #nav-menu {
-        position: relative;
-        display: flex !important;
-        width: auto;
-        height: auto;
-        overflow: visible;
-        background: transparent;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-        gap: 2.5rem;
-        padding-top: 0;
-    }
-}
-
-@media (max-width: 767px) {
-    .header-shell {
-        padding: 0.9rem 1rem;
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* HIDE LOGO ON MOBILE */
-    .header-shell > a img.header-logo {
-        display: none !important;
-    }
-
-    .header-brand-text {
-        display: none !important;
-    }
-
-    /* REMOVE EXTRA GAP FROM LOGO AREA */
-    .header-shell > a {
-        display: none;
-    }
-
-    #nav-menu {
-        display: flex !important;
-        position: relative;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        gap: 1.15rem;
-        white-space: nowrap;
-    }
-
-    #nav-menu a {
-        flex: 0 0 auto;
-    }
-
-    #nav-menu .brand-font {
-        font-size: 1.8rem !important;
-        line-height: 1;
-    }
-}
-#controls {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1.5rem;
-        margin-top: 1rem;
-    }
-
-    #controls button {
-        width: 3rem;
-        height: 3rem;
-        font-size: 1.5rem;
-        border-radius: 9999px;
-        background-color: white;
-        border: 2px solid #ccc;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    #controls button:hover {
-        background-color: #3b82f6;
-        color: white;
-    }
-
-    .slider .slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 350px;
-        max-width: 100%;
-        margin: auto;
-    }
-
-    .slider .slide img {
-        height: 100%;
-        width: auto;
-        object-fit: contain;
-        display: block;
-        margin: 0 auto;
-        border-radius: 0.5rem;
-    }
-</style>
+<body>
 
 <div class="site-shell min-h-screen flex flex-col">
 
-    <div class="flex-grow">
+    <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
+        <div class="header-shell">
+            <a href="index.html" class="flex items-center gap-4">
+                <img src="./images/logo.png" alt="Prime Promotions Logo" class="header-logo" />
 
-        <div class="fixed top-0 left-0 w-full h-screen -z-10 pointer-events-none">
-            <div id="bg1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
-                style="background-image: url('./images/test2.jpg'); z-index: 1;"></div>
-            <div id="bg2" class="absolute inset-0 bg-cover bg-center opacity-0 transition-opacity duration-1000"
-                style="background-image: url('./images/hero-bg2.png'); z-index: 2;"></div>
-        </div>
-
-        <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
-            <div class="header-shell">
-                <a href="index.html" class="flex items-center gap-4">
-                    <img src="./images/logo.png" alt="Prime Promotions Logo" class="header-logo" />
-
-                    <span class="header-brand-text brand-font">
-                        <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
-                        <span class="header-contact-line">(574) 202-7050</span>
-                        <span class="header-contact-line email">sales@primepromollc.com</span>
-                    </span>
-                </a>
-
-               <nav id="nav-menu">
-                        <a href="index.html" class="relative group">
-                            <span class="text-black group-hover:text-blue-400 transition brand-font text-4xl mt-[2px]">
-                                Home
-                            </span>
-                           <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left"></span>
-                        </a>
-
-                        <a href="products.html" class="relative group">
-                            <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Catalogs</span>
-                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                        </a>
-
-                        <a href="shopify.html" class="relative group">
-                            <span class="text-blue-400 brand-font text-4xl">Shopify</span>
-                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                        </a>
-
-                        <a href="contact.html" class="relative group">
-                            <span class="text-black hover:text-blue-400 transition brand-font text-4xl">Contact</span>
-                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-                        </a>
-                    </nav>
-            </div>
-        </header>
-
-        <section
-            class="relative min-h-[35vh] flex items-center justify-center px-6 py-20 md:py-32 text-white z-10 bg-cover bg-center">
-            <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-70 z-0 pointer-events-none"></div>
-
-            <div class="relative z-10 max-w-6xl w-full flex flex-col md:flex-row items-center justify-between gap-10">
-
-                <div
-                    class="w-full md:w-2/3 flex flex-col items-center md:items-start text-center md:text-left px-2 md:px-0 pb-12 md:pb-0">
-
-                    <h1
-                        class="order-1 text-5xl md:text-8xl font-extrabold brand-font mb-8 leading-tight text-center md:text-left">
-                        BRANDING<span class="text-blue-400">.</span>
-
-                        <span class="inline md:hidden">
-                            WITH<span class="text-blue-400">.</span> BRILLIANCE<span class="text-blue-400">.</span>
-                        </span>
-
-                        <span class="hidden md:inline">
-                            <br>WITH<span class="text-blue-400">.</span><br>
-                            BRILLIANCE<span class="text-blue-400">.</span>
-                        </span>
-                    </h1>
-
-                    <div class="order-2 md:hidden flex justify-center items-center mb-8">
-                        <img src="./images/logo.png" alt="Logo"
-                            class="w-56 rounded-full border-4 border-white shadow-2xl" />
-                    </div>
-
-                    <p class="order-3 text-3xl brand-font text-white max-w-2xl mb-12">
-                        At Prime Promotions, bringing your brand to life is simple: choose your products, work with
-                        our design team, and we’ll handle the rest—from production to delivery.
-                    </p>
-
-                    <a href="products.html"
-                        class="order-4 inline-block brand-font text-2xl bg-blue-400 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition">
-                        Catalog Directory
-                    </a>
-                </div>
-
-                <div class="hidden md:flex md:w-1/3 justify-center items-center">
-                    <img src="./images/logo.png" alt="Logo"
-                        class="w-72 md:w-96 rounded-full border-4 border-white shadow-2xl" />
-                </div>
-            </div>
-
-            <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
-                <svg class="relative block w-full h-[80px]" xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="none" viewBox="0 0 1200 120">
-                    <path d="M1200 0L0 0 892.25 114.72 1200 0z" fill="#ffffff"></path>
-                </svg>
-            </div>
-        </section>
-
-        <section id="how" class="py-20 px-6 bg-white text-black text-center relative">
-            <div class="text-5xl font-bold mb-2 brand-font">OUR PRODUCTS IN ACTION</div>
-
-            <section class="py-20 bg-white text-black">
-                <div class="max-w-7xl mx-auto px-4">
-
-                    <div class="w-full flex flex-col items-center justify-center mx-auto">
-                        <div class="w-full max-w-6xl overflow-hidden mx-auto">
-                            <div class="slider"></div>
-                        </div>
-
-                        <div id="controls" class="flex gap-4 mt-6">
-                            <button class="previous text-3xl text-gray-700 hover:text-blue-500">
-                                <i class="fa-solid fa-angle-left"></i>
-                            </button>
-                            <button class="next text-3xl text-gray-700 hover:text-blue-500">
-                                <i class="fa-solid fa-angle-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-16"></div>
-
-                <div class="text-center">
-                    <a href="products.html"
-                        class="inline-block brand-font text-2xl bg-blue-400 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-500 transition">
-                        Catalog Directory
-                    </a>
-                </div>
-            </section>
-
-            <section id="companies" class="bg-white py-20 text-black">
-                <div class="text-5xl font-bold mb-10 brand-font">Trusted by Leading Companies</div>
-
-                <div class="max-w-7xl mx-auto px-6">
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 items-center justify-items-center">
-                        <img src="./images/7.png" class="h-30 w-auto object-contain" />
-                        <img src="./images/8.png" class="h-30 w-auto object-contain" />
-                        <img src="./images/9.png" class="h-20 w-auto object-contain" />
-                        <img src="./images/10.png" class="h-20 w-auto object-contain" />
-                        <img src="./images/15.png" class="h-20 w-auto object-contain" />
-                        <img src="./images/12.png" class="h-21 w-auto object-contain" />
-                    </div>
-
-                    <div class="flex flex-wrap justify-center gap-10 mt-10">
-                        <img src="./images/13.png" class="h-21 w-auto object-contain" />
-                        <img src="./images/14.jpg" class="h-21 w-auto object-contain" />
-                        <img src="./images/11.png" class="h-21 w-auto object-contain" />
-                    </div>
-                </div>
-            </section>
-        </section>
-    </div>
-
-    <footer class="bg-black text-white">
-        <div
-            class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-            <div class="flex items-center gap-4">
-                <img src="./images/logo.png" class="w-28 md:w-36 rounded-full border-4 border-white shadow-2xl" />
-                <div>
-                    <span class="text-white text-3xl brand-font">
-                        Prime Promotions LLC
-                        <br>
-                        <span class="text-xl text-blue-400">(574) 202-7050</span>
-                        <br>
-                        <span class="text-xl text-blue-400">sales@primepromollc.com</span>
-                        <br>
-                        <span class="text-xl text-blue-400">514 S Main Street, Middlebury, IN 46540</span>
-                    </span>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-2xl brand-font text-white font-normal mb-2">
-                    Let’s Make Your Brand Unforgettable
-                </h3>
-                <p class="text-2xl brand-font text-grey font-normal mb-4 italic">
-                    Reach out to our team to get your order started today.
-                </p>
-                <a href="mailto:sales@primepromollc.com"
-                    class="bg-blue-400 brand-font text-2xl px-5 py-2 rounded-full hover:bg-blue-500 transition">
-                    Get in Touch
-                </a>
-            </div>
-        </div>
-
-        <div class="text-center text-sm text-white opacity-70 pb-6">
-            &copy; <span id="year"></span> Prime Promotions LLC. All rights reserved.
-            <br>
-            Site by
-            <a href="https://www.linkedin.com/in/drewmcollins/" target="_blank"
-                class="underline hover:text-blue-400 transition">
-                Drew Collins
+                <span class="header-brand-text brand-font">
+                    <span class="whitespace-nowrap font-semibold">Prime Promotions LLC</span>
+                    <span class="header-contact-line">(574) 202-7050</span>
+                    <span class="header-contact-line email">sales@primepromollc.com</span>
+                </span>
             </a>
+
+            <nav id="nav-menu">
+                <a href="index.html" class="relative group">
+                    <span class="text-blue-400 transition brand-font text-4xl">
+                        Home
+                    </span>
+
+                    <span
+                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-100 transition-transform origin-left">
+                    </span>
+                </a>
+
+                <a href="products.html" class="relative group">
+                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl">
+                        Catalogs
+                    </span>
+
+                    <span
+                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left">
+                    </span>
+                </a>
+
+                <a href="shopify.html" class="relative group">
+                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl">
+                        Shopify
+                    </span>
+
+                    <span
+                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left">
+                    </span>
+                </a>
+
+                <a href="contact.html" class="relative group">
+                    <span class="text-black hover:text-blue-400 transition brand-font text-4xl">
+                        Contact
+                    </span>
+
+                    <span
+                        class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left">
+                    </span>
+                </a>
+            </nav>
         </div>
-    </footer>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center py-32">
+        <h1 class="brand-font text-7xl text-slate-900">
+            NAV SHIFT FIXED<span class="text-blue-400">.</span>
+        </h1>
+    </main>
+
 </div>
 
-<div id="image-lightbox" class="lightbox hidden">
-    <div class="lightbox-content">
-        <button id="lightbox-close" class="lightbox-close" aria-label="Close enlarged image">&times;</button>
-        <img id="lightbox-image" src="" alt="Expanded product image" />
-    </div>
-</div>
-
-<script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-
-<script>
-    window.addEventListener("DOMContentLoaded", () => {
-        const slider = document.querySelector(".slider");
-        if (!slider) return;
-
-        const carObject = [
-            { img: "./images/50.jpeg" },
-            { img: "./images/shotskis.jpg" },
-            { img: "./images/51.jpeg" },
-            { img: "./images/52.jpeg" }
-        ];
-
-        slider.innerHTML = carObject.map(car => `
-            <div class="slide">
-                <img src="${car.img}" alt="Showcase image" class="clickable-slide-image" />
-            </div>
-        `).join("");
-
-        const tinySliderInstance = tns({
-            container: ".slider",
-            items: 1,
-            gutter: 15,
-            slideBy: 1,
-            nav: false,
-            speed: 400,
-            controls: false,
-            mouseDrag: true,
-            responsive: {
-                640: { items: 2 },
-                1024: { items: 3 }
-            }
-        });
-
-        const prevBtn = document.querySelector(".previous");
-        const nextBtn = document.querySelector(".next");
-
-        prevBtn?.addEventListener("click", () => tinySliderInstance.goTo("prev"));
-        nextBtn?.addEventListener("click", () => tinySliderInstance.goTo("next"));
-
-        const lightbox = document.getElementById("image-lightbox");
-        const lightboxImage = document.getElementById("lightbox-image");
-        const lightboxClose = document.getElementById("lightbox-close");
-
-        function openLightbox(src, alt) {
-            lightboxImage.src = src;
-            lightboxImage.alt = alt || "Expanded product image";
-            lightboxImage.classList.remove("zoomed");
-            lightbox.classList.remove("hidden");
-            document.body.style.overflow = "hidden";
-        }
-
-        function closeLightbox() {
-            lightbox.classList.add("hidden");
-            lightboxImage.src = "";
-            lightboxImage.classList.remove("zoomed");
-
-            document.body.style.overflow = "";
-        }
-
-        document.addEventListener("click", (e) => {
-            const clickedImage = e.target.closest(".clickable-slide-image");
-            if (clickedImage) {
-                openLightbox(clickedImage.getAttribute("src"), clickedImage.getAttribute("alt"));
-            }
-        });
-
-        lightboxImage.addEventListener("click", (e) => {
-            e.stopPropagation();
-            lightboxImage.classList.toggle("zoomed");
-        });
-
-        lightboxClose.addEventListener("click", (e) => {
-            e.stopPropagation();
-            closeLightbox();
-        });
-
-        lightbox.addEventListener("click", (e) => {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (!lightbox.classList.contains("hidden") && e.key === "Escape") {
-                closeLightbox();
-            }
-        });
-    });
-</script>
 </body>
-
 </html>
