@@ -61,6 +61,7 @@ body,
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-shrink: 0;
 }
 
 .header-logo {
@@ -81,10 +82,8 @@ body,
     flex-direction: column;
     color: #000000;
     font-size: 2.25rem;
-    line-height: 1.15;
+    line-height: 1;
     letter-spacing: 0.025em;
-    padding-top: 0.35rem;
-    padding-bottom: 0.35rem;
 }
 
 .header-contact-line {
@@ -100,7 +99,8 @@ body,
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 2.25rem;
+    gap: 2.5rem;
+    margin-left: auto;
 }
 
 @media (max-width: 767px) {
@@ -109,8 +109,8 @@ body,
         align-items: center;
         justify-content: center;
         gap: 0.85rem;
-        padding-top: 0.85rem;
-        padding-bottom: 0.85rem;
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
     }
 
     .header-brand-link {
@@ -176,14 +176,14 @@ body.cart-open #cart-icon {
 
 @media (max-width: 767px) {
     #cart-icon {
-        width: 4.35rem;
-        height: 4.35rem;
+        width: 3.65rem;
+        height: 3.65rem;
         right: 1rem;
         bottom: 1rem;
     }
 
     #cart-icon i {
-        font-size: 1.6rem;
+        font-size: 1.35rem;
     }
 
     #cart-count {
@@ -703,16 +703,16 @@ body.cart-open #cart-backdrop {
 
 
     <button id="cart-icon"
-        class="fixed bottom-6 right-6 z-[55] w-20 h-20 rounded-full bg-blue-400 hover:bg-blue-500 text-white shadow-2xl flex items-center justify-center transition hover:scale-105"
+        class="fixed bottom-6 right-6 z-[55] w-16 h-16 rounded-full bg-blue-400 hover:bg-blue-500 text-white shadow-2xl flex items-center justify-center transition hover:scale-105"
         aria-label="Open saved catalogs cart">
-        <i class="fas fa-shopping-cart text-3xl"></i>
+        <i class="fas fa-shopping-cart text-2xl"></i>
         <span id="cart-count"
             class="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
     </button>
 
     <div class="site-shell min-h-screen">
     <header class="sticky top-0 z-50 bg-white backdrop-blur-lg shadow-xl border-b border-transparent">
-        <div class="site-header-inner max-w-7xl mx-auto px-6 py-6 relative">
+        <div class="site-header-inner max-w-7xl mx-auto px-6 py-4 relative">
             <a href="index.html" class="header-brand-link">
                 <img src="/images/logo.png" alt="Prime Promotions Logo" class="header-logo" />
                 <span class="header-brand-text brand-font">
